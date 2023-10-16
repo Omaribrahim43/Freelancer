@@ -1,5 +1,6 @@
 import Home from "./Components/pages/home";
 import Services from "./Components/pages/services";
+import Singel from "./Components/pages/singel";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -9,6 +10,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
         {/* Define more routes here */}
+        <Route path="/singel" element={<Singel />} />
+        
       </Routes>
     </Router>
   );
