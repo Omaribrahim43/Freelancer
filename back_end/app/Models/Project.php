@@ -13,6 +13,7 @@ class Project extends Model
         'seller_id',
         'category_id',
         'image',
+        'desc',
         'title',
         'rating',
         'price',
