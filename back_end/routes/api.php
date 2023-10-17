@@ -24,6 +24,7 @@ Route::get('users', [UserController::class, 'index']);
 Route::get('users/{id}', [UserController::class, 'getuser']);
 
 Route::get('projects', [ProjectController::class, 'index'])->name('show.projects');
+Route::get('projects/category/{id}', [ProjectController::class, 'categoryProjects'])->name('show.category.projects');
 Route::get('projects/{id}', [ProjectController::class, 'oneProject'])->name('show.one.projects');
 Route::post('projects/create', [ProjectController::class, 'store'])->name( 'store.projects');
 Route::put('projects/update/{id}', [ProjectController::class, 'update'])->name('update.projects');
