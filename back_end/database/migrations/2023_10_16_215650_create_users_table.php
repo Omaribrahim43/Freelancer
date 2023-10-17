@@ -18,15 +18,15 @@ return new class extends Migration
             $table->id();
             $table->string('image')->nullable();
             $table->string('username')->unique();
-            $table->string('name');
+            $table->string('first_name');
             $table->string('last_name')->nullable();
             $table->string('email')->unique();
             $table->string('password');
             $table->string('contact_info')->nullable();
-            $table->enum('role', [0,1,2])->default(2);
+            $table->enum('role', ['admin', 'freelancer', 'client'])->default('client');
             $table->integer('age')->nullable();
             $table->string('gender')->nullable();
-            $table->bigInteger('Bio')->nullable();
+            $table->text('Bio')->nullable();
             $table->timestamps();
         });
         // Schema::enableForeignKeyConstraints();
