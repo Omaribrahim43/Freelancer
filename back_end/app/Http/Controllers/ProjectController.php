@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
 {
@@ -14,7 +15,13 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $projects = Project::all();
+        return response()->json($projects);
+    }
+    public function oneProject($id)
+    {
+        $project = Project::findOrFail($id);
+        return response()->json($project);
     }
 
     /**
@@ -35,7 +42,40 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'seller_id' => 'required',
+                'category_id' => 'required',
+                'image' => 'nullable',
+                'title' => 'required|max:30',
+                'price' => 'required',
+                'deadline' => 'required',
+                'status' => 'required',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/img');
+            $image->move($destinationPath, $filename);
+        }
+
+        Project::create([
+            'seller_id' => $request->seller_id,
+            'category_id' => $request->category_id,
+            'title' => $request->title,
+            'price' => $request->price,
+            'deadline' => $request->deadline,
+            'status' => $request->status,
+        ]);
+
+        return response()->json(['message' => 'project added successfully!'], 200);
     }
 
     /**
@@ -67,9 +107,42 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'seller_id' => 'required',
+                'category_id' => 'required',
+                'image' => 'nullable',
+                'title' => 'required|max:30',
+                'price' => 'required',
+                'deadline' => 'required',
+                'status' => 'required',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/img');
+            $image->move($destinationPath, $filename);
+        }
+
+        Project::where('id', $id)->update([
+            'seller_id' => $request->seller_id,
+            'category_id' => $request->category_id,
+            'title' => $request->title,
+            'price' => $request->price,
+            'deadline' => $request->deadline,
+            'status' => $request->status,
+        ]);
+
+        return response()->json(['message' => 'project updated successfully!'], 200);
     }
 
     /**
@@ -78,8 +151,10 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        $project = Project::findOrFail($id);
+        $project->delete();
+        return response()->json(['message' => 'project deleted successfully!'], 200);
     }
 }

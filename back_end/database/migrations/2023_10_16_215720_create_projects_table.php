@@ -13,26 +13,24 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            // $table->bigInteger('user_id');
-            $table->foreignId('buyer_id')->constrained('users')->onDelete('RESTRICT')->onUpdate('cascade');
+            $table->unsignedBigInteger('seller_id');
+            $table->foreign('seller_id')->references('id')->on('users')->onDelete('CASCADE');
+            // $table->foreignId('seller_id')->constrained('users')->onDelete('RESTRICT')->onUpdate('cascade');
 
-            // $table->bigInteger('category_id');
-            // $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('RESTRICT')->onUpdate('cascade');
-            $table->string('image');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('CASCADE');
+            // $table->foreignId('category_id')->constrained('categories')->onDelete('RESTRICT')->onUpdate('cascade');
+            $table->string('image')->nullable();
             $table->string('title');
-            $table->integer('rating');
+            $table->integer('rating')->nullable();
             $table->double('price');
-            $table->date('deadline');
-            $table->integer('buyers');
-            $table->enum('status', ['0', '1']);
+            $table->integer('deadline');
+            $table->integer('buyers')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
         });
-        Schema::enableForeignKeyConstraints();
-
     }
 
     /**
