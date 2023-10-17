@@ -51,7 +51,7 @@ function Cards() {
                 className="fa fa-times close"
                 data-dismiss="alert"
                 aria-label="close"
-              ></i>{" "}
+              ></i>
               <span>Chinese</span>
             </a>
           </li>
