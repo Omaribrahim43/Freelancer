@@ -1,9 +1,3 @@
-// ==husam===
-import React, { useState } from "react";
-import { Card, CardBody, Col, Container, Input, Row } from "reactstrap";
-import { useNavigate } from "react-router-dom";
-import axios from "../../../axios/axios";
-// ===husam==
 
 
 function Cards() {

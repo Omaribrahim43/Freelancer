@@ -68,6 +68,7 @@ export default function AddService() {
     return (
         <>
             <Header />
+            <link rel="stylesheet" href="css/dashboard.css"></link>
             <div id="wt-wrapper" className="wt-wrapper wt-haslayout">
                 <div className="wt-contentwrapper">
                     <main id="wt-main" className="wt-main wt-haslayout">
