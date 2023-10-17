@@ -13,17 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('name');
             $table->longText('description');
             $table->timestamps();
-
         });
-        Schema::enableForeignKeyConstraints();
-
     }
 
     /**
