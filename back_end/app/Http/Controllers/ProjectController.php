@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Project;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
@@ -19,6 +20,11 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
+        return response()->json($projects);
+    }
+    public function categoryProjects($id)
+    {
+        $projects = Project::where('category_id', $id)->get();
         return response()->json($projects);
     }
     public function oneProject($id)
