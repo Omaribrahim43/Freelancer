@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+
 class ProjectController extends Controller
 {
+    use ImageUploadTrait;
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +50,7 @@ class ProjectController extends Controller
             [
                 'seller_id' => 'required',
                 'category_id' => 'required',
-                'image' => 'nullable',
+                'image' => 'required',
                 'title' => 'required|max:30',
                 'price' => 'required',
                 'deadline' => 'required',
@@ -59,17 +62,13 @@ class ProjectController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/img');
-            $image->move($destinationPath, $filename);
-        }
+        $imagePath = $this->uploadImage($request, 'image', 'uploads');
 
         Project::create([
             'seller_id' => $request->seller_id,
             'category_id' => $request->category_id,
             'title' => $request->title,
+            'image' => $imagePath,
             'price' => $request->price,
             'deadline' => $request->deadline,
             'status' => $request->status,
@@ -126,17 +125,13 @@ class ProjectController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/img');
-            $image->move($destinationPath, $filename);
-        }
+        $imagePath = $this->updateImage($request, 'image', 'uploads', $request->image);
 
         Project::where('id', $id)->update([
             'seller_id' => $request->seller_id,
             'category_id' => $request->category_id,
             'title' => $request->title,
+            'image' => $imagePath,
             'price' => $request->price,
             'deadline' => $request->deadline,
             'status' => $request->status,
@@ -154,7 +149,9 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         $project = Project::findOrFail($id);
+        $this->deleteImage($project->image);
         $project->delete();
+
         return response()->json(['message' => 'project deleted successfully!'], 200);
     }
 }
