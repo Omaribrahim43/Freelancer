@@ -11,8 +11,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/services/:id" element={<Services />} />
-        {/* <Route path="/services" element={<Services />} /> */}
+        {/* <Route path="/services/:id" element={<Services />} /> */}
+        <Route path="/services" element={<Services />} />
         {/* Define more routes here */}
         <Route path="/singel" element={<Singel />} />
         <Route path="/add-service" element={<AddService />} />

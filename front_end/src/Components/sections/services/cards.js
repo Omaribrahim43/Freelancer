@@ -1,5 +1,3 @@
-import React from "react";
-
 // ==husam===
 import React, { useState } from "react";
 import { Card, CardBody, Col, Container, Input, Row } from "reactstrap";
@@ -9,30 +7,6 @@ import axios from "../../../axios/axios";
 
 
 function Cards() {
-  // ==husam===
-  const navigate = useNavigate();
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-    try {
-      
-
-      
-
-      // Now, make your login request
-      const response = await axios.get("/projects/{id}", { email, password });
-
-      setemail("");
-      setpassword("");
-      navigate("/");
-      console.log(response.data); // Log the user information
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  // ==husam===
-
   return (
     <div className="wt-userlistingholder wt-haslayout">
       <div className="wt-userlistingtitle">
@@ -136,7 +110,7 @@ function Cards() {
               </div>
             </div>
           </div>
-          {/* <div className="col-12 col-sm-12 col-md-12 col-lg-6">
+          <div className="col-12 col-sm-12 col-md-12 col-lg-6">
             <div className="wt-companysdetails">
               <figure className="wt-companysimg">
                 <img src="images/company/img-02.jpg" alt="img description" />
@@ -310,7 +284,7 @@ function Cards() {
                 </ul>
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
       <nav className="wt-pagination">
