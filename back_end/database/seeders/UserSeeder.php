@@ -89,7 +89,7 @@ class UserSeeder extends Seeder
                 'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
                 'username' => 'Client',
                 'first_name' => 'client',
-                'last_name' => 'client',
+                'last_name' => 'user',
                 'email' => 'client@gmail.com',
                 'password' => Hash::make('password'),
                 'role' => 'client',
