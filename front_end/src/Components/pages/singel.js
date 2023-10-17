@@ -5,11 +5,11 @@ import Content from '../sections/singel/content';
 
 
 export default function Singel() {
-    return (
-      <>
-       <Header/>
-<Content/>
-       <Footer/>
-      </>
-    );
+  return (
+    <>
+      <Header />
+      <Content />
+      <Footer />
+    </>
+  );
 }
