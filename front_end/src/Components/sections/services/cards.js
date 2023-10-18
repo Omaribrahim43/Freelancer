@@ -1,6 +1,13 @@
 import React from "react";
-
+import {useState,useEffect}from 'react';
+import axios from "axios";
+import UseReadApi from "../../../coustmHooks/UseReadapi"
 function Cards() {
+const [ProjectData, getFetch] = UseReadApi("http://127.0.0.1:8000/api/projects");
+useEffect(() => {
+  getFetch();
+}, []);
+
   return (
     <div className="wt-userlistingholder wt-haslayout">
       <div className="wt-userlistingtitle">
@@ -20,8 +27,7 @@ function Cards() {
               <i
                 className="fa fa-times close"
                 data-dismiss="alert"
-                aria-label="close"
-              ></i>{" "}
+                aria-label="close"></i>{" "}
               <span>Graphic Design</span>
             </a>
           </li>
@@ -30,8 +36,7 @@ function Cards() {
               <i
                 className="fa fa-times close"
                 data-dismiss="alert"
-                aria-label="close"
-              ></i>{" "}
+                aria-label="close"></i>{" "}
               <span>Any Hourly Rate</span>
             </a>
           </li>
@@ -40,8 +45,7 @@ function Cards() {
               <i
                 className="fa fa-times close"
                 data-dismiss="alert"
-                aria-label="close"
-              ></i>{" "}
+                aria-label="close"></i>{" "}
               <span>Any Freelancer Type</span>
             </a>
           </li>
@@ -50,8 +54,7 @@ function Cards() {
               <i
                 className="fa fa-times close"
                 data-dismiss="alert"
-                aria-label="close"
-              ></i>
+                aria-label="close"></i>
               <span>Chinese</span>
             </a>
           </li>
@@ -60,8 +63,7 @@ function Cards() {
               <i
                 className="fa fa-times close"
                 data-dismiss="alert"
-                aria-label="close"
-              ></i>{" "}
+                aria-label="close"></i>{" "}
               <span>English</span>
             </a>
           </li>
@@ -69,216 +71,46 @@ function Cards() {
       </div>
       <div className="wt-companysinfoholder">
         <div className="row">
-          <div className="col-12 col-sm-12 col-md-12 col-lg-6">
-            <div className="wt-companysdetails">
-              <figure className="wt-companysimg">
-                <img src="images/company/img-01.jpg" alt="img description" />
-              </figure>
-              <div className="wt-companysinfo">
-                <figure>
-                  <img src="images/company/img-01.png" alt="img description" />
+          {ProjectData.map((project, index) => (
+            <div className="col-12 col-sm-12 col-md-12 col-lg-6" key={index}>
+              <div className="wt-companysdetails">
+                <figure className="wt-companysimg">
+                  <img src="images/company/img-01.jpg" alt="img description" />
                 </figure>
-                <div className="wt-title">
-                  <a href="javascript:void(0);">
-                    <i className="fa fa-check-circle"></i> Verified Company
-                  </a>
-                  <h2>Angry Creative Studio</h2>
+                <div className="wt-companysinfo">
+                  <figure>
+                    <img
+                      src="images/company/img-01.png"
+                      alt="img description"
+                    />
+                  </figure>
+                  <div className="wt-title">
+                    <a href="javascript:void(0);">
+                      <i className="fa fa-check-circle"></i> Verified Company
+                    </a>
+                    <h2>{project.title}</h2>
+                  </div>
+                  <ul className="wt-postarticlemeta">
+                    <li>
+                      <a href="javascript:void(0);">
+                        <span>Open Jobs</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);">
+                        <span>Full Profile</span>
+                      </a>
+                    </li>
+                    <li className="wt-following">
+                      <a href="javascript:void(0);">
+                        <span>Following</span>
+                      </a>
+                    </li>
+                  </ul>
                 </div>
-                <ul className="wt-postarticlemeta">
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Open Jobs</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Full Profile</span>
-                    </a>
-                  </li>
-                  <li className="wt-following">
-                    <a href="javascript:void(0);">
-                      <span>Following</span>
-                    </a>
-                  </li>
-                </ul>
               </div>
             </div>
-          </div>
-          <div className="col-12 col-sm-12 col-md-12 col-lg-6">
-            <div className="wt-companysdetails">
-              <figure className="wt-companysimg">
-                <img src="images/company/img-02.jpg" alt="img description" />
-              </figure>
-              <div className="wt-companysinfo">
-                <figure>
-                  <img src="images/company/img-02.png" alt="img description" />
-                </figure>
-                <div className="wt-title">
-                  <a href="javascript:void(0);">
-                    <i className="fa fa-check-circle"></i> Verified Company
-                  </a>
-                  <h2>Aviato Care Company</h2>
-                </div>
-                <ul className="wt-postarticlemeta">
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Open Jobs</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Full Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Click To Follow</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-sm-12 col-md-12 col-lg-6">
-            <div className="wt-companysdetails">
-              <figure className="wt-companysimg">
-                <img src="images/company/img-03.jpg" alt="img description" />
-              </figure>
-              <div className="wt-companysinfo">
-                <figure>
-                  <img src="images/company/img-03.png" alt="img description" />
-                </figure>
-                <div className="wt-title">
-                  <a href="javascript:void(0);">
-                    <i className="fa fa-check-circle"></i> Verified Company
-                  </a>
-                  <h2>Ember Planner &amp; Organizer</h2>
-                </div>
-                <ul className="wt-postarticlemeta">
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Open Jobs</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Full Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Click To Follow</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-sm-12 col-md-12 col-lg-6">
-            <div className="wt-companysdetails">
-              <figure className="wt-companysimg">
-                <img src="images/company/img-04.jpg" alt="img description" />
-              </figure>
-              <div className="wt-companysinfo">
-                <figure>
-                  <img src="images/company/img-04.png" alt="img description" />
-                </figure>
-                <div className="wt-title">
-                  <a href="javascript:void(0);">
-                    <i className="fa fa-check-circle"></i> Verified Company
-                  </a>
-                  <h2>Firy Birds &amp; Company</h2>
-                </div>
-                <ul className="wt-postarticlemeta">
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Open Jobs</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Full Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Click To Follow</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-sm-12 col-md-12 col-lg-6">
-            <div className="wt-companysdetails">
-              <figure className="wt-companysimg">
-                <img src="images/company/img-05.jpg" alt="img description" />
-              </figure>
-              <div className="wt-companysinfo">
-                <figure>
-                  <img src="images/company/img-05.png" alt="img description" />
-                </figure>
-                <div className="wt-title">
-                  <a href="javascript:void(0);">
-                    <i className="fa fa-check-circle"></i> Verified Company
-                  </a>
-                  <h2>VAV Creative Studio</h2>
-                </div>
-                <ul className="wt-postarticlemeta">
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Open Jobs</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Full Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Click To Follow</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-sm-12 col-md-12 col-lg-6">
-            <div className="wt-companysdetails">
-              <figure className="wt-companysimg">
-                <img src="images/company/img-06.jpg" alt="img description" />
-              </figure>
-              <div className="wt-companysinfo">
-                <figure>
-                  <img src="images/company/img-06.png" alt="img description" />
-                </figure>
-                <div className="wt-title">
-                  <a href="javascript:void(0);">
-                    <i className="fa fa-check-circle"></i> Verified Company
-                  </a>
-                  <h2>Sass Studio</h2>
-                </div>
-                <ul className="wt-postarticlemeta">
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Open Jobs</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Full Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Click To Follow</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
       <nav className="wt-pagination">
