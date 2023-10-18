@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 
 export default function Detail() {
 
-  // const { id } = useParams();
+  const { id } = useParams();
   const [project, setProject] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/projects/1');
+            const response = await axios.get('http://127.0.0.1:8000/api/projects/${id}');
             setProject(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
