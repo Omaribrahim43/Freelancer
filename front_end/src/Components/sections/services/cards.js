@@ -334,7 +334,7 @@ function Cards() {
                 </ul>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <nav className="wt-pagination">
