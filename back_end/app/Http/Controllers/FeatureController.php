@@ -43,13 +43,10 @@ class FeatureController extends Controller
             [
                 'project_id' => 'required',
                 'title' => 'required',
-                'description' => 'required',
+                'deadline' => 'required',
                 'price' => 'required',
             ]
         );
-       
-     
-            
         if ($validator->fails()) {
             Log::error('Validation errors:', $validator->errors()->all());
             return response()->json(['error' => $validator->errors()], 400);
@@ -61,7 +58,7 @@ class FeatureController extends Controller
             'project_id' => $request->project_id,
             'title' => $request->title,
             'price' => $request->price,
-            'description' => $request->description,
+            'deadline' => $request->deadline,
         ]);
         
         Log::info('Feature added successfully');

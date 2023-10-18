@@ -6,6 +6,25 @@ import axios from "axios";
 
 export default function AddService() {
   const [category, setCategory] = useState([]);
+  const [features, setFeatures] = useState([]);
+  const [projectId, setProjectId] = useState(null);
+  const navigate = useNavigate();
+  const [error, setError] = useState([]);
+  const [project, setProject] = useState({
+    seller_id: "",
+    category_id: "",
+    title: "",
+    image: "",
+    price: "",
+    deadline: "",
+    desc: "",
+  });
+  const [feature, setFeature] = useState({
+    project_id: "",
+    title: "",
+    deadline: "",
+    price: "",
+  });
   useEffect(() => {
     async function fetchData() {
       try {
@@ -17,29 +36,11 @@ export default function AddService() {
         console.error("Error fetching data:", error);
       }
     }
-
     fetchData();
   }, []);
-  const [project, setProject] = useState({
-    seller_id: "",
-    category_id: "",
-    title: "",
-    image: "",
-    price: "",
-    deadline: "",
-    desc: "",
-  });
-
-  const [feature, setFeature] = useState({
-    project_id: "",
-    title: "",
-    description: "",
-    price: "",
-  });
-
-  const navigate = useNavigate();
-  const [error, setError] = useState([]);
-
+  const addFeature = () => {
+    setFeatures([...features, {}]);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -55,22 +56,11 @@ export default function AddService() {
       formData.append("image", project.image);
     }
 
-    console.log("FormData seller_id:", project.seller_id);
-    console.log("FormData category_id:", project.category_id);
-    console.log("FormData title:", project.title);
-    console.log("FormData price:", project.price);
-    console.log("FormData deadline:", project.deadline);
-
     const featureData = new FormData();
     featureData.append("project_id", feature.project_id);
-    featureData.append("feature_title", feature.title);
-    featureData.append("feature_description", feature.description);
-    featureData.append("feature_price", feature.price);
-
-    console.log("featureData id:", feature.project_id);
-    console.log("featureData title:", feature.title);
-    console.log("featureData price:", feature.price);
-    console.log("featureData description:", feature.description);
+    featureData.append("title", feature.title);
+    featureData.append("deadline", feature.deadline);
+    featureData.append("price", feature.price);;
 
     try {
       // First, create the Project record
@@ -89,8 +79,6 @@ export default function AddService() {
         featureData
       );
 
-      // Handle the responses as needed
-
       alert("Project added successfully!");
       // Reset your form or navigate to another page
     } catch (error) {
@@ -98,30 +86,56 @@ export default function AddService() {
       setError("An error occurred while adding the project.");
     }
   };
+  const handleFeatureSubmit = async (e, featureIndex) => {
+    e.preventDefault();
+    const featureData = new FormData();
+
+    // Use the stored project ID
+    featureData.append("project_id", projectId);
+    featureData.append("title", features[featureIndex].title);
+    featureData.append("deadline", features[featureIndex].deadline);
+    featureData.append("price", features[featureIndex].price);
+
+    try {
+      const featureResponse = await axios.post(
+        "http://127.0.0.1:8000/api/features/create",
+        featureData
+      );
+
+      // Handle the response as needed
+
+      alert("Feature added successfully!");
+      // Reset the feature form or navigate to another page
+    } catch (error) {
+      console.error("API request error:", error);
+      setError("An error occurred while adding the feature.");
+    }
+  };
   return (
     <>
       <Header />
       <link rel="stylesheet" href="css/dashboard.css"></link>
+
       <div id="wt-wrapper" className="wt-wrapper wt-haslayout">
         <div className="wt-contentwrapper">
           <main id="wt-main" className="wt-main wt-haslayout">
             <section className="wt-haslayout wt-dbsectionspace">
               <div className="row">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-6 float-left">
-                  <form
-                    onSubmit={handleSubmit}
-                    encType="multipart/form-data"
-                    className="wt-formtheme wt-userform wt-userformvtwo"
-                  >
-                    <div className="wt-dashboardbox">
-                      <div className="wt-dashboardboxtitle">
-                        <h2>Post a Job</h2>
-                      </div>
-                      <div className="wt-dashboardboxcontent">
-                        <div className="wt-jobdescription wt-tabsinfo">
-                          <div className="wt-tabscontenttitle">
-                            <h2>Job Description</h2>
-                          </div>
+                  <div className="wt-dashboardbox">
+                    <div className="wt-dashboardboxtitle">
+                      <h2>Post a Job</h2>
+                    </div>
+                    <div className="wt-dashboardboxcontent">
+                      <div className="wt-jobdescription wt-tabsinfo">
+                        <div className="wt-tabscontenttitle">
+                          <h2>Job Description</h2>
+                        </div>
+                        <form
+                          onSubmit={handleSubmit}
+                          encType="multipart/form-data"
+                          className="wt-formtheme wt-userform wt-userformvtwo"
+                        >
                           <fieldset>
                             <div className="form-group">
                               <label htmlFor="image">Upload Image:</label>
@@ -249,80 +263,86 @@ export default function AddService() {
                                 }}
                               ></textarea>
                             </div>
-
-                            <div className="form-group">
-                              <label htmlFor="feature-title">
-                                Feature Title:
-                              </label>
-                              <input
-                                type="text"
-                                id="feature-title"
-                                name="feature-title"
-                                className="form-control"
-                                value={feature.title}
-                                onChange={(e) =>
-                                  setFeature({
-                                    ...feature,
-                                    title: e.target.value,
-                                  })
-                                }
-                              />
-                            </div>
-                            <div className="form-group">
-                              <label htmlFor="feature-description">
-                                Feature Description:
-                              </label>
-                              <textarea
-                                id="feature-description"
-                                name="feature-description"
-                                className="form-control"
-                                value={feature.description}
-                                onChange={(e) =>
-                                  setFeature({
-                                    ...feature,
-                                    description: e.target.value,
-                                  })
-                                }
-                              ></textarea>
-                            </div>
-                            <div className="form-group">
-                              <label htmlFor="feature-price">
-                                Feature Price:
-                              </label>
-                              <input
-                                type="number"
-                                id="feature-price"
-                                name="feature-price"
-                                className="form-control"
-                                value={feature.price}
-                                onChange={(e) =>
-                                  setFeature({
-                                    ...feature,
-                                    price: e.target.value,
-                                  })
-                                }
-                              />
+                            <div className="form-group my-3">
+                              <button className="wt-btn" type="submit">
+                                Post Job Now
+                              </button>
                             </div>
                           </fieldset>
+                        </form>
+                      </div>
+                      <div class="wt-jobskills wt-tabsinfo">
+                        <div class="wt-tabscontenttitle">
+                          <h2>Features</h2>
                         </div>
+                        <div class="form-group wt-btnarea ">
+                          <a href="javascript:void(0);" class="wt-btn float-right" onClick={addFeature}>
+                            Add Features
+                          </a>
+                        </div>
+                        {/* Render feature forms */}
+                        {features.map((feature, index) => (
+                          <div key={index} className="wt-feature-form">
+                            <h3>Feature {index + 1}</h3>
+                            <form
+                              onSubmit={(e) => handleFeatureSubmit(e, index)} // Define a separate function to handle feature submission
+                              encType="multipart/form-data"
+                              className="wt-formtheme wt-userform wt-userformvtwo"
+                            >
+                              <div className="form-group">
+                                <input type="text" className="form-control" name="title" placeholder="Title"
+                                  onChange={(e) => {
+                                    setFeature((prev) => ({
+                                      ...prev,
+                                      title: e.target.value,
+                                    }));
+                                  }} />
+                              </div>
+                              <div className="form-group">
+                                <input type="number" className="form-control" name="price" placeholder="Price"
+                                  onChange={(e) => {
+                                    setFeature((prev) => ({
+                                      ...prev,
+                                      price: e.target.value,
+                                    }));
+                                  }} />
+                              </div>
+                              <div className="form-group form-group-half wt-formwithlabel">
+                                <span className="wt-select">
+                                  <label for="selectoption">Feature Duration:</label>
+                                  <select
+                                    name="deadline"
+                                    onChange={(e) => {
+                                      setFeature((prev) => ({
+                                        ...prev,
+                                        deadline: e.target.value,
+                                      }));
+                                    }}
+                                  >
+                                    <option value="">Select a duration</option>
+                                    <option value="1">1 day</option>
+                                    <option value="2">2 days</option>
+                                    <option value="3">3 days</option>
+                                    <option value="5">5 days</option>
+                                    <option value="7">7 days</option>
+                                  </select>
+                                </span>
+                              </div>
+                              <div class="form-group wt-btnarea ">
+                                <button type="submit" class="wt-btn float-right">Add Features</button>
+                              </div>
+                            </form>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                    <div className="wt-updatall">
-                      <i className="ti-announcement"></i>
-                      <span>
-                        Post job by just clicking on “Post Job Now” button.
-                      </span>
-                      <button className="wt-btn" type="submit">
-                        Post Job Now
-                      </button>
-                    </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </section>
           </main>
         </div>
-      </div>
+      </div >
       <Footer />
     </>
   );
