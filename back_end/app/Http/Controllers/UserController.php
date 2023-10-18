@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class UserController extends Controller
 {
@@ -25,6 +27,43 @@ class UserController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         }
         return response()->json($users);
+    }
+
+
+    public function updateUser(Request $request, $id)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                // 'image' => 'image|mimes:jpeg,png,gif',
+                'username' => 'required|string|unique:users',
+                'first_name' => 'required|string',
+                // 'last_name' => 'string|nullable',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:8',
+                // 'number' => 'string|nullable',
+                // 'age' => 'integer|nullable',
+                // 'gender' => 'string|nullable',
+                // 'bio' => 'string|nullable',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        User::where('id', $id)->update([
+            'username' => $request->username,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'contact_info' => $request->number,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'Bio' => $request->bio,
+        ]);
+
+        return response()->json(['message' => 'User Updated Successfully'], 201);
     }
   
 
@@ -72,7 +111,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+* Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\User  $user

@@ -1,6 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 
 function UserDetails() {
+  const [userData, setUserData] = useState([]);
+
+  // Function to fetch user data
+  const fetchUserData = () => {
+    axios.get("http://127.0.0.1:8000/api/users/1")
+      .then((response) => {
+        setUserData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []); 
+
   return (
     <div
       className="wt-personalskillshold tab-pane active fade show"
@@ -15,17 +34,19 @@ function UserDetails() {
             <div className="form-group form-group-half">
               <input
                 type="text"
-                name="first name"
+                name="first_name"
                 className="form-control"
                 placeholder="First Name"
+                value={userData.first_name}
               />
             </div>
             <div className="form-group form-group-half">
               <input
                 type="email"
-                name="last name"
+                name="last_name"
                 className="form-control"
                 placeholder="Last Name"
+                value={userData.last_name}
               />
             </div>
             <div className="form-group form-group-half">
@@ -34,12 +55,13 @@ function UserDetails() {
                 name="age"
                 className="form-control"
                 placeholder="Age"
+                value={userData.age}
               />
             </div>
             <div className="form-group form-group-half">
               <span className="wt-select">
                 <select name="gender">
-                  <option value="" disabled selected>
+                  <option value={userData.gender} disabled selected>
                     Select Gender
                   </option>
                   <option value="male">Male</option>
@@ -53,6 +75,7 @@ function UserDetails() {
                 name="username"
                 className="form-control"
                 placeholder="Username"
+                value={userData.username}
               />
             </div>
             <div className="form-group">
@@ -61,6 +84,7 @@ function UserDetails() {
                 name="email"
                 className="form-control"
                 placeholder="Email"
+                value={userData.email}
               />
             </div>
             <div className="form-group">
@@ -69,6 +93,7 @@ function UserDetails() {
                 name="number"
                 className="form-control"
                 placeholder="Phone Number"
+                value={userData.contact_info}
               />
             </div>
 
@@ -77,6 +102,7 @@ function UserDetails() {
                 name="bio"
                 className="form-control"
                 placeholder="Bio"
+                value={userData.Bio}
               ></textarea>
             </div>
           </fieldset>
@@ -114,7 +140,7 @@ function UserDetails() {
                     <div className="wt-uploadingbox">
                       <figure>
                         <img
-                          src="images/company/img-07.jpg"
+                          src="/images/company/img-07.jpg"
                           alt="img description"
                         />
                       </figure>
@@ -135,7 +161,7 @@ function UserDetails() {
                     <div className="wt-uploadingbox">
                       <figure>
                         <img
-                          src="images/company/img-08.jpg"
+                          src="/images/company/img-08.jpg"
                           alt="img description"
                         />
                       </figure>
@@ -164,7 +190,7 @@ function UserDetails() {
                         />
                         <label for="demoz">
                           <img
-                            src="images/company/img-09.jpg"
+                            src="/images/company/img-09.jpg"
                             alt="img description"
                           />
                           <i className="fa fa-check"></i>
@@ -189,7 +215,6 @@ function UserDetails() {
           </form>
         </div>
       </div>
-      
     </div>
   );
 }

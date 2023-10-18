@@ -4,6 +4,7 @@ import Content from "../sections/about/content";
 export default function About() {
   return (
     <>
+    
       <Header />
       <Content />
       <Footer />
