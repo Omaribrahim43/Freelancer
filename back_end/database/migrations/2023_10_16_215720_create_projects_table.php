@@ -24,6 +24,7 @@ return new class extends Migration
             // $table->foreignId('category_id')->constrained('categories')->onDelete('RESTRICT')->onUpdate('cascade');
             $table->string('image')->nullable();
             $table->string('title');
+            $table->longText('desc');
             $table->integer('rating')->nullable();
             $table->double('price');
             $table->integer('deadline');

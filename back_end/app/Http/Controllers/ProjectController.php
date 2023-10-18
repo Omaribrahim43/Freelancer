@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Project;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -56,17 +57,19 @@ class ProjectController extends Controller
             [
                 'seller_id' => 'required',
                 'category_id' => 'required',
-                'image' => 'required',
                 'title' => 'required|max:30',
+                'image' => 'nullable',
                 'price' => 'required',
                 'deadline' => 'required',
-                'status' => 'required',
+                'desc' => 'required',
             ]
         );
 
         if ($validator->fails()) {
+            Log::error('Validation errors:', $validator->errors()->all());
             return response()->json(['error' => $validator->errors()], 400);
         }
+        Log::info('Request data:', $request->all());
 
         $imagePath = $this->uploadImage($request, 'image', 'uploads');
 
@@ -77,9 +80,10 @@ class ProjectController extends Controller
             'image' => $imagePath,
             'price' => $request->price,
             'deadline' => $request->deadline,
-            'status' => $request->status,
+            'desc' => $request->desc,
         ]);
-
+        
+        Log::info('Project added successfully');
         return response()->json(['message' => 'project added successfully!'], 200);
     }
 
