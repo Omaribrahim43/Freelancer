@@ -4,11 +4,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Detail() {
+   const navigate = useNavigate();
   const { id } = useParams();
   const [project, setProject] = useState([]);
   const [features, setFeatures] = useState([]); 
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+
+
 
   useEffect(() => {
     async function fetchData() {
@@ -25,6 +28,11 @@ export default function Detail() {
 
     fetchData();
   }, [id]);
+
+  const profile =project.seller_id;
+  const profileButtonClick = (id) => {
+    navigate(`/profile/${id}`);
+  };
 
   const handleFeatureChange = (event) => {
     const featureId = parseInt(event.target.value, 10);
@@ -51,18 +59,18 @@ export default function Detail() {
     return (
       <>
       
-      <div className="container">
+      <div  style={{margin:'0px 180px'}}>
       <div className="row">
-        <div id="wt-twocolumns" className="wt-twocolumns wt-haslayout">
+        <div id="wt-twocolumns" className="wt-twocolumns ">
           <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 float-left">
             <div className="wt-proposalholder">
               <span className="wt-featuredtag">
-                <img
+                {/* <img
                   src="images/featured.png"
                   alt="img description"
                   data-tipso="Plus Member"
                   className="template-content tipso_style"
-                />
+                /> */}
               </span>
               <div className="wt-proposalhead">
                 <h2>{project.title}</h2>
@@ -86,9 +94,9 @@ export default function Detail() {
                 </ul>
               </div>
               <div className="wt-btnarea">
-                <a href="javascrip:void(0);" className="wt-btn">
+                <button onClick={() => profileButtonClick(profile)} className="wt-btn">
                   See Profile
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -123,8 +131,12 @@ export default function Detail() {
                       </span>
                     </li>
                   </ul>
+                  <br/> <br/>
                   {/* <p>Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porrom quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia nonae numquam eius modi tempora incidunt labore.</p> */}
-                  <p>Available features for this project : </p>
+                  <div className="wt-title">
+                    <h3>Available features for this project : </h3> <br/>
+                    </div>
+                  
                     <div>
                      {features.map((item) => (
                        <div key={item.id}>
@@ -201,6 +213,7 @@ export default function Detail() {
                 <div className="wt-widgetcontent">
                   <form className="wt-formtheme wt-formreport">
                   <div >
+                    <div>price = {project.price }  </div>
                     <div>Total price = {project.price + totalPrice}  </div>
                    
                   </div>
