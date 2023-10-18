@@ -4,113 +4,75 @@ import Header from "../layouts/Header";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 export default function AddService() {
-  const [category, setCategory] = useState([]);
-  const [features, setFeatures] = useState([]);
-  const [projectId, setProjectId] = useState(null);
-  const navigate = useNavigate();
-  const [error, setError] = useState([]);
-  const [project, setProject] = useState({
-    seller_id: "",
-    category_id: "",
-    title: "",
-    image: "",
-    price: "",
-    deadline: "",
-    desc: "",
-  });
-  const [feature, setFeature] = useState({
-    project_id: "",
-    title: "",
-    deadline: "",
-    price: "",
-  });
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/categories"
-        );
-        setCategory(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+    const [category, setCategory] = useState([]);
+    const [project, setProject] = useState({
+      seller_id: "",
+      category_id: "",
+      title: "",
+      image: null,
+      price: "",
+      deadline: "",
+      desc: "",
+      features: [],
+    });
+  
+    useEffect(() => {
+        async function fetchData() {
+          try {
+            const response = await axios.get("http://127.0.0.1:8000/api/categories");
+            setCategory(response.data);
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        }
+        fetchData();
+      }, []);
+    
+    const handleFeatureChange = (index, key, value) => {
+      const updatedFeatures = [...project.features];
+      updatedFeatures[index] = { ...updatedFeatures[index], [key]: value };
+      setProject({ ...project, features: updatedFeatures });
+    };
+  
+    const addFeature = () => {
+      const newFeature = { title: "", price: "", deadline: "" };
+      setProject({ ...project, features: [...project.features, newFeature] });
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      const formData = new FormData();
+      formData.append("seller_id", project.seller_id);
+      formData.append("category_id", project.category_id);
+      formData.append("title", project.title);
+      formData.append("price", project.price);
+      formData.append("desc", project.desc);
+      formData.append("deadline", project.deadline);
+      if (project.image) {
+        formData.append("image", project.image);
       }
-    }
-    fetchData();
-  }, []);
-  const addFeature = () => {
-    setFeatures([...features, {}]);
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-
-    formData.append("seller_id", project.seller_id);
-    formData.append("category_id", project.category_id);
-    formData.append("title", project.title);
-    formData.append("price", project.price);
-    formData.append("desc", project.desc);
-    formData.append("deadline", project.deadline);
-    if (project.image) {
-      formData.append("image", project.image);
-    }
-
-    const featureData = new FormData();
-    featureData.append("project_id", feature.project_id);
-    featureData.append("title", feature.title);
-    featureData.append("deadline", feature.deadline);
-    featureData.append("price", feature.price);;
-
-    try {
-      // First, create the Project record
-      const projectResponse = await axios.post(
-        "http://127.0.0.1:8000/api/projects/create",
-        formData
-      );
-
-      // Extract the project ID from the response
-    //   const projectId = 1;
-    //   console.log(projectId);
-      // Next, create the Feature record
-    //   feature.project_id = projectId;
-      const featureResponse = await axios.post(
-        "http://127.0.0.1:8000/api/features/create",
-        featureData
-      );
-
-      alert("Project added successfully!");
-      // Reset your form or navigate to another page
-    } catch (error) {
-      console.error("API request error:", error);
-      setError("An error occurred while adding the project.");
-    }
-  };
-  const handleFeatureSubmit = async (e, featureIndex) => {
-    e.preventDefault();
-    const featureData = new FormData();
-
-    // Use the stored project ID
-    featureData.append("project_id", projectId);
-    featureData.append("title", features[featureIndex].title);
-    featureData.append("deadline", features[featureIndex].deadline);
-    featureData.append("price", features[featureIndex].price);
-
-    try {
-      const featureResponse = await axios.post(
-        "http://127.0.0.1:8000/api/features/create",
-        featureData
-      );
-
-      // Handle the response as needed
-
-      alert("Feature added successfully!");
-      // Reset the feature form or navigate to another page
-    } catch (error) {
-      console.error("API request error:", error);
-      setError("An error occurred while adding the feature.");
-    }
-  };
+  
+      project.features.forEach((feature, index) => {
+        formData.append(`features[${index}][title]`, feature.title);
+        formData.append(`features[${index}][price]`, feature.price);
+        formData.append(`features[${index}][deadline]`, feature.deadline);
+      });
+  
+      try {
+        const projectResponse = await axios.post(
+          "http://127.0.0.1:8000/api/projects/add",
+          formData
+        );
+        alert("Project added successfully!");
+        // Reset your form or navigate to another page
+      } catch (error) {
+        console.error("API request error:", error);
+        // Handle the error
+      }
+    };
   return (
     <>
       <Header />
@@ -164,11 +126,10 @@ export default function AddService() {
                                 type="number"
                                 name="seller_id"
                                 className="form-control"
-                                placeholder="seller ID"
+                                placeholder="Seller ID"
                               />
                             </div>
-
-                            <div className="form-group">
+                            {/* <div className="form-group">
                               <input
                                 onChange={(e) => {
                                   setProject((prev) => ({
@@ -179,9 +140,9 @@ export default function AddService() {
                                 type="number"
                                 name="project_id"
                                 className="form-control"
-                                placeholder="project_id ID"
+                                placeholder="project ID"
                               />
-                            </div>
+                            </div> */}
                             <div className="form-group">
                               <input
                                 onChange={(e) => {
@@ -198,7 +159,7 @@ export default function AddService() {
                             </div>
                             <div className="form-group form-group-half wt-formwithlabel">
                               <span className="wt-select">
-                                <label for="selectoption">Categories:</label>
+                                <label htmlFor="category_id">Categories:</label>
                                 <select
                                   name="category_id"
                                   onChange={(e) => {
@@ -219,7 +180,7 @@ export default function AddService() {
                             </div>
                             <div className="form-group form-group-half wt-formwithlabel">
                               <span className="wt-select">
-                                <label for="selectoption">Job Duration:</label>
+                                <label htmlFor="deadline">Job Duration:</label>
                                 <select
                                   name="deadline"
                                   onChange={(e) => {
@@ -253,7 +214,7 @@ export default function AddService() {
                             <div className="form-group">
                               <textarea
                                 name="desc"
-                                placeholder="Descripe your project..."
+                                placeholder="Describe your project..."
                                 className="form-control"
                                 onChange={(e) => {
                                   setProject((prev) => ({
@@ -263,77 +224,60 @@ export default function AddService() {
                                 }}
                               ></textarea>
                             </div>
-                            <div className="form-group my-3">
+                         
+                       
+                      <div className="wt-jobskills wt-tabsinfo">
+                        <div className="wt-tabscontenttitle">
+                          <h2>Features</h2>
+                        </div>
+                        <div className="form-group wt-btnarea ">
+                          <a
+                            href="javascript:void(0);"
+                            className="wt-btn float-right"
+                         
+                          >
+                            Add Features
+                          </a>
+                        </div>
+                      
+                          <div  className="wt-feature-form">
+                            <h3></h3>
+                          
+                            {project.features.map((feature, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              placeholder="Feature Title"
+              value={feature.title}
+              onChange={(e) => handleFeatureChange(index, "title", e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Feature Price"
+              value={feature.price}
+              onChange={(e) => handleFeatureChange(index, "price", e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Feature Deadline"
+              value={feature.deadline}
+              onChange={(e) => handleFeatureChange(index, "deadline", e.target.value)}
+            />
+          </div>
+        ))}
+        <a onClick={addFeature}>Add Feature</a>
+                              
+                              <div className="form-group my-3">
                               <button className="wt-btn" type="submit">
                                 Post Job Now
                               </button>
                             </div>
-                          </fieldset>
-                        </form>
-                      </div>
-                      <div class="wt-jobskills wt-tabsinfo">
-                        <div class="wt-tabscontenttitle">
-                          <h2>Features</h2>
-                        </div>
-                        <div class="form-group wt-btnarea ">
-                          <a href="javascript:void(0);" class="wt-btn float-right" onClick={addFeature}>
-                            Add Features
-                          </a>
-                        </div>
-                        {/* Render feature forms */}
-                        {features.map((feature, index) => (
-                          <div key={index} className="wt-feature-form">
-                            <h3>Feature {index + 1}</h3>
-                            <form
-                              onSubmit={(e) => handleFeatureSubmit(e, index)} // Define a separate function to handle feature submission
-                              encType="multipart/form-data"
-                              className="wt-formtheme wt-userform wt-userformvtwo"
-                            >
-                              <div className="form-group">
-                                <input type="text" className="form-control" name="title" placeholder="Title"
-                                  onChange={(e) => {
-                                    setFeature((prev) => ({
-                                      ...prev,
-                                      title: e.target.value,
-                                    }));
-                                  }} />
-                              </div>
-                              <div className="form-group">
-                                <input type="number" className="form-control" name="price" placeholder="Price"
-                                  onChange={(e) => {
-                                    setFeature((prev) => ({
-                                      ...prev,
-                                      price: e.target.value,
-                                    }));
-                                  }} />
-                              </div>
-                              <div className="form-group form-group-half wt-formwithlabel">
-                                <span className="wt-select">
-                                  <label for="selectoption">Feature Duration:</label>
-                                  <select
-                                    name="deadline"
-                                    onChange={(e) => {
-                                      setFeature((prev) => ({
-                                        ...prev,
-                                        deadline: e.target.value,
-                                      }));
-                                    }}
-                                  >
-                                    <option value="">Select a duration</option>
-                                    <option value="1">1 day</option>
-                                    <option value="2">2 days</option>
-                                    <option value="3">3 days</option>
-                                    <option value="5">5 days</option>
-                                    <option value="7">7 days</option>
-                                  </select>
-                                </span>
-                              </div>
-                              <div class="form-group wt-btnarea ">
-                                <button type="submit" class="wt-btn float-right">Add Features</button>
-                              </div>
-                            </form>
                           </div>
-                        ))}
+                      
+                      </div>
+                      </fieldset>
+                          </form>
+                       
                       </div>
                     </div>
                   </div>
@@ -342,7 +286,7 @@ export default function AddService() {
             </section>
           </main>
         </div>
-      </div >
+      </div>
       <Footer />
     </>
   );

@@ -1,27 +1,52 @@
-
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Detail() {
-
   const { id } = useParams();
   const [project, setProject] = useState([]);
+  const [features, setFeatures] = useState([]); 
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
-        try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/projects/${id}`);
-            setProject(response.data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+      try {
+        const projectResponse = await axios.get(`http://127.0.0.1:8000/api/projects/${id}`);
+        setProject(projectResponse.data);
+
+        const featuresResponse = await axios.get(`http://127.0.0.1:8000/api/features/project/${id}`);
+        setFeatures(featuresResponse.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     }
 
     fetchData();
-}, [])
+  }, [id]);
 
+  const handleFeatureChange = (event) => {
+    const featureId = parseInt(event.target.value, 10);
+    const isChecked = event.target.checked;
+
+    // Find the selected feature
+    const selectedFeature = features.find((feature) => feature.id === featureId);
+
+    if (selectedFeature) {
+      // If the feature is checked, add its price to the total; otherwise, subtract it
+      const featurePrice = isChecked ? selectedFeature.price : -selectedFeature.price;
+
+      setTotalPrice(totalPrice + featurePrice);
+
+      // Update the selected features
+      if (isChecked) {
+        setSelectedFeatures([...selectedFeatures, selectedFeature]);
+      } else {
+        setSelectedFeatures(selectedFeatures.filter((feature) => feature.id !== featureId));
+      }
+    }
+  };
 
     return (
       <>
@@ -98,82 +123,23 @@ export default function Detail() {
                       </span>
                     </li>
                   </ul>
-                  <p>Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porrom quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia nonae numquam eius modi tempora incidunt labore.</p>
-                  <p>Eomnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt.</p>
-                  <ul className="wt-projectliststyle">
-                    <li>
-                      <span>
-                        <i className="fa fa-check"></i>Adipisci velit, sed quia non numquam eius modi tempora
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        <i className="fa fa-check"></i>Eaque ipsa quae ab illo inventore veritatis et quasi architecto
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        <i className="fa fa-check"></i>Qui dolorem ipsum quia dolor sit amet
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        <i className="fa fa-check"></i>Nemo enim ipsam voluptatem quia
-                      </span>
-                    </li>
-                  </ul>
-                  <p>Sed quia consequuntur magni dolores eos who ratione voluptatem sequi nesciunt. Neque porrom quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia nonae numquam eius modi tempora incidunt labore ste natus error voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                  <p>Sed quia consequuntur magni dolores eos who ratione voluptatem sequi nesciunt. Neque porrom quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia nonae numquam eius modi tempora incidunt labore.</p>
+                  {/* <p>Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porrom quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia nonae numquam eius modi tempora incidunt labore.</p> */}
+                  <p>Available features for this project : </p>
+                    <div>
+                     {features.map((item) => (
+                       <div key={item.id}>
+                         <label >
+                         <input type="checkbox" name="features" value={item.id}
+                            className="mx-2" onChange={handleFeatureChange}  />
+                            {item.title} <br/> <div className="mx-5"> For an additional cost of {item.price} JD ,the project's completion date will be postponed by  {item.deadline} days .</div>
+                             </label>
+                             </div>
+                              ))}
+                     </div>
                 </div>
               </div>
-              <div className="wt-skillsrequired">
-                <div className="wt-title">
-                  <h3>Skills Required</h3>
-                </div>
-                <div className="wt-tag wt-widgettag">
-                  <a href="javascript:void(0);">PHP Developer</a>
-                  <a href="javascript:void(0);">PHP</a>
-                  <a href="javascript:void(0);">My SQL</a>
-                  <a href="javascript:void(0);">Business</a>
-                  <a href="javascript:void(0);">Website Development</a>
-                  <a href="javascript:void(0);">Collaboration</a>
-                  <a href="javascript:void(0);">Decent</a>
-                </div>
-              </div>
-              <div className="wt-attachments">
-                <div className="wt-title">
-                  <h3>Attachments</h3>
-                </div>
-                <ul className="wt-attachfile">
-                  <li>
-                    <span>Wireframe Document.doc</span>
-                    <em>
-                      File size: 512 kb
-                      <a href="javascript:void(0);">
-                        <i className="lnr lnr-download"></i>
-                      </a>
-                    </em>
-                  </li>
-                  <li>
-                    <span>Requirments.pdf</span>
-                    <em>
-                      File size: 110 kb
-                      <a href="javascript:void(0);">
-                        <i className="lnr lnr-download"></i>
-                      </a>
-                    </em>
-                  </li>
-                  <li>
-                    <span>Company Intro.docx</span>
-                    <em>
-                      File size: 224 kb
-                      <a href="javascript:void(0);">
-                        <i className="lnr lnr-download"></i>
-                      </a>
-                    </em>
-                  </li>
-                </ul>
-              </div>
+             
+            
             </div>
           </div>
           <div className="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-4 float-left">
@@ -199,7 +165,7 @@ export default function Detail() {
                  
                 </div>
               </div>
-              <div className="wt-widget wt-sharejob">
+              {/* <div className="wt-widget wt-sharejob">
                 <div className="wt-widgettitle">
                   <h2>Ratings </h2>
                 </div>
@@ -227,7 +193,7 @@ export default function Detail() {
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> */}
               <div className="wt-widget wt-reportjob">
                 <div className="wt-widgettitle">
                   <h2>Order Now</h2>
@@ -235,7 +201,7 @@ export default function Detail() {
                 <div className="wt-widgetcontent">
                   <form className="wt-formtheme wt-formreport">
                   <div >
-                    <div>Total price = {project.price} </div>
+                    <div>Total price = {project.price + totalPrice}  </div>
                    
                   </div>
                   <br></br>
@@ -243,7 +209,7 @@ export default function Detail() {
                     
                       <div className="form-group wt-btnarea">
                         <a href="javascrip:void(0);" className="wt-btn">
-                          Submit
+                          Order Now
                         </a>
                       </div>
                   
