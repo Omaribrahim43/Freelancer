@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\FeatureController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -32,6 +33,10 @@ Route::put('projects/update/{id}', [ProjectController::class, 'update'])->name('
 Route::delete('projects/delete/{id}', [ProjectController::class, 'destroy'])->name('delete.projects');
 
 Route::get('categories', [CategoryController::class, 'index'])->name('show.categories');
+
+Route::get('features', [FeatureController::class, 'index'])->name('show.projects');
+Route::get('features/create', [FeatureController::class, 'store'])->name('store.projects');
+
 
 
 

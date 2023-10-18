@@ -1,7 +1,7 @@
 import Home from "./Components/pages/home";
 import About from "./Components/pages/about";
 import Services from "./Components/pages/services";
-import Singel from "./Components/pages/singel";
+import Single from "./Components/pages/single";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AddService from "./Components/pages/AddService";
 
@@ -14,7 +14,7 @@ function App() {
         {/* <Route path="/services/:id" element={<Services />} /> */}
         <Route path="/services" element={<Services />} />
         {/* Define more routes here */}
-        <Route path="/singel" element={<Singel />} />
+        <Route path="/single/:id" element={<Single />} />
         <Route path="/add-service" element={<AddService />} />
         
       </Routes>
