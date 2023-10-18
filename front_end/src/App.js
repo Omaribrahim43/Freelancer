@@ -14,7 +14,7 @@ function App() {
         {/* <Route path="/services/:id" element={<Services />} /> */}
         <Route path="/services" element={<Services />} />
         {/* Define more routes here */}
-        <Route path="/single" element={<Single />} />
+        <Route path="/single/:id" element={<Single />} />
         <Route path="/add-service" element={<AddService />} />
         
       </Routes>
