@@ -65,7 +65,12 @@ export default function AddService() {
     featureData.append("project_id", feature.project_id);
     featureData.append("feature_title", feature.title);
     featureData.append("feature_description", feature.description);
-    featureData.append("feature_price", feature.price);;
+    featureData.append("feature_price", feature.price);
+
+    console.log("featureData id:", feature.project_id);
+    console.log("featureData title:", feature.title);
+    console.log("featureData price:", feature.price);
+    console.log("featureData description:", feature.description);
 
     try {
       // First, create the Project record
@@ -75,10 +80,10 @@ export default function AddService() {
       );
 
       // Extract the project ID from the response
-      const projectId = projectResponse.data.id;
-
+    //   const projectId = 1;
+    //   console.log(projectId);
       // Next, create the Feature record
-      feature.project_id = projectId;
+    //   feature.project_id = projectId;
       const featureResponse = await axios.post(
         "http://127.0.0.1:8000/api/features/create",
         featureData
@@ -146,6 +151,21 @@ export default function AddService() {
                                 name="seller_id"
                                 className="form-control"
                                 placeholder="seller ID"
+                              />
+                            </div>
+
+                            <div className="form-group">
+                              <input
+                                onChange={(e) => {
+                                  setProject((prev) => ({
+                                    ...prev,
+                                    project_id: e.target.value,
+                                  }));
+                                }}
+                                type="number"
+                                name="project_id"
+                                className="form-control"
+                                placeholder="project_id ID"
                               />
                             </div>
                             <div className="form-group">

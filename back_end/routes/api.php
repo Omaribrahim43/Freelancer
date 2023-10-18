@@ -35,7 +35,7 @@ Route::delete('projects/delete/{id}', [ProjectController::class, 'destroy'])->na
 Route::get('categories', [CategoryController::class, 'index'])->name('show.categories');
 
 Route::get('features', [FeatureController::class, 'index'])->name('show.projects');
-Route::get('features/create', [FeatureController::class, 'store'])->name('store.projects');
+Route::post('features/create', [FeatureController::class, 'store'])->name('store.projects');
 
 
 
