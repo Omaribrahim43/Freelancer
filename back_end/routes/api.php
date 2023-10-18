@@ -4,6 +4,9 @@ use App\Http\Controllers\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,8 +28,25 @@ Route::get('users/{id}', [UserController::class, 'getuser']);
 
 Route::get('projects', [ProjectController::class, 'index'])->name('show.projects');
 Route::get('projects/{id}', [ProjectController::class, 'oneProject'])->name('show.one.projects');
-Route::post('projects/create', [ProjectController::class, 'store'])->name( 'store.projects');
+Route::post('projects/create', [ProjectController::class, 'store'])->name('store.projects');
 Route::put('projects/update/{id}', [ProjectController::class, 'update'])->name('update.projects');
 Route::delete('projects/delete/{id}', [ProjectController::class, 'destroy'])->name('delete.projects');
 
 
+
+// login 
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+    ->middleware(['web', 'guest'])
+    ->name('login');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
+
+Route::get('/get-csrf-token', function () {
+    return response()->json(['token' => csrf_token()]);
+});
+Route::get('/user', [AuthenticatedSessionController::class, 'User1'])
+    ->middleware('auth');
+
+Route::post('/register', [RegisteredUserController::class, 'store'])
+    ->middleware('guest')
+    ->name('register');
