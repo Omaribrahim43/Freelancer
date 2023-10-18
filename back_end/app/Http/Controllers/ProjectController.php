@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Project;
+use App\Models\Feature;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -39,10 +40,65 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // Validate the incoming request for creating a project
+        $projectValidator = Validator::make(
+            $request->all(),
+            [
+                'seller_id' => 'required',
+                'category_id' => 'required',
+                'title' => 'required|max:30',
+                'image' => 'nullable',
+                'price' => 'required',
+                'deadline' => 'required',
+                'desc' => 'required',
+            ]
+        );
+
+        if ($projectValidator->fails()) {
+            Log::error('Project validation errors:', $projectValidator->errors()->all());
+            return response()->json(['error' => $projectValidator->errors()], 400);
+        }
+
+        // Log request data
+        Log::info('Request data:', $request->all());
+
+        // Upload project image
+        $imagePath = $this->uploadImage($request, 'image', 'uploads');
+
+        // Create the Project
+        $project = Project::create([
+            'seller_id' => $request->seller_id,
+            'category_id' => $request->category_id,
+            'title' => $request->title,
+            'image' => $imagePath,
+            'price' => $request->price,
+            'deadline' => $request->deadline,
+            'desc' => $request->desc,
+        ]);
+
+        // Log that the Project was added successfully
+        Log::info('Project added successfully');
+
+        // Create Features associated with the Project
+        if ($request->has('features')) {
+            foreach ($request->features as $featureData) {
+                Feature::create([
+                    'project_id' => $project->id,
+                    'title' => $featureData['title'],
+                    'price' => $featureData['price'],
+                    'deadline' => $featureData['deadline'],
+                ]);
+            }
+        }
+
+        // Log that the Features were added successfully
+        Log::info('Features added successfully');
+
+        return response()->json(['message' => 'Project and Features added successfully!'], 200);
     }
+    
 
     /**
      * Store a newly created resource in storage.
