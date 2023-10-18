@@ -31,8 +31,8 @@ function handleLogout() {
                         <strong className="wt-logo">
                           <a href="index-2.html">
                             <img
-                              src="images/logo.png"
-                              alt="company logo here"
+                              src="images/user-login.png"
+                              alt="img description"
                             />
                           </a>
                         </strong>
@@ -280,10 +280,54 @@ function handleLogout() {
                                       )}
                                       ;
                                     </a>
-                                    <a href="register.html">Create account</a>
+                                    <span className="wt-checkbox">
+                                      <input
+                                        id="wt-login"
+                                        type="checkbox"
+                                        name="rememberme"
+                                      />
+                                      <label htmlFor="wt-login">
+                                        Keep me logged in
+                                      </label>
+                                    </span>
                                   </div>
-                                </form>
-                              </div>
+                                </fieldset>
+                                <div className="wt-loginfooterinfo">
+                                  <a
+                                    href="javascript:;"
+                                    className="wt-forgot-password">
+                                    Forgot password?
+                                  </a>
+                                  <a href="register.html">Create account</a>
+                                </div>
+                              </form>
+                              <form className="wt-formtheme wt-loginform do-forgot-password-form wt-hide-form">
+                                <fieldset>
+                                  <div className="form-group">
+                                    <input
+                                      type="email"
+                                      name="email"
+                                      className="form-control get_password"
+                                      placeholder="Email"
+                                    />
+                                  </div>
+                                  <div className="wt-logininfo">
+                                    <a
+                                      href="javascript:;"
+                                      className="wt-btn do-get-password">
+                                      Get Pasword
+                                    </a>
+                                  </div>
+                                </fieldset>
+                                <div className="wt-loginfooterinfo">
+                                  <a
+                                    href="javascript:void(0);"
+                                    className="wt-show-login">
+                                    Login
+                                  </a>
+                                  <a href="register.html">Create account</a>
+                                </div>
+                              </form>
                             </div>
                       
 
@@ -548,10 +592,11 @@ function handleLogout() {
                     </div>
                   </div>
                 </div>
-              </header>
-            </div>
+              {/* </div> */}
+            </header>
           </div>
-        </>
+        </div>
       </>
-    );
+    </>
+  );
 }

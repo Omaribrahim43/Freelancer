@@ -1,4 +1,4 @@
-<Form className="wt-formtheme wt-loginform do-forgot-password-form wt-hide-form" onSubmit={handleLogin}>
+{/* <Form className="wt-formtheme wt-loginform do-forgot-password-form wt-hide-form" onSubmit={handleLogin}>
       <div className="form-group">
             
                                   <label
@@ -30,4 +30,4 @@
       <a href="register.html">Create account</a>
     </div>
   </From>
-
+ */}

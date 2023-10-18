@@ -7,7 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\User;
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -25,9 +25,9 @@ class AuthenticatedSessionController extends Controller
     {
 
         $user = Auth::user();
-        return response()->json([
-            'user' => $user,
-        ]);
+        // $user = User::findOrfail($users)->with(['reviews', 'order'])->first();
+
+        return response()->json(['user' => $user]);
     }
     /**
      * Destroy an authenticated session.

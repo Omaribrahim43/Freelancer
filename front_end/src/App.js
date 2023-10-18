@@ -1,7 +1,7 @@
 import Home from "./Components/pages/home";
 import About from "./Components/pages/about";
 import Services from "./Components/pages/services";
-import Single from "./Components/pages/singel";
+import Single from "./Components/pages/single";
 import Login from "./Components/pages/login";
 import Register from "./Components/pages/register";
 import { NavLink } from "react-router-dom";
@@ -17,6 +17,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import AddService from "./Components/pages/AddService";
 
 function App() {
 const Auth = useSelector((state) => state.isAuthenticated);
@@ -29,6 +30,7 @@ console.log(Auth);
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        {/* <Route path="/services/:id" element={<Services />} /> */}
         <Route path="/services" element={<Services />} />
         <Route path="/login" element={Auth ? <Home/> : <Login />} />
         <Route
@@ -36,7 +38,9 @@ console.log(Auth);
           element={Auth ? <NavLink to="/" /> : <Register />}
         />
         {/* Define more routes here */}
-        <Route path="/single" element={<Single />} />
+        <Route path="/single/:id" element={<Single />} />
+        <Route path="/add-service" element={<AddService />} />
+        
       </Routes>
     </Router>
   );

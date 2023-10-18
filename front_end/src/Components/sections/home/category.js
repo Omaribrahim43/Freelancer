@@ -1,6 +1,14 @@
-import useReadApi from "../../../coustmHooks/UseReadapi"
-const url = 
-export default function category() {
+import UseReadApi from "../../../coustmHooks/UseReadapi"
+import React ,{ useEffect } from "react";
+
+export default function Category() {
+
+
+  const [categories, getFetch] = UseReadApi("http://127.0.0.1:8000/api/categories");
+  
+  useEffect (() => {
+    getFetch();
+  }, []);
     return (
       <>
         <section className="wt-haslayout wt-main-section">
@@ -15,33 +23,28 @@ export default function category() {
                 </div>
               </div>
               <div className="wt-categoryexpl">
-                
+                {categories.map((catygory) =>(
+
                 <div className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 float-left">
                   <div className="wt-categorycontent">
                     <figure>
-                      <img
-                        src="images/categories/img-01.png"
-                        alt="image description"
-                      />
+                      <img src={catygory.image} alt="image description" />
                     </figure>
                     <div className="wt-cattitle">
                       <h3>
-                        <a href="javascrip:void(0);">Mobiles</a>
+                        <a href="javascrip:void(0);">{catygory.name}</a>
                       </h3>
                     </div>
                     <div className="wt-categoryslidup">
-                      <p>
-                        Consectetur adipisicing elitaed eiusmod tempor
-                        incididuatna labore et dolore magna.
-                      </p>
+                      <p>{catygory.description}</p>
                       <a href="javascript:void(0);">
                         Explore <i className="fa fa-arrow-right" />
                       </a>
                     </div>
                   </div>
                 </div>
-             
-           
+                ))}
+
                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 float-left">
                   <div className="wt-btnarea">
                     <a href="javascript:void(0)" className="wt-btn">

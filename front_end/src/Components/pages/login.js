@@ -37,7 +37,7 @@ const SignIn = ({isAuthenticated, user, loginSuccess, logoutSuccess}) => {
       // Now, make your login request
       const response = await axios.post("/login", { email, password });
   const user = response.data.user;
-
+console.log(response.data);
       setemail("");
       setpassword("");
       const data = await axios.get("/user");

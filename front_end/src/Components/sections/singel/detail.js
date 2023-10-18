@@ -1,4 +1,28 @@
-export default function Banner(params) {
+
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+export default function Detail() {
+
+  const { id } = useParams();
+  const [project, setProject] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/projects/${id}`);
+            setProject(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    fetchData();
+}, [])
+
+
     return (
       <>
       
@@ -16,35 +40,29 @@ export default function Banner(params) {
                 />
               </span>
               <div className="wt-proposalhead">
-                <h2>Webpage Takes Many Seconds to Load, I Want to Reduce it to 3 or 4 Seconds Max</h2>
+                <h2>{project.title}</h2>
                 <ul className="wt-userlisting-breadcrumb wt-userlisting-breadcrumbvtwo">
                   <li>
                     <span>
-                      <i className="fa fa-dollar-sign"></i>
-                      <i className="fa fa-dollar-sign"></i>
-                      <i className="fa fa-dollar-sign"></i> Professional
+                     Buyers : {project.buyers}
+                    </span>
+                  </li>
+               
+                  <li>
+                    <span>
+                    <i className="fa fa-dollar-sign"></i> Price: {project.price}
                     </span>
                   </li>
                   <li>
                     <span>
-                      <img src="images/flag/img-02.png" alt="img description" /> United States
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <i className="far fa-folder"></i> Type: Fixed
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      <i className="far fa-clock"></i> Duration: 15 Days
+                      <i className="far fa-clock"></i> Duration: {project.deadline} Days
                     </span>
                   </li>
                 </ul>
               </div>
               <div className="wt-btnarea">
                 <a href="javascrip:void(0);" className="wt-btn">
-                  Send Proposal
+                  See Profile
                 </a>
               </div>
             </div>
@@ -56,7 +74,7 @@ export default function Banner(params) {
                   <h3>Project Detail</h3>
                 </div>
                 <div className="wt-description">
-                  <p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
+                  <p>{project.desc}</p>
                   <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
                   <ul className="wt-projectliststyle">
                     <li>
@@ -161,76 +179,29 @@ export default function Banner(params) {
           <div className="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-4 float-left">
             <aside id="wt-sidebar" className="wt-sidebar">
               <div className="wt-proposalsr">
-                <div className="wt-proposalsrcontent">
+                {/* <div className="wt-proposalsrcontent">
                   <span className="wt-proposalsicon">
-                    <i className="fa fa-angle-double-down"></i>
-                    <i className="fa fa-newspaper"></i>
+                  
                   </span>
                   <div className="wt-title">
-                    <h3>150</h3>
-                    <span>
-                      Proposals Received Till<em>June 27, 2018</em>
-                    </span>
+                    <div>Rating</div>
+                   
                   </div>
-                </div>
-                <div className="tg-authorcodescan">
-                  <figure className="tg-qrcodeimg">
-                    <img src="images/qrcode.png" alt="img description" />
-                  </figure>
-                  <div className="tg-qrcodedetail">
-                    <span className="lnr lnr-laptop-phone"></span>
-                    <div className="tg-qrcodefeat">
-                      <h3>
-                        Scan with your <span>Smart Phone </span> To Get It Handy.
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-                <div className="wt-clicksavearea">
-                  <span>Job ID: tQu5DW9F2G</span>
-                  <a href="javascrip:void(0);" className="wt-clicksavebtn">
-                    <i className="far fa-heart"></i> Click to save
-                  </a>
-                </div>
+                </div> */}
+           
+           
               </div>
               <div className="wt-widget wt-companysinfo-jobsingle">
                 <div className="wt-companysdetails">
                   <figure className="wt-companysimg">
-                    <img src="images/company/img-01.jpg" alt="img description" />
+                    <img src={project.image} alt="img description" />
                   </figure>
-                  <div className="wt-companysinfo">
-                    <figure>
-                      <img src="images/company/img-01.png" alt="img description" />
-                    </figure>
-                    <div className="wt-title">
-                      <a href="javascript:void(0);">
-                        <i className="fa fa-check-circle"></i> Verified Company
-                      </a>
-                      <h2>Angry Creative Studio</h2>
-                    </div>
-                    <ul className="wt-postarticlemeta">
-                      <li>
-                        <a href="javascript:void(0)">
-                          <span>Open Jobs</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0)">
-                          <span>Full Profile</span>
-                        </a>
-                      </li>
-                      <li className="wt-following">
-                        <a href="javascript:void(0)">
-                          <span>Following</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+                 
                 </div>
               </div>
               <div className="wt-widget wt-sharejob">
                 <div className="wt-widgettitle">
-                  <h2>Share This Job</h2>
+                  <h2>Ratings </h2>
                 </div>
                 <div className="wt-widgetcontent">
                   <ul className="wt-socialiconssimple">
@@ -259,6 +230,28 @@ export default function Banner(params) {
               </div>
               <div className="wt-widget wt-reportjob">
                 <div className="wt-widgettitle">
+                  <h2>Order Now</h2>
+                </div>
+                <div className="wt-widgetcontent">
+                  <form className="wt-formtheme wt-formreport">
+                  <div >
+                    <div>Total price = {project.price} </div>
+                   
+                  </div>
+                  <br></br>
+                     
+                    
+                      <div className="form-group wt-btnarea">
+                        <a href="javascrip:void(0);" className="wt-btn">
+                          Submit
+                        </a>
+                      </div>
+                  
+                  </form>
+                </div>
+              </div>
+              {/* <div className="wt-widget wt-reportjob">
+                <div className="wt-widgettitle">
                   <h2>Report This Job</h2>
                 </div>
                 <div className="wt-widgetcontent">
@@ -284,7 +277,7 @@ export default function Banner(params) {
                     </fieldset>
                   </form>
                 </div>
-              </div>
+              </div> */}
             </aside>
           </div>
         </div>

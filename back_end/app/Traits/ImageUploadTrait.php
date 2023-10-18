@@ -3,7 +3,8 @@
 namespace App\Traits;
 
 use Illuminate\Http\Request;
-use File;
+// use File;
+use Illuminate\Support\Facades\File;
 
 trait ImageUploadTrait
 {
@@ -16,7 +17,7 @@ trait ImageUploadTrait
             $imageName = 'media_' . uniqid() . '.' . $ext;
             $image->move(public_path($path), $imageName);
 
-            return $path . "/" . $imageName;
+            return asset($path . "/" . $imageName);
         }
     }
 
