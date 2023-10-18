@@ -13,8 +13,8 @@ class Feature extends Model
 
         'project_id',
         'title',
-        'description',
         'price',
+        'deadline',
         
     ];
     public function project()
