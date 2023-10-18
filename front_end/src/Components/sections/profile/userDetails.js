@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 
 function UserDetails() {
   const [userData, setUserData] = useState([]);
+  const user = useSelector((state) => state.user);
 
   // Function to fetch user data
-  const fetchUserData = () => {
-    axios.get("http://127.0.0.1:8000/api/users/1")
-      .then((response) => {
-        setUserData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-      });
-  };
+//   const fetchUserData = () => {
+//     axios.get("http://127.0.0.1:8000/api/users/1")
+//       .then((response) => {
+//         setUserData(response.data);
+//       })
+//       .catch((error) => {
+//         console.error("Error fetching user data:", error);
+//       });
+//   };
 
-  useEffect(() => {
-    fetchUserData();
-  }, []); 
+//   useEffect(() => {
+//     fetchUserData();
+//   }, []); 
 
   return (
     <div
@@ -37,7 +39,7 @@ function UserDetails() {
                 name="first_name"
                 className="form-control"
                 placeholder="First Name"
-                value={userData.first_name}
+                value={user.first_name}
               />
             </div>
             <div className="form-group form-group-half">
@@ -46,7 +48,7 @@ function UserDetails() {
                 name="last_name"
                 className="form-control"
                 placeholder="Last Name"
-                value={userData.last_name}
+                // value={userData.last_name}
               />
             </div>
             <div className="form-group form-group-half">
@@ -55,13 +57,13 @@ function UserDetails() {
                 name="age"
                 className="form-control"
                 placeholder="Age"
-                value={userData.age}
+                // value={userData.age}
               />
             </div>
             <div className="form-group form-group-half">
               <span className="wt-select">
                 <select name="gender">
-                  <option value={userData.gender} disabled selected>
+                  <option value={user.gender} disabled selected>
                     Select Gender
                   </option>
                   <option value="male">Male</option>
@@ -75,7 +77,7 @@ function UserDetails() {
                 name="username"
                 className="form-control"
                 placeholder="Username"
-                value={userData.username}
+                // value={userData.username}
               />
             </div>
             <div className="form-group">
@@ -84,7 +86,7 @@ function UserDetails() {
                 name="email"
                 className="form-control"
                 placeholder="Email"
-                value={userData.email}
+                // value={userData.email}
               />
             </div>
             <div className="form-group">
@@ -93,7 +95,7 @@ function UserDetails() {
                 name="number"
                 className="form-control"
                 placeholder="Phone Number"
-                value={userData.contact_info}
+                // value={userData.contact_info}
               />
             </div>
 
@@ -102,7 +104,7 @@ function UserDetails() {
                 name="bio"
                 className="form-control"
                 placeholder="Bio"
-                value={userData.Bio}
+                // value={userData.Bio}
               ></textarea>
             </div>
           </fieldset>
