@@ -4,113 +4,75 @@ import Header from "../layouts/Header";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 export default function AddService() {
-  const [category, setCategory] = useState([]);
-  const [features, setFeatures] = useState([]);
-  const [projectId, setProjectId] = useState(null);
-  const navigate = useNavigate();
-  const [error, setError] = useState([]);
-  const [project, setProject] = useState({
-    seller_id: "",
-    category_id: "",
-    title: "",
-    image: "",
-    price: "",
-    deadline: "",
-    desc: "",
-  });
-  const [feature, setFeature] = useState({
-    project_id: "",
-    title: "",
-    deadline: "",
-    price: "",
-  });
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/categories"
-        );
-        setCategory(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+    const [category, setCategory] = useState([]);
+    const [project, setProject] = useState({
+      seller_id: "",
+      category_id: "",
+      title: "",
+      image: null,
+      price: "",
+      deadline: "",
+      desc: "",
+      features: [],
+    });
+  
+    useEffect(() => {
+        async function fetchData() {
+          try {
+            const response = await axios.get("http://127.0.0.1:8000/api/categories");
+            setCategory(response.data);
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        }
+        fetchData();
+      }, []);
+    
+    const handleFeatureChange = (index, key, value) => {
+      const updatedFeatures = [...project.features];
+      updatedFeatures[index] = { ...updatedFeatures[index], [key]: value };
+      setProject({ ...project, features: updatedFeatures });
+    };
+  
+    const addFeature = () => {
+      const newFeature = { title: "", price: "", deadline: "" };
+      setProject({ ...project, features: [...project.features, newFeature] });
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      const formData = new FormData();
+      formData.append("seller_id", project.seller_id);
+      formData.append("category_id", project.category_id);
+      formData.append("title", project.title);
+      formData.append("price", project.price);
+      formData.append("desc", project.desc);
+      formData.append("deadline", project.deadline);
+      if (project.image) {
+        formData.append("image", project.image);
       }
-    }
-    fetchData();
-  }, []);
-  const addFeature = () => {
-    setFeatures([...features, {}]);
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-
-    formData.append("seller_id", project.seller_id);
-    formData.append("category_id", project.category_id);
-    formData.append("title", project.title);
-    formData.append("price", project.price);
-    formData.append("desc", project.desc);
-    formData.append("deadline", project.deadline);
-    if (project.image) {
-      formData.append("image", project.image);
-    }
-
-    const featureData = new FormData();
-    featureData.append("project_id", feature.project_id);
-    featureData.append("title", feature.title);
-    featureData.append("deadline", feature.deadline);
-    featureData.append("price", feature.price);;
-
-    try {
-      // First, create the Project record
-      const projectResponse = await axios.post(
-        "http://127.0.0.1:8000/api/projects/create",
-        formData
-      );
-
-      // Extract the project ID from the response
-    //   const projectId = 1;
-    //   console.log(projectId);
-      // Next, create the Feature record
-    //   feature.project_id = projectId;
-      const featureResponse = await axios.post(
-        "http://127.0.0.1:8000/api/features/create",
-        featureData
-      );
-
-      alert("Project added successfully!");
-      // Reset your form or navigate to another page
-    } catch (error) {
-      console.error("API request error:", error);
-      setError("An error occurred while adding the project.");
-    }
-  };
-  const handleFeatureSubmit = async (e, featureIndex) => {
-    e.preventDefault();
-    const featureData = new FormData();
-
-    // Use the stored project ID
-    featureData.append("project_id", projectId);
-    featureData.append("title", features[featureIndex].title);
-    featureData.append("deadline", features[featureIndex].deadline);
-    featureData.append("price", features[featureIndex].price);
-
-    try {
-      const featureResponse = await axios.post(
-        "http://127.0.0.1:8000/api/features/create",
-        featureData
-      );
-
-      // Handle the response as needed
-
-      alert("Feature added successfully!");
-      // Reset the feature form or navigate to another page
-    } catch (error) {
-      console.error("API request error:", error);
-      setError("An error occurred while adding the feature.");
-    }
-  };
+  
+      project.features.forEach((feature, index) => {
+        formData.append(`features[${index}][title]`, feature.title);
+        formData.append(`features[${index}][price]`, feature.price);
+        formData.append(`features[${index}][deadline]`, feature.deadline);
+      });
+  
+      try {
+        const projectResponse = await axios.post(
+          "http://127.0.0.1:8000/api/projects/add",
+          formData
+        );
+        alert("Project added successfully!");
+        // Reset your form or navigate to another page
+      } catch (error) {
+        console.error("API request error:", error);
+        // Handle the error
+      }
+    };
   return (
     <>
       <Header />
@@ -118,13 +80,13 @@ export default function AddService() {
 
       <div id="wt-wrapper" className="wt-wrapper wt-haslayout">
         <div className="wt-contentwrapper">
-          <main id="wt-main" className="wt-main wt-haslayout">
+          <main id="wt-main"  style={{margin:'30px 180px'}}>
             <section className="wt-haslayout wt-dbsectionspace">
               <div className="row">
-                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-6 float-left">
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-6 ">
                   <div className="wt-dashboardbox">
                     <div className="wt-dashboardboxtitle">
-                      <h2>Post a Job</h2>
+                      <h2>Post a Service</h2>
                     </div>
                     <div className="wt-dashboardboxcontent">
                       <div className="wt-jobdescription wt-tabsinfo">
@@ -137,6 +99,8 @@ export default function AddService() {
                           className="wt-formtheme wt-userform wt-userformvtwo"
                         >
                           <fieldset>
+
+                            
                             <div className="form-group">
                               <label htmlFor="image">Upload Image:</label>
                               <input
@@ -158,35 +122,6 @@ export default function AddService() {
                                 onChange={(e) => {
                                   setProject((prev) => ({
                                     ...prev,
-                                    seller_id: e.target.value,
-                                  }));
-                                }}
-                                type="number"
-                                name="seller_id"
-                                className="form-control"
-                                placeholder="seller ID"
-                              />
-                            </div>
-
-                            <div className="form-group">
-                              <input
-                                onChange={(e) => {
-                                  setProject((prev) => ({
-                                    ...prev,
-                                    project_id: e.target.value,
-                                  }));
-                                }}
-                                type="number"
-                                name="project_id"
-                                className="form-control"
-                                placeholder="project_id ID"
-                              />
-                            </div>
-                            <div className="form-group">
-                              <input
-                                onChange={(e) => {
-                                  setProject((prev) => ({
-                                    ...prev,
                                     title: e.target.value,
                                   }));
                                 }}
@@ -196,9 +131,24 @@ export default function AddService() {
                                 placeholder="Job Title"
                               />
                             </div>
+                            <div className="form-group">
+                              <input
+                                onChange={(e) => {
+                                  setProject((prev) => ({
+                                    ...prev,
+                                    seller_id: e.target.value,
+                                  }));
+                                }}
+                                type="number"
+                                name="seller_id"
+                                className="form-control"
+                                placeholder="Seller ID"
+                              />
+                            </div>
+                       
                             <div className="form-group form-group-half wt-formwithlabel">
                               <span className="wt-select">
-                                <label for="selectoption">Categories:</label>
+                                <label htmlFor="category_id">Categories:</label>
                                 <select
                                   name="category_id"
                                   onChange={(e) => {
@@ -219,7 +169,7 @@ export default function AddService() {
                             </div>
                             <div className="form-group form-group-half wt-formwithlabel">
                               <span className="wt-select">
-                                <label for="selectoption">Job Duration:</label>
+                                <label htmlFor="deadline">Job Duration:</label>
                                 <select
                                   name="deadline"
                                   onChange={(e) => {
@@ -253,7 +203,7 @@ export default function AddService() {
                             <div className="form-group">
                               <textarea
                                 name="desc"
-                                placeholder="Descripe your project..."
+                                placeholder="Describe your project..."
                                 className="form-control"
                                 onChange={(e) => {
                                   setProject((prev) => ({
@@ -263,86 +213,138 @@ export default function AddService() {
                                 }}
                               ></textarea>
                             </div>
-                            <div className="form-group my-3">
-                              <button className="wt-btn" type="submit">
-                                Post Job Now
-                              </button>
-                            </div>
-                          </fieldset>
-                        </form>
-                      </div>
-                      <div class="wt-jobskills wt-tabsinfo">
-                        <div class="wt-tabscontenttitle">
-                          <h2>Features</h2>
+                         
+                      <div className="wt-jobskills wt-tabsinfo" style={{ paddingTop: '50px' , marginBottom :'-10px' }}>
+                        <div className="wt-tabscontenttitle">
+                         
+                          <h2>Enhance this service</h2>
                         </div>
-                        <div class="form-group wt-btnarea ">
-                          <a href="javascript:void(0);" class="wt-btn float-right" onClick={addFeature}>
-                            Add Features
+                        <div className="form-group wt-btnarea " style={{marginTop : '-70px' }}>
+                          <a
+                             style={{ color: 'white' }}
+                            className="wt-btn float-right"
+                            onClick={addFeature}
+                          >
+                           <i class="fa fa-plus" aria-hidden="true"> </i>   Add Features
                           </a>
                         </div>
-                        {/* Render feature forms */}
-                        {features.map((feature, index) => (
-                          <div key={index} className="wt-feature-form">
-                            <h3>Feature {index + 1}</h3>
-                            <form
-                              onSubmit={(e) => handleFeatureSubmit(e, index)} // Define a separate function to handle feature submission
-                              encType="multipart/form-data"
-                              className="wt-formtheme wt-userform wt-userformvtwo"
-                            >
-                              <div className="form-group">
-                                <input type="text" className="form-control" name="title" placeholder="Title"
-                                  onChange={(e) => {
-                                    setFeature((prev) => ({
-                                      ...prev,
-                                      title: e.target.value,
-                                    }));
-                                  }} />
-                              </div>
-                              <div className="form-group">
-                                <input type="number" className="form-control" name="price" placeholder="Price"
-                                  onChange={(e) => {
-                                    setFeature((prev) => ({
-                                      ...prev,
-                                      price: e.target.value,
-                                    }));
-                                  }} />
-                              </div>
-                              <div className="form-group form-group-half wt-formwithlabel">
-                                <span className="wt-select">
-                                  <label for="selectoption">Feature Duration:</label>
-                                  <select
-                                    name="deadline"
-                                    onChange={(e) => {
-                                      setFeature((prev) => ({
-                                        ...prev,
-                                        deadline: e.target.value,
-                                      }));
-                                    }}
-                                  >
-                                    <option value="">Select a duration</option>
-                                    <option value="1">1 day</option>
-                                    <option value="2">2 days</option>
-                                    <option value="3">3 days</option>
-                                    <option value="5">5 days</option>
-                                    <option value="7">7 days</option>
-                                  </select>
-                                </span>
-                              </div>
-                              <div class="form-group wt-btnarea ">
-                                <button type="submit" class="wt-btn float-right">Add Features</button>
-                              </div>
-                            </form>
+                      
+                          <div  className="wt-feature-form">
+                            <h3></h3>
+                          
+                            {project.features.map((feature, index) => (
+          <div key={index}>
+            <br/>
+            <p style={{fontSize:'18px'}}> Feature Details: </p>
+            <input
+              type="text"
+              placeholder="Feature Title"
+              value={feature.title}
+              onChange={(e) => handleFeatureChange(index, "title", e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Feature Price"
+              value={feature.price}
+              onChange={(e) => handleFeatureChange(index, "price", e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Feature Deadline"
+              value={feature.deadline}
+              onChange={(e) => handleFeatureChange(index, "deadline", e.target.value)}
+            />
+          </div>
+        ))}
+      
+                           
+                              <div className="form-group my-3">
+                              <hr/>
+                              <br/>
+                              <center>
+                              <button className="wt-btn" type="submit">
+                                Post Service Now
+                              </button>
+                              </center>
+                            </div>
                           </div>
-                        ))}
+                      
+                      </div>
+                      </fieldset>
+                          </form>
+                       
                       </div>
                     </div>
                   </div>
                 </div>
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-6 ">
+                <div className="wt-dashboardbox">
+                    <div className="wt-dashboardboxtitle">
+                    <div >
+      <h2 className="wt-tabscontenttitle">Add Your Service and Start Earning</h2>
+      <div style={{ paddingLeft: '25px' ,paddingTop: '60px' }}>
+      <p>
+        On Freelancer, you have the opportunity to generate income by adding
+        services that you excel at and making them available for sale to
+        interested customers. Please enter the service details carefully so that
+        the Freelancer team can review and publish them.
+      </p>
+      </div>
+      <h2 className="wt-tabscontenttitle">Tips for Adding a Valid Service</h2> 
+      <div style={{ paddingLeft: '25px' ,paddingTop: '60px' }}>
+      <p>
+        <strong>Service Title</strong>: Choose a concise and clear title that
+        reflects precisely what you will offer in your service, enabling buyers
+        to find it when searching for related keywords in your service's field.
+      </p>
+
+      <p>
+        <strong>Service Description</strong>: Write a distinctive description of
+        the service in proper, error-free language, explaining in detail what
+        the customer will receive when purchasing the service.
+      </p>
+
+      <p>
+        <strong>Service Gallery</strong>: Add an expressive image related to the
+        service, along with at least three unique samples that introduce the
+        buyer to your work style and skills.
+      </p>
+
+      <p>
+        <strong>Service Price</strong>: Ensure that you set an appropriate price
+        for the service based on the amount of work and effort involved, while
+        considering the site's commission. Also, specify a suitable delivery time
+        for completing the service with quality.
+      </p>
+      </div>
+      <h2 className="wt-tabscontenttitle">Why Services Get Rejected on Freelancer?</h2>
+      <ul style={{ paddingLeft: '25px' ,paddingTop: '60px' }}>
+        <li>
+          A long, unclear title that merges multiple services together.
+        </li>
+        <li>
+          Failure to specify the amount of work the buyer will receive in the
+          service description.
+        </li>
+        <li>
+          Low-quality images or designs not created by the seller.
+        </li>
+        <li>
+          Attaching fewer than three samples to the service's work gallery.
+        </li>
+        <li>
+          Services that violate Freelancer's terms of use.
+        </li>
+      </ul>
+    </div>
+                  </div>
+              </div>
+                  </div>
               </div>
             </section>
           </main>
         </div>
-      </div >
+      </div>
       <Footer />
     </>
   );
