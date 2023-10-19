@@ -6,8 +6,8 @@ export default function Content() {
     return (
       <>
          <Banner />
-      <main id="wt-main" class="wt-main wt-haslayout wt-innerbgcolor">
-				<div class="wt-haslayout wt-main-section">
+      <main id="wt-main" className="wt-main wt-haslayout wt-innerbgcolor">
+				<div className="wt-haslayout wt-main-section">
              
                 <Detail/>
       

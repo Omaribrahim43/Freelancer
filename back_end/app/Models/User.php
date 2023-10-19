@@ -21,8 +21,8 @@ class User extends Authenticatable
         
         'image',
         'username',
-        'first_name',
-        'last_name',
+        // 'first_name',
+        'name',
         'email',
         'password',
         'contact_info',
@@ -33,7 +33,11 @@ class User extends Authenticatable
     ];
     public function reviews()
     {
-        return $this->hasMany(Review::class, 'client_id', 'id');
+        return $this->hasMany(Review::class, 'user_id', 'id');
+    }
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'seller_id', 'id');
     }
 
     public function order()
