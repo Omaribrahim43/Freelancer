@@ -25,6 +25,16 @@
 	margin: 0px;
 	padding: 0px;
 }
+
+
+/* link:active  {
+  color: red;
+} */ */
+
+.active {
+  color: red !important;
+}
+
 body {
 	color: #767676;
 	background: #fff;

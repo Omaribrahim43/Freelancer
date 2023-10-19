@@ -16,7 +16,7 @@ import category from "../home/category";
 import { Searchbar } from "./searchbar";
 
 import { SearchResultsList } from "./searchResultsList";
-import  Category from "./category";
+import Category from "./category";
 
 import SearchInput from "./SearchInput";
 
@@ -41,7 +41,24 @@ function Sidebar() {
     };
     fetchData();
   }, []); // Using useEffect to fetch data when the component mounts
+// ==============category side bar=================
+  // const { id } = useParams();
+  const [categories, setCategories] = useState([]);
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/categories`);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+// ==============category side bar=================
+// =============================
 
   return (
 
@@ -73,12 +90,12 @@ function Sidebar() {
               </div>
             </fieldset>
           </form>
-          
+
         </div>
       </div>
       {/* <SearchInput searchQuery={searchQuery} handleSearchInputChange={handleSearchInputChange} /> */}
 
-   
+
       {/* <div className="wt-widget wt-startsearch">
         <div className="wt-widgettitle">
           <h2>Start Your Search</h2>
@@ -106,7 +123,7 @@ function Sidebar() {
         </div>
       </div> */}
       {/* =====second search == */}
-     
+
       {/* <div className="wt-widget wt-effectiveholder">
         <div className="wt-widgettitle">
           <h2>No. Of Employee</h2>
@@ -195,8 +212,22 @@ function Sidebar() {
                     <Route path="/services/:id" component={ServiceDetails} />
                   </Switch>
                 </Router> */}
-                <Category/>
-               
+                <div>
+                  {categories.map((category) => (
+                    <span className="wt-checkbox" key={category.id}>
+                      <input
+                        id={`category-${category.id}`}
+                        type="checkbox"
+                        name="description"
+                        value={category.name}
+                      />
+                      <Link to={`/services/${category.id}`}>
+                        <label>{category.name}</label>
+                      </Link>
+                    </span>
+                  ))}
+                </div>
+
                 {/* <span className="wt-checkbox">
                   <input
                     id="independent"

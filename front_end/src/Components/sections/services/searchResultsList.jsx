@@ -5,7 +5,9 @@ export const SearchResultsList = ({ results }) => {
   return (
     <div className="results-list">
       {results.map((result, id) => {
-        return <SearchResult result={result.title} result2={result.id} key={id} />;
+        return <div className="search-result">
+      <Link to={`/single/${result2}`}>{result}</Link>
+    </div>;
       })}
     </div>
   );
