@@ -3,6 +3,7 @@ import About from "./Components/pages/about";
 import Services from "./Components/pages/services";
 import Single from "./Components/pages/single";
 import Login from "./Components/pages/login";
+import Checkout from "./Components/pages/checkout";
 import Register from "./Components/pages/register";
 import { NavLink } from "react-router-dom";
 
@@ -52,6 +53,7 @@ console.log(Auth);
           {/* Define more routes here */}
           <Route path="/single/:id" element={<Single />} />
           <Route path="/add-service" element={<AddService />} />
+          <Route path="/checkout/:id" element={<Checkout />} />
         </Routes>
       </Router>
     </>

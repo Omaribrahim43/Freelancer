@@ -29,7 +29,26 @@ export default function Detail() {
     fetchData();
   }, [id]);
 
+  // const order = (id) => {
+  //   navigate(`/checkout/${id}`);
+  // };
+
+  const order = () => {
+    // Create an array of feature IDs from the selectedFeatures
+    const selectedFeatureIds = selectedFeatures.map((feature) => feature.id);
+  
+    // Convert the array to a comma-separated string
+    const selectedFeatureIdsString = selectedFeatureIds.join(',');
+  
+    // Construct the URL with query parameters
+    const checkoutURL = `/checkout/${id}?features=${selectedFeatureIdsString}`;
+  
+    // Navigate to the /checkout route with the features and project info in the URL
+    navigate(checkoutURL);
+  };
+
   const profile =project.seller_id;
+
   const profileButtonClick = (id) => {
     navigate(`/profile/${id}`);
   };
@@ -37,6 +56,8 @@ export default function Detail() {
   const handleFeatureChange = (event) => {
     const featureId = parseInt(event.target.value, 10);
     const isChecked = event.target.checked;
+
+  
 
     // Find the selected feature
     const selectedFeature = features.find((feature) => feature.id === featureId);
@@ -54,6 +75,8 @@ export default function Detail() {
         setSelectedFeatures(selectedFeatures.filter((feature) => feature.id !== featureId));
       }
     }
+
+   
   };
 
     return (
@@ -221,7 +244,7 @@ export default function Detail() {
                      
                     
                       <div className="form-group wt-btnarea">
-                        <a href="javascrip:void(0);" className="wt-btn">
+                        <a href="javascrip:void(0);" className="wt-btn" onClick={() => {order(id)}}>
                           Order Now
                         </a>
                       </div>
