@@ -18,31 +18,43 @@ import {
   Navigate,
 } from "react-router-dom";
 import AddService from "./Components/pages/AddService";
-
+import { useGoogleOneTapLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 function App() {
 const Auth = useSelector((state) => state.isAuthenticated);
 console.log(Auth);
 // const Auth = !!localStorage.getItem("user");
 // console.log(!!localStorage.getItem("user"));
-
+// const Api Key =
+  useGoogleOneTapLogin({
+    onSuccess: (credentialResponse) => {
+      var credentialResponse = jwt_decode(credentialResponse.credential);
+      console.log(credentialResponse);
+    },
+    onError: () => {
+      console.log("Login Failed");
+    },
+  });
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        {/* <Route path="/services/:id" element={<Services />} /> */}
-        <Route path="/services" element={<Services />} />
-        <Route path="/login" element={Auth ? <Home/> : <Login />} />
-        <Route
-          path="/register"
-          element={Auth ? <NavLink to="/" /> : <Register />}
-        />
-        {/* Define more routes here */}
-        <Route path="/single/:id" element={<Single />} />
-        <Route path="/add-service" element={<AddService />} />
-        
-      </Routes>
-    </Router>
+    <>
+
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          {/* <Route path="/services/:id" element={<Services />} /> */}
+          <Route path="/services" element={<Services />} />
+          <Route path="/login" element={Auth ? <Home /> : <Login />} />
+          <Route
+            path="/register"
+            element={Auth ? <NavLink to="/" /> : <Register />}
+          />
+          {/* Define more routes here */}
+          <Route path="/single/:id" element={<Single />} />
+          <Route path="/add-service" element={<AddService />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 

@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom";
 import {Navigate} from "react-router-dom";
 export default function Header() {
 const data = useSelector((state) => state.user);
+const login = useSelector((state) => state.isAuthenticated);
 const dispatch = useDispatch();
 
 const Auth = !!localStorage.getItem("user");
@@ -161,6 +162,7 @@ function handleLogout() {
                                       <a href="userlisting.html">
                                         User Listing
                                       </a>
+                                      {/* <span>{console.log(data.reviews[0].comment)} </span> */}
                                     </li>
                                     <li className="current-menu-item">
                                       <a href="usersingle.html">User Single</a>
@@ -592,11 +594,11 @@ function handleLogout() {
                     </div>
                   </div>
                 </div>
-              {/* </div> */}
-            </header>
+                {/* </div> */}
+              </header>
+            </div>
           </div>
-        </div>
+        </>
       </>
-    </>
-  );
+    );
 }
