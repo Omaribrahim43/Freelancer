@@ -1,129 +1,89 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-// ==husam===
-// import React, { useState } from "react";
-import { Card, CardBody, Col, Container, Input, Row } from "reactstrap";
-// import { useNavigate, useState } from "react-router-dom";
-// import axios from "../../../axios/axios";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-// ===husam==
-import { useParams } from "react-router-dom";
+import ReactPaginate from 'react-paginate';
+import SearchInput from './SearchInput';
 
 function Cards() {
- 
-  // ==husam====================================
   const { id } = useParams();
-  // const [data, setData] = useState({
-  //   id: "",
-  //   image: "",
-  //   seller_id: "",
-  //   title: "",
-  //   rating: "",
-  //   price: "",
-  //   deadline: "",
-  //   buyers: "",
-  //   status: "",
-  // });
   const [project, setProject] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [pageNumber, setPageNumber] = useState(0);
+  const projectsPerPage = 5;
 
   useEffect(() => {
-   async function fetchData(){
-    
+    async function fetchData() {
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/projects/category/${id}`);
-        // Assuming that response.data is an object with the fields you want
-        setProject(response.data);
+        const filteredData = response.data.filter((project) => {
+          return (
+            project.category_id === parseInt(id) &&
+            project.title.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+        });
+        setProject(filteredData);
       } catch (error) {
-        // Handle any errors that might occur during the request
         console.error("Error fetching data:", error);
       }
-    };
+    }
+
     fetchData();
-  }, []); // Using useEffect to fetch data when the component mounts
+  }, [id, searchQuery]);
 
-  
-  
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
-  // const toursPerPage = 6; // Number of tours to display per page
-  // // Calculate the total number of pages needed based on the number of tours
-  // const totalPages = Math.ceil(data.length / toursPerPage);
+  const handlePageChange = ({ selected }) => {
+    setPageNumber(selected);
+  };
 
-  // // Calculate the index range of tours to display on the current page
-  // const startIndex = (currentPage - 1) * toursPerPage;
-  // const endIndex = startIndex + toursPerPage;
+  const startIndex = pageNumber * projectsPerPage;
+  const endIndex = startIndex + projectsPerPage;
 
+  const displayedProjects = project.slice(startIndex, endIndex);
 
   return (
     <div className="wt-userlistingholder wt-haslayout">
+      <SearchInput searchQuery={searchQuery} handleSearchInputChange={handleSearchInputChange} />
+      {/* <div className="wt-widget wt-startsearch">
+        <div className="wt-widgettitle">
+          <h2>Start Your Search</h2>
+        </div>
+
+        <div className="wt-widgetcontent">
+          <form className="wt-formtheme wt-formsearch">
+            <fieldset>
+              <div className="form-group">
+
+                <input
+                  type="text"
+                  placeholder="Search by name..."
+                  value={searchQuery}
+                  onChange={handleSearchInputChange}
+                  className="search-input"
+                />
+                <a href="javascript:void(0);" className="wt-searchgbtn">
+                  <i className="lnr lnr-magnifier"></i>
+                </a>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div> */}
       <div className="wt-userlistingtitle">
         <span>
-          01 - 48 of 57143 results for <em>"Software House"</em>
+          01 - 48 of {project.length} results for <em>"Software House"</em>
         </span>
       </div>
       <div className="wt-filterholder">
         <ul className="wt-filtertag">
-          <li className="wt-filtertagclear">
-            <a href="javascript:void(0)">
-              <i className="fa fa-times"></i> <span>Clear All Filter</span>
-            </a>
-          </li>
-          <li className="alert alert-dismissable fade in">
-            <a href="javascript:void(0)">
-              <i
-                className="fa fa-times close"
-                data-dismiss="alert"
-                aria-label="close"
-              ></i>{" "}
-              <span>Graphic Design</span>
-            </a>
-          </li>
-          <li className="alert alert-dismissable fade in">
-            <a href="javascript:void(0)">
-              <i
-                className="fa fa-times close"
-                data-dismiss="alert"
-                aria-label="close"
-              ></i>{" "}
-              <span>Any Hourly Rate</span>
-            </a>
-          </li>
-          <li className="alert alert-dismissable fade in">
-            <a href="javascript:void(0)">
-              <i
-                className="fa fa-times close"
-                data-dismiss="alert"
-                aria-label="close"
-              ></i>{" "}
-              <span>Any Freelancer Type</span>
-            </a>
-          </li>
-          <li className="alert alert-dismissable fade in">
-            <a href="javascript:void(0)">
-              <i
-                className="fa fa-times close"
-                data-dismiss="alert"
-                aria-label="close"
-              ></i>
-              <span>Chinese</span>
-            </a>
-          </li>
-          <li className="alert alert-dismissable fade in">
-            <a href="javascript:void(0)">
-              <i
-                className="fa fa-times close"
-                data-dismiss="alert"
-                aria-label="close"
-              ></i>{" "}
-              <span>English</span>
-            </a>
-          </li>
+          {/* Filter tags go here */}
         </ul>
       </div>
       <div className="wt-companysinfoholder">
         <div className="row">
-          {project.map((item) => (
-            
+          {displayedProjects.map((item) => (
             <div className="col-12 col-sm-12 col-md-12 col-lg-6" key={item.id}>
               <div className="wt-companysdetails">
                 <figure className="wt-companysimg">
@@ -141,7 +101,7 @@ function Cards() {
                   </div>
                   <ul className="wt-postarticlemeta">
                     <li>
-                      <a href="javascript:void(0);">
+                      <a href="javascript:void(0)">
                         <span>Open Jobs</span>
                       </a>
                     </li>
@@ -158,218 +118,23 @@ function Cards() {
                   </ul>
                 </div>
               </div>
-            </div> 
-        ))}
-          {/* <div className="col-12 col-sm-12 col-md-12 col-lg-6">
-            <div className="wt-companysdetails">
-              <figure className="wt-companysimg">
-                <img src="images/company/img-02.jpg" alt="img description" />
-              </figure>
-              <div className="wt-companysinfo">
-                <figure>
-                  <img src="images/company/img-02.png" alt="img description" />
-                </figure>
-                <div className="wt-title">
-                  <a href="javascript:void(0);">
-                    <i className="fa fa-check-circle"></i> Verified Company
-                  </a>
-                  <h2>Aviato Care Company</h2>
-                </div>
-                <ul className="wt-postarticlemeta">
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Open Jobs</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Full Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Click To Follow</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
             </div>
-          </div>
-          <div className="col-12 col-sm-12 col-md-12 col-lg-6">
-            <div className="wt-companysdetails">
-              <figure className="wt-companysimg">
-                <img src="images/company/img-03.jpg" alt="img description" />
-              </figure>
-              <div className="wt-companysinfo">
-                <figure>
-                  <img src="images/company/img-03.png" alt="img description" />
-                </figure>
-                <div className="wt-title">
-                  <a href="javascript:void(0);">
-                    <i className="fa fa-check-circle"></i> Verified Company
-                  </a>
-                  <h2>Ember Planner &amp; Organizer</h2>
-                </div>
-                <ul className="wt-postarticlemeta">
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Open Jobs</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Full Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Click To Follow</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-sm-12 col-md-12 col-lg-6">
-            <div className="wt-companysdetails">
-              <figure className="wt-companysimg">
-                <img src="images/company/img-04.jpg" alt="img description" />
-              </figure>
-              <div className="wt-companysinfo">
-                <figure>
-                  <img src="images/company/img-04.png" alt="img description" />
-                </figure>
-                <div className="wt-title">
-                  <a href="javascript:void(0);">
-                    <i className="fa fa-check-circle"></i> Verified Company
-                  </a>
-                  <h2>Firy Birds &amp; Company</h2>
-                </div>
-                <ul className="wt-postarticlemeta">
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Open Jobs</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Full Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Click To Follow</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-sm-12 col-md-12 col-lg-6">
-            <div className="wt-companysdetails">
-              <figure className="wt-companysimg">
-                <img src="images/company/img-05.jpg" alt="img description" />
-              </figure>
-              <div className="wt-companysinfo">
-                <figure>
-                  <img src="images/company/img-05.png" alt="img description" />
-                </figure>
-                <div className="wt-title">
-                  <a href="javascript:void(0);">
-                    <i className="fa fa-check-circle"></i> Verified Company
-                  </a>
-                  <h2>VAV Creative Studio</h2>
-                </div>
-                <ul className="wt-postarticlemeta">
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Open Jobs</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Full Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Click To Follow</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-sm-12 col-md-12 col-lg-6">
-            <div className="wt-companysdetails">
-              <figure className="wt-companysimg">
-                <img src="images/company/img-06.jpg" alt="img description" />
-              </figure>
-              <div className="wt-companysinfo">
-                <figure>
-                  <img src="images/company/img-06.png" alt="img description" />
-                </figure>
-                <div className="wt-title">
-                  <a href="javascript:void(0);">
-                    <i className="fa fa-check-circle"></i> Verified Company
-                  </a>
-                  <h2>Sass Studio</h2>
-                </div>
-                <ul className="wt-postarticlemeta">
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Open Jobs</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Full Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);">
-                      <span>Click To Follow</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div> */}
+          ))}
         </div>
       </div>
       <nav className="wt-pagination">
-        <ul>
-          <li className="wt-prevpage">
-            <a href="javascript:void(0);">
-              <i className="lnr lnr-chevron-left"></i>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">1</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">2</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">3</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">4</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">...</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">50</a>
-          </li>
-          <li className="wt-nextpage">
-            <a href="javascript:void(0);">
-              <i className="lnr lnr-chevron-right"></i>
-            </a>
-          </li>
-        </ul>
+        <ReactPaginate
+          pageCount={Math.ceil(project.length / projectsPerPage)}
+          pageRangeDisplayed={5}
+          marginPagesDisplayed={1}
+          previousLabel={'<'}
+          nextLabel={'>'}
+          onPageChange={handlePageChange}
+          containerClassName={'pagination'}
+          subContainerClassName={'pages pagination'}
+          activeClassName={'active'}
+        />
       </nav>
-      
     </div>
   );
 }

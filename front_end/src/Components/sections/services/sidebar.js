@@ -1,16 +1,96 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// ==husam===
+// import React, { useState } from "react";
+import { Card, CardBody, Col, Container, Input, Row } from "reactstrap";
+// import { useNavigate, useState } from "react-router-dom";
+// import axios from "../../../axios/axios";
+import axios from 'axios';
+// ===husam==
+import { useParams } from "react-router-dom";
+import category from "../home/category";
+
+import { Searchbar } from "./searchbar";
+
+import { SearchResultsList } from "./searchResultsList";
+import  Category from "./category";
+
+import SearchInput from "./SearchInput";
 
 function Sidebar() {
+
+  const { id } = useParams();
+  {/* ====search========= */ }
+  const [category, setCategory] = useState([]);
+  const [results, setResults] = useState([]);
+  {/* ====search========= */ }
+  useEffect(() => {
+    async function fetchData() {
+
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/categories`);
+        // Assuming that response.data is an object with the fields you want
+        setCategory(response.data);
+      } catch (error) {
+        // Handle any errors that might occur during the request
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []); // Using useEffect to fetch data when the component mounts
+
+
   return (
+
+
     <aside id="wt-sidebar" className="wt-sidebar">
       <div className="wt-widget wt-startsearch">
         <div className="wt-widgettitle">
           <h2>Start Your Search</h2>
         </div>
+
+        {/* <Searchbar /> */}
         <div className="wt-widgetcontent">
           <form className="wt-formtheme wt-formsearch">
             <fieldset>
               <div className="form-group">
+                {/* ====search========= */}
+                <Searchbar setResults={setResults} />
+                {results && results.length > 0 && <SearchResultsList results={results} />}
+                {/* ====search====== */}
+                {/* <input
+                  type="text"
+                  name="Search"
+                  className="form-control"
+                  placeholder="Search Company"
+                /> */}
+                <a href="javascript:void(0);" className="wt-searchgbtn">
+                  <i className="lnr lnr-magnifier"></i>
+                </a>
+              </div>
+            </fieldset>
+          </form>
+          
+        </div>
+      </div>
+      {/* <SearchInput searchQuery={searchQuery} handleSearchInputChange={handleSearchInputChange} /> */}
+
+   
+      {/* <div className="wt-widget wt-startsearch">
+        <div className="wt-widgettitle">
+          <h2>Start Your Search</h2>
+        </div>
+
+     
+        <div className="wt-widgetcontent">
+          <form className="wt-formtheme wt-formsearch">
+            <fieldset>
+              <div className="form-group">
+
+                
                 <input
                   type="text"
                   name="Search"
@@ -24,147 +104,10 @@ function Sidebar() {
             </fieldset>
           </form>
         </div>
-      </div>
-      <div className="wt-widget wt-effectiveholder">
-        <div className="wt-widgettitle">
-          <h2>Location</h2>
-        </div>
-        <div className="wt-widgetcontent">
-          <form className="wt-formtheme wt-formsearch">
-            <fieldset>
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="fullname"
-                  className="form-control"
-                  placeholder="Search Location"
-                />
-                <a href="javascript:void(0);" className="wt-searchgbtn">
-                  <i className="lnr lnr-magnifier"></i>
-                </a>
-              </div>
-            </fieldset>
-            <fieldset>
-              <div className="wt-checkboxholder wt-verticalscrollbar">
-                <span className="wt-checkbox">
-                  <input
-                    id="wt-description"
-                    type="checkbox"
-                    name="description"
-                    value="company"
-                    checked
-                  />
-                  <label for="wt-description">
-                    {" "}
-                    <img
-                      src="images/flag/img-01.png"
-                      alt="img description"
-                    />{" "}
-                    Australia
-                  </label>
-                </span>
-                <span className="wt-checkbox">
-                  <input
-                    id="us"
-                    type="checkbox"
-                    name="description"
-                    value="company"
-                  />
-                  <label for="us">
-                    {" "}
-                    <img
-                      src="images/flag/img-02.png"
-                      alt="img description"
-                    />{" "}
-                    United States
-                  </label>
-                </span>
-                <span className="wt-checkbox">
-                  <input
-                    id="canada"
-                    type="checkbox"
-                    name="description"
-                    value="company"
-                  />
-                  <label for="canada">
-                    {" "}
-                    <img
-                      src="images/flag/img-03.png"
-                      alt="img description"
-                    />{" "}
-                    Canada
-                  </label>
-                </span>
-                <span className="wt-checkbox">
-                  <input
-                    id="england"
-                    type="checkbox"
-                    name="description"
-                    value="company"
-                  />
-                  <label for="england">
-                    {" "}
-                    <img
-                      src="images/flag/img-04.png"
-                      alt="img description"
-                    />{" "}
-                    England
-                  </label>
-                </span>
-                <span className="wt-checkbox">
-                  <input
-                    id="emirates"
-                    type="checkbox"
-                    name="description"
-                    value="company"
-                  />
-                  <label for="emirates">
-                    {" "}
-                    <img
-                      src="images/flag/img-05.png"
-                      alt="img description"
-                    />{" "}
-                    United Emirates
-                  </label>
-                </span>
-                <span className="wt-checkbox">
-                  <input
-                    id="wt-description1"
-                    type="checkbox"
-                    name="description"
-                    value="company"
-                  />
-                  <label for="wt-description1">
-                    {" "}
-                    <img
-                      src="images/flag/img-01.png"
-                      alt="img description"
-                    />{" "}
-                    Australia
-                  </label>
-                </span>
-                <span className="wt-checkbox">
-                  <input
-                    id="us1"
-                    type="checkbox"
-                    name="description"
-                    value="company"
-                  />
-                  <label for="us1">
-                    {" "}
-                    <img
-                      src="images/flag/img-02.png"
-                      alt="img description"
-                    />{" "}
-                    United States
-                  </label>
-                </span>
-              </div>
-            </fieldset>
-          </form>
-        </div>
-      </div>
-      <div className="wt-widget wt-effectiveholder">
+      </div> */}
+      {/* =====second search == */}
+     
+      {/* <div className="wt-widget wt-effectiveholder">
         <div className="wt-widgettitle">
           <h2>No. Of Employee</h2>
         </div>
@@ -222,16 +165,20 @@ function Sidebar() {
             </fieldset>
           </form>
         </div>
-      </div>
+      </div> */}
       <div className="wt-widget wt-effectiveholder">
         <div className="wt-widgettitle">
-          <h2>Job Type</h2>
+          {/* <h2>Job Type</h2> */}
+          <h2>Categories</h2>
         </div>
+
         <div className="wt-widgetcontent">
           <form className="wt-formtheme wt-formsearch">
             <fieldset>
               <div className="wt-checkboxholder">
-                <span className="wt-checkbox">
+
+
+                {/* <span className="wt-checkbox">
                   <input
                     id="proindependent"
                     type="checkbox"
@@ -240,17 +187,17 @@ function Sidebar() {
                     checked
                   />
                   <label for="proindependent">All Types</label>
-                </span>
-                <span className="wt-checkbox">
-                  <input
-                    id="proagency"
-                    type="checkbox"
-                    name="description"
-                    value="company"
-                  />
-                  <label for="proagency"> Featured Jobs</label>
-                </span>
-                <span className="wt-checkbox">
+                </span> */}
+
+                {/* <Router>
+                  <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route path="/services/:id" component={ServiceDetails} />
+                  </Switch>
+                </Router> */}
+                <Category/>
+               
+                {/* <span className="wt-checkbox">
                   <input
                     id="independent"
                     type="checkbox"
@@ -276,7 +223,7 @@ function Sidebar() {
                     value="company"
                   />
                   <label for="rising"> Hourly Jobs</label>
-                </span>
+                </span> */}
               </div>
             </fieldset>
           </form>

@@ -2,6 +2,9 @@ import Home from "./Components/pages/home";
 import About from "./Components/pages/about";
 import Services from "./Components/pages/services";
 import Single from "./Components/pages/single";
+
+import {Searchbar} from "./Components/sections/services/searchbar";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AddService from "./Components/pages/AddService";
 
@@ -11,8 +14,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        {/* <Route path="/services/:id" element={<Services />} /> */}
-        <Route path="/services" element={<Services />} />
+        <Route path="/services/:id" element={<Services />} />
+        {/* <Route path="/project" element={<Project />} /> */}
+        <Route path="/search" element={<Searchbar />} />
+        {/* <Route path="/services" element={<Services />} /> */}
         {/* Define more routes here */}
         <Route path="/single/:id" element={<Single />} />
         <Route path="/add-service" element={<AddService />} />
