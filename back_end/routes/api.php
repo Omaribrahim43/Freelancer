@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
@@ -45,6 +46,15 @@ Route::post('features/create', [FeatureController::class, 'store'])->name('store
 
 
 Route::post('orders/create', [OrderController::class, 'store'])->name( 'store.order');
+// Reviews 
+// Route::resources(ReviewController::class)
+Route::get('reviews', [ReviewController::class, 'index'])->name('show.reviews');
+Route::get('review/{id}', [ReviewController::class, 'oneReview'])->name('show.one.review');
+Route::post('reviews/store', [ReviewController::class, 'store'])->name('store.reviews');
+Route::post('reviews/add', [ReviewController::class, 'create'])->name('add.reviews');
+Route::put('reviews/update/{id}', [ReviewController::class, 'update'])->name('update.reviews');
+Route::delete('reviews/delete/{id}', [ReviewController::class, 'destroy'])->name('delete.reviews');
+
 
 
 // login 
