@@ -6,6 +6,9 @@ use App\Http\Controllers\FeatureController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,6 +28,7 @@ Route::get('users', [UserController::class, 'index']);
 
 Route::get('users/{id}', [UserController::class, 'getuser']);
 Route::put('users/update/{id}', [UserController::class, 'updateUser']);
+Route::put('users/updatepass/{id}', [UserController::class, 'updateUserPass']);
 
 
 Route::get('projects', [ProjectController::class, 'index'])->name('show.projects');
@@ -44,3 +48,21 @@ Route::post('features/create', [FeatureController::class, 'store'])->name('store
 
 
 
+
+// login 
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+    ->middleware(['web', 'guest'])
+    ->name('login');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
+
+Route::get('/get-csrf-token', function () {
+    return response()->json(['token' => csrf_token()]);
+});
+Route::get('/user', [AuthenticatedSessionController::class, 'User1'])
+    ->middleware('auth');
+Route::get('/usersss', [AuthenticatedSessionController::class, 'User2']);
+
+Route::post('/register', [RegisteredUserController::class, 'store'])
+    ->middleware('guest')
+    ->name('register');

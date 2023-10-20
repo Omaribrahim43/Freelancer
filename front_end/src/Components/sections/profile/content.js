@@ -1,11 +1,11 @@
 import React from "react";
 import UserDetails from "./userDetails";
 import Buyers from "./buyers";
+import Password from "./password";
 
 function Content() {
   return (
     <main id="wt-main" className="wt-main wt-haslayout">
-    
       {/* Register Form Start */}
       <section className="wt-haslayout">
         <div className="row">
@@ -29,7 +29,7 @@ function Content() {
                     </li>
                     <li className="nav-item">
                       <a data-toggle="tab" href="#wt-awards">
-                        Projects &amp; Awards
+                        Change Password
                       </a>
                     </li>
                   </ul>
@@ -41,28 +41,28 @@ function Content() {
 
                   {/* Buyers start */}
                   <Buyers />
-                  {/* Buyers start */}
+                  {/* Buyers end */}
+
+                  {/* password start */}
+                  <Password />
+                  {/* password end */}
                 </div>
               </div>
             </div>
-            <div className="wt-updatall">
+            {/* <div className="wt-updatall">
               <i className="ti-announcement"></i>
               <span>
                 Update all the latest changes made by you, by just clicking on
-                “Save &amp; Continue” button.
+                "Save & Continue" button.
               </span>
-              <a className="wt-btn" href="javascript:void(0);">
-                Save &amp; Update
-              </a>
-            </div>
+              <button className="wt-btn" onClick={handleSaveAndUpdate}>
+                Save & Update
+              </button>
+            </div> */}
           </div>
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
             <div className="wt-haslayout wt-dbsectionspace wt-codescansidebar">
-              <div className="tg-authorcodescan wt-codescanholder">
-                
-               
-              </div>
-              
+              <div className="tg-authorcodescan wt-codescanholder"></div>
             </div>
           </div>
         </div>

@@ -73,8 +73,7 @@ function Cards() {
               <i
                 className="fa fa-times close"
                 data-dismiss="alert"
-                aria-label="close"
-              ></i>{" "}
+                aria-label="close"></i>{" "}
               <span>Graphic Design</span>
             </a>
           </li>
@@ -83,8 +82,7 @@ function Cards() {
               <i
                 className="fa fa-times close"
                 data-dismiss="alert"
-                aria-label="close"
-              ></i>{" "}
+                aria-label="close"></i>{" "}
               <span>Any Hourly Rate</span>
             </a>
           </li>
@@ -93,8 +91,7 @@ function Cards() {
               <i
                 className="fa fa-times close"
                 data-dismiss="alert"
-                aria-label="close"
-              ></i>{" "}
+                aria-label="close"></i>{" "}
               <span>Any Freelancer Type</span>
             </a>
           </li>
@@ -103,8 +100,7 @@ function Cards() {
               <i
                 className="fa fa-times close"
                 data-dismiss="alert"
-                aria-label="close"
-              ></i>
+                aria-label="close"></i>
               <span>Chinese</span>
             </a>
           </li>
@@ -113,8 +109,7 @@ function Cards() {
               <i
                 className="fa fa-times close"
                 data-dismiss="alert"
-                aria-label="close"
-              ></i>{" "}
+                aria-label="close"></i>{" "}
               <span>English</span>
             </a>
           </li>
