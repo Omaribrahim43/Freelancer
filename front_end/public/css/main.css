@@ -117,7 +117,7 @@ iframe {
 .bypostauthor {}
 .wp-caption.alignleft,
 .wp-caption.alignnone { width: 100%; }
-button { border: none; }
+button { border: none;  }
 textarea,
 select,
 .wt-select select,
