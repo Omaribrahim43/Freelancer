@@ -35,7 +35,28 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Retrieve the data, including payment, order, and feature IDs
+        $data = $request->input('data');
+    
+        // Access the feature IDs
+        $featureIds = $data['featureIds'];
+    
+        // Create an order record with all data, including feature IDs
+        $order = Order::create([
+            'amount' => $data['paymentData']['amount'],
+            'payment_method' => $data['paymentData']['method'],
+            'duration' => $data['orderDetails']['duration'],
+            'project_id' => $data['orderDetails']['projectId'],
+            'user_id' => $data['orderDetails']['userId'],
+            
+        ]);
+    
+        // Attach feature IDs to the order (assuming a many-to-many relationship)
+        // $order->features()->sync($featureIds);
+    
+        // You can also perform any additional logic here
+    
+        return response()->json(['message' => 'Data stored successfully']);
     }
 
     /**

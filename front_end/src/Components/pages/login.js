@@ -4,7 +4,7 @@ import { loginSuccess, logoutSuccess } from "./../../redux/action";
 import { Card, CardBody, Col, Container, Input, Row } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "../../axios/axios";
-
+import { GoogleLogin } from "@react-oauth/google";
 //Import Image
 // import lightLogo from "../../assets/images/logo-light.png";
 // import darkLogo from "../../assets/images/logo-dark.png";
@@ -167,6 +167,15 @@ console.log(response.data);
                                     {" "}
                                     Sign Up{" "}
                                   </Link>
+                                  <GoogleLogin
+                                    onSuccess={(credentialResponse) => {
+                                      console.log(credentialResponse);
+                                    }}
+                                    onError={() => {
+                                      console.log("Login Failed");
+                                    }}
+                                  />
+                                  ;
                                 </p>
                               </div>
                             </div>

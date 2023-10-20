@@ -23,15 +23,20 @@ class AuthenticatedSessionController extends Controller
     }
     public function User1()
     {
-
+        // Get the authenticated user
         $user = Auth::user();
-        // $user = User::findOrfail($users)->with(['reviews', 'order'])->first();
 
-        return response()->json(['user' => $user]);
+        // Load the 'reviews' and 'order' relationships using Eager Loading via a query builder context
+        $userWithRelationships = User::with(['reviews', 'order', "projects"])->find($user->id);
+
+        if ($userWithRelationships) {
+            return response()->json(['user' => $userWithRelationships]);
+        } else {
+            return response()->json(['message' => 'User not found'], 404);
+        }
     }
-    /**
-     * Destroy an authenticated session.
-     */
+
+
     public function destroy(Request $request): Response
     {
         Auth::guard('web')->logout();
