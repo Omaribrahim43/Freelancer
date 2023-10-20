@@ -15,10 +15,10 @@ class Feature extends Model
         'title',
         'price',
         'deadline',
-        
+
     ];
     public function project()
     {
-        return $this->belongsTo(Project::class, 'id', 'project_id');
+        return $this->belongsTo(Project::class, 'project_id');
     }
 }

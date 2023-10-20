@@ -18,61 +18,6 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
 
-            // Admin
-            [
-                'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
-                'username' => 'omar.migdady',
-                'first_name' => 'omar',
-                'last_name' => 'migdady',
-                'email' => 'omar.migdady@gmail.com',
-                'password' => Hash::make('password'),
-                'role' => 'admin',
-            ],
-            [
-                'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
-                'username' => 'hussam.odat',
-                'first_name' => 'hussam',
-                'last_name' => 'odat',
-                'email' => 'hussam.odat@gmail.com',
-                'password' => Hash::make('password'),
-                'role' => 'admin',
-            ],
-            [
-                'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
-                'username' => 'sereen.qamhia',
-                'first_name' => 'sereen',
-                'last_name' => 'qamhia',
-                'email' => 'sereen.qamhia@gmail.com',
-                'password' => Hash::make('password'),
-                'role' => 'admin',
-            ],
-            [
-                'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
-                'username' => 'leena.rababah',
-                'first_name' => 'leena',
-                'last_name' => 'rababah',
-                'email' => 'leena.rababah@gmail.com',
-                'password' => Hash::make('password'),
-                'role' => 'admin',
-            ],
-            [
-                'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
-                'username' => 'ahmad.tamimi',
-                'first_name' => 'ahmad',
-                'last_name' => 'tamimi',
-                'email' => 'ahmad.tamimi@gmail.com',
-                'password' => Hash::make('password'),
-                'role' => 'admin',
-            ],
-            [
-                'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
-                'username' => 'anfal.dherat',
-                'first_name' => 'anfal',
-                'last_name' => 'dherat',
-                'email' => 'anfal.dherat@gmail.com',
-                'password' => Hash::make('password'),
-                'role' => 'admin',
-            ],
             // Agent
             [
                 'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',

@@ -9,15 +9,12 @@ class Category extends Model
 {
     use HasFactory;
     protected $fillable = [
-
         'image',
         'name',
         'description',
-        
-
     ];
     public function project()
     {
-        return $this->belongsTo(Project::class, 'id', 'category_id');
+        return $this->hasMany(Project::class);
     }
 }
