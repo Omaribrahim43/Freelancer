@@ -1270,7 +1270,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	font-size:16px;
 	font-weight:400;
 	margin: 0 0 5px;
-	line-height:16px;
+	line-height:32px;
 }
 .wt-username span{
 	display:block;

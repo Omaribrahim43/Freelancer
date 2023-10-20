@@ -122,7 +122,7 @@ export default function content() {
                           <div className="wt-signupcontent">
                             <div className="wt-title">
                               <h2>
-                                <span>Signup as</span>Worktern Pro
+                                <span>Signup as</span>Freelancer
                               </h2>
                             </div>
                             <div className="wt-description">

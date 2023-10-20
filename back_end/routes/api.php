@@ -49,6 +49,7 @@ Route::post('features/create', [FeatureController::class, 'store'])->name('store
 
 
 Route::post('orders/create', [OrderController::class, 'store'])->name( 'store.order');
+Route::get('orders/project/{id}', [OrderController::class, 'projectOrders'])->name( 'projectOrders.order');
 // Reviews 
 // Route::resources(ReviewController::class)
 Route::get('reviews', [ReviewController::class, 'index'])->name('show.reviews');
