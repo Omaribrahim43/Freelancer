@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\FeatureController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -43,7 +44,7 @@ Route::get('features/project/{id}', [FeatureController::class, 'projectFeatures'
 Route::post('features/create', [FeatureController::class, 'store'])->name('store.projects');
 
 
-
+Route::post('orders/create', [OrderController::class, 'store'])->name( 'store.order');
 
 
 // login 
