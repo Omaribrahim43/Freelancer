@@ -16,6 +16,9 @@ export default function Content() {
   const [project, setProject] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
+  const [maxPrice, setMaxPrice] = useState('');
+  const [minPrice, setMinPrice] = useState(''); // Input field for minimum price
+
   const projectsPerPage = 5;
 
   useEffect(() => {
@@ -25,7 +28,10 @@ export default function Content() {
         const filteredData = response.data.filter((project) => {
           return (
             project.category_id === parseInt(id) &&
-            project.title.toLowerCase().includes(searchQuery.toLowerCase())
+            project.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
+            (minPrice === '' || parseFloat(project.price) <= parseFloat(minPrice))
+            &&
+            (maxPrice === '' || parseFloat(project.price) >= parseFloat(maxPrice))
           );
         });
         setProject(filteredData);
@@ -35,7 +41,7 @@ export default function Content() {
     }
 
     fetchData();
-  }, [id, searchQuery]);
+  }, [id, searchQuery, minPrice, maxPrice]);
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -119,6 +125,7 @@ export default function Content() {
   };
 
   // ===============search in bar=====================
+
   // ===============side bar=====================
 
   const [activeCategory, setActiveCategory] = useState(null);
@@ -126,11 +133,24 @@ export default function Content() {
   const handleCategoryClick = (categoryId) => {
     setActiveCategory(categoryId);
   };
+  const [pricemin, setPricemin] = useState(10);
+  const handleInputmin = (emin) => {
+    setPricemin(emin.target.value);
+  }
+  const [pricemax, setPricemax] = useState(10);
+  const handleInputmax = (emax) => {
+    setPricemax(emax.target.value);
+  }
 
+  const divStyle = {
+    transform: 'rotate(180deg)'
+  };
   return (
     <>
       <div className="wt-haslayout wt-main-section">
-        {/* User Listing Start */}
+
+
+
         <div className="wt-haslayout">
           <div className="container">
             <div className="row">
@@ -150,14 +170,18 @@ export default function Content() {
                             <div className="form-group">
                               {/* ====search========= */}
                               <div className="input-wrapper">
-                                <input
+                                {/* <input
                                   type="text"
                                   placeholder="Search by name..."
                                   value={searchQuery}
                                   onChange={handleSearchInputChange}
                                   onKeyUp={handleChange}
                                   className="search-input"
-                                />
+                                /> */}
+                                <input type="text" value={searchQuery}
+                                  onChange={handleSearchInputChange}
+                                  onKeyUp={handleChange} name="Search" class="form-control" placeholder="Search Company"></input>
+                                <span href="javascrip:void(0);" class="wt-searchgbtn"><i class="lnr lnr-magnifier"></i></span>
                                 {/* <input
                                   type="text"
                                   name="Search"
@@ -185,12 +209,108 @@ export default function Content() {
                   className="form-control"
                   placeholder="Search Company"
                 /> */}
-                              
+
                             </div>
                           </fieldset>
                         </form>
 
                       </div>
+                    </div>
+                    <div className="wt-widget wt-startsearch">
+                      <div className="wt-widgettitle">
+                        <h2>Start Your Search</h2>
+
+
+
+                      </div>
+
+                      <div className="App">
+
+                        {/* <input type="range" onInput={handleInput} /> */}
+                        {/* <h1>Price: {price}</h1> */}
+                        <div>
+                          {/* <label htmlFor="minPrice">Max Price:</label>
+                          <input
+                            onInput={handleInput}
+                            type="range"
+                            min={10}
+                            max={500}
+                            step={10}
+                            id="minPrice"
+                            value={minPrice}
+                            onChange={(e) => setMinPrice(e.target.value)}
+                          />
+                          <h1>Price: <h1>Price: {price}</h1></h1> */}
+
+
+
+                          <label for="mintemp">Choose a min price:</label><br />
+                          <h6>min Price: {pricemin}</h6>
+                          <input onInput={handleInputmin}
+                            type="range"
+                            min={0}
+                            max={100}
+                            step={20}
+                            id="minPrice"
+                            value={minPrice}
+                            onChange={(e) => setMinPrice(e.target.value)} name="mintemp" list="values" />
+
+                          <datalist id="mintemp">
+                            <option value="0" label="0"></option>
+                            <option value="20" label="20"></option>
+                            <option value="40" label="40"></option>
+                            <option value="60" label="60"></option>
+                            <option value="70" label="70"></option>
+                            <option value="80" label="80"></option>
+                            <option value="90" label="90"></option>
+                            <option value="100" label="100"></option>
+                          </datalist>
+
+
+                          <label for="maxtemp">Choose a max price:</label><br />
+                          <h6>max Price: {pricemax}</h6>
+                          <input onInput={handleInputmax}
+                            style={divStyle}
+                            type="range"
+
+                            min={0}
+                            max={100}
+                            step={20}
+                            // id="minPrice"
+                            value={maxPrice}
+                            onChange={(emax) => setMaxPrice(emax.target.value)} name="maxtemp" list="maxtemp" />
+
+                          <datalist id="maxtemp">
+                            {/* <option value="0" label="0"></option>
+                            <option value="20" label="20"></option>
+                            <option value="40" label="40"></option>
+                            <option value="60" label="60"></option>
+                            <option value="70" label="70"></option>
+                            <option value="80" label="80"></option>
+                            <option value="90" label="90"></option>
+                            <option value="100" label="100"></option> */}
+                            <option value="100-100" label="0"></option>
+                            <option value="100-80" label="20"></option>
+                            <option value="100-60" label="40"></option>
+                            <option value="100-40" label="60"></option>
+                            <option value="100-20" label="80"></option>
+                            <option value="100-0" label="100"></option>
+
+                            {/* <option value="100" label="100"></option>
+                            <option value="90" label="90"></option>
+                            <option value="80" label="80"></option>
+                            <option value="70" label="70"></option>
+                            <option value="60" label="60"></option>
+                            <option value="50" label="50"></option>
+                            <option value="40" label="40"></option>
+                            <option value="30" label="30"></option>
+                            <option value="20" label="20"></option>
+                            <option value="10" label="10"></option> */}
+
+                          </datalist>
+                        </div>
+                      </div>
+
                     </div>
                     {/* <SearchInput searchQuery={searchQuery} handleSearchInputChange={handleSearchInputChange} /> */}
 
@@ -421,7 +541,7 @@ export default function Content() {
       </div> */}
                     <div className="wt-userlistingtitle">
                       <span>
-                        01 - 48 of {project.length} results for <em>"Software House"</em>
+                        01 - 48 of {project.length} results for <em>"{category.name}"</em>
                       </span>
                     </div>
                     <div className="wt-filterholder">
@@ -446,6 +566,12 @@ export default function Content() {
                                     <i className="fa fa-check-circle"></i> Verified Company
                                   </a>
                                   <h2>{item.title}</h2>
+                                  <h5>desc{item.desc}</h5>
+                                  <h5>rating{item.rating}</h5>
+                                  <h5>price {item.price}</h5>
+                                  <h5>deadline{item.deadline}</h5>
+                                  <h6>{item.buyers}</h6>
+                                  <h6>{item.status}</h6>
                                 </div>
                                 <ul className="wt-postarticlemeta">
                                   <li>

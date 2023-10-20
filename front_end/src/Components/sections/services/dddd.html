@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Style for the dual-range slider */
+        .dual-range-slider {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Style for each range input */
+        .dual-range-slider input[type="range"] {
+            width: 45%; /* Adjust the width as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="dual-range-slider">
+        <!-- Left side of the range slider -->
+        <input type="range" id="range-left" min="-10" max="10" step="0.1" value="-10">
+        
+        <!-- Right side of the range slider -->
+        <input type="range" id="range-right" min="-10" max="10" step="0.1" value="10">
+    </div>
+    
+    <script>
+        const rangeLeft = document.getElementById("range-left");
+        const rangeRight = document.getElementById("range-right");
+        
+        // Update the left input when the right input changes
+        rangeRight.addEventListener("input", function () {
+            if (parseFloat(rangeRight.value) < parseFloat(rangeLeft.value)) {
+                rangeLeft.value = rangeRight.value;
+            }
+        });
+        
+        // Update the right input when the left input changes
+        rangeLeft.addEventListener("input", function () {
+            if (parseFloat(rangeLeft.value) > parseFloat(rangeRight.value)) {
+                rangeRight.value = rangeLeft.value;
+            }
+        });
+    </script>
+</body>
+</html>

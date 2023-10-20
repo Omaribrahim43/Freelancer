@@ -14,7 +14,7 @@ class Review extends Model
         'project_id',
         'rating',
         'comment',
-        'review_datel',
+        'review_date',
     ];
 
     public function project()

@@ -2,6 +2,7 @@ import Home from "./Components/pages/home";
 import About from "./Components/pages/about";
 import Services from "./Components/pages/services";
 import Single from "./Components/pages/single";
+import Yacht from "./Components/sections/services/test";
 
 import {Searchbar} from "./Components/sections/services/searchbar";
 
@@ -49,6 +50,7 @@ console.log(Auth);
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services/:id" element={<Services />} />
+          <Route path="/Yacht" element={<Yacht />} />
           {/* <Route path="/services" element={<Services />} /> */}
   
         {/* <Route path="/project" element={<Project />} /> */}
