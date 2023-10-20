@@ -25,6 +25,33 @@
 	margin: 0px;
 	padding: 0px;
 }
+
+datalist {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  writing-mode: vertical-lr;
+  width: 280px;
+}
+
+option {
+  padding: 0;
+}
+
+input[type="range"] {
+  width: 300px;
+  margin: 0;
+}
+
+
+/* link:active  {
+  color: red;
+} */ */
+
+.active {
+  color: red !important;
+}
+
 body {
 	color: #767676;
 	background: #fff;
@@ -168,7 +195,7 @@ form p span i {
 	color: #474747;
 	position: absolute;
 }
-option { padding: 5px 15px; }
+option { padding: 5px 8px; }
 li {
 	line-height: 28px;
 	list-style: disc inside none;
@@ -3162,13 +3189,15 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-searchgbtn{
 	top: 0;
 	right: 0;
-	color:#fff;
+	color:#000;
 	width: 50px;
 	display: block;
-	line-height: 50px;
+	line-height: 48px;
 	position: absolute;
 	text-align: center;
-	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 	border-radius: 0 5px 5px 0;
 }
 .wt-searchgbtn:hover,
