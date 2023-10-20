@@ -25,6 +25,7 @@ class AuthenticatedSessionController extends Controller
     {
         // Get the authenticated user
         $user = Auth::user();
+        
 
         // Load the 'reviews' and 'order' relationships using Eager Loading via a query builder context
         $userWithRelationships = User::with(['reviews', 'order', "projects"])->find($user->id);

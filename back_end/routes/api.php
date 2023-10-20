@@ -10,7 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,6 +29,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('users', [UserController::class, 'index']);
 
 Route::get('users/{id}', [UserController::class, 'getuser']);
+Route::put('users/update/{id}', [UserController::class, 'updateUser']);
+Route::put('users/updatepass/{id}', [UserController::class, 'updateUserPass']);
+
 
 Route::get('projects', [ProjectController::class, 'index'])->name('show.projects');
 Route::get('projects/category/{id}', [ProjectController::class, 'categoryProjects'])->name('show.category.projects');
@@ -74,3 +77,5 @@ Route::get('/usersss', [AuthenticatedSessionController::class, 'User2']);
 Route::post('/register', [RegisteredUserController::class, 'store'])
     ->middleware('guest')
     ->name('register');
+Route::post('/googlelogin', [AuthController::class, 'googleLogin']);
+

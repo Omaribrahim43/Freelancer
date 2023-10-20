@@ -8,9 +8,11 @@ import {Navigate} from "react-router-dom";
 export default function Header() {
 const data = useSelector((state) => state.user);
 const login = useSelector((state) => state.isAuthenticated);
+
+const Auth = useSelector((state) => state.isAuthenticated);
+console.log(Auth);
 const dispatch = useDispatch();
 
-const Auth = !!localStorage.getItem("user");
 function handleLogout() {
   localStorage.removeItem("user");
 
@@ -30,12 +32,7 @@ function handleLogout() {
                     <div className="row">
                       <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <strong className="wt-logo">
-                          <a href="index-2.html">
-                            <img
-                              src="images/user-login.png"
-                              alt="img description"
-                            />
-                          </a>
+                         
                         </strong>
                         <div className="wt-rightarea">
                           <nav id="wt-nav" className="wt-nav navbar-expand-lg">

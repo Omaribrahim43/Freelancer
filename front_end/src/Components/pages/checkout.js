@@ -92,7 +92,13 @@ const onApprove = async (data, actions) => {
           currency: details.purchase_units[0].amount.currency_code,
           timestamp: details.create_time,
       };
-
+const amount = paymentData.amount;
+const method = paymentData.method;
+const payername = paymentData.payer.name;
+const payeremail = paymentData.payer.email;
+const  userId= user.id;
+const projectId = id;
+const  duration= Duration;
       // Additional order and feature details
       const orderDetails = {
           duration: Duration,
@@ -107,9 +113,11 @@ const onApprove = async (data, actions) => {
 
       // Combine all data into a single object
       const requestData = {
-          paymentData,
-          orderDetails,
-          featureIds,
+        amount,
+        method,
+        userId,
+        projectId,
+        duration,
       };
 
       console.log('requestData' , requestData);
@@ -119,9 +127,16 @@ const onApprove = async (data, actions) => {
         const csrfToken = csrfResponse.data.csrf_token;
         axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
         console.log('csrfResponse:', csrfResponse);
-        const response = await axios.post('/orders/create', requestData);
+        const response = await axios.post("/orders/create", {
+          amount,
+          method,
+          userId,
+          projectId,
+          duration,
+          featureIds,
+        });
 
-        console.log('Data sent to Laravel:', response.data);
+        console.log('Data sent to Laravel:', response);
     } catch (error) {
         console.error('Error sending data to Laravel:', error);
     }
