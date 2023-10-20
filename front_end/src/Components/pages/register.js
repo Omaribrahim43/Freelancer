@@ -3,13 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Container, Card, Col, Input, Row, CardBody } from "reactstrap";
 import axios from "../../axios/axios";
-
-
+import Google from "./google"
+import { useDispatch } from "react-redux";
 import { Form } from "react-bootstrap";
+import { loginSuccess } from "../../redux/action";
 
 const SignUp = () => {
   document.title = "Sign Up";
-
+const dispatch = useDispatch();
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [name, setname] = useState("");
@@ -30,11 +31,13 @@ const SignUp = () => {
         password,
         password_confirmation,
       });
+        dispatch(loginSuccess(response.data.user));
+      
       setemail("");
       setpassword("");
       setname("");
       setpasswordConfirmation("");
-      console.log(response.data);
+      console.log(response);
       navigate("/");
     } catch (e) {
       console.log(e);
@@ -156,6 +159,7 @@ const SignUp = () => {
                                     {" "}
                                     Sign In{" "}
                                   </Link>
+                                  <Google/>
                                 </p>
                               </div>
                             </div>

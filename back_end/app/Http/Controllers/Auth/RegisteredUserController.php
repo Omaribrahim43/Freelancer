@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Http\JsonResponse;
 
 class RegisteredUserController extends Controller
 {
@@ -18,11 +19,12 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): Response
+
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -35,7 +37,16 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+        // Load the 'reviews' and 'order' relationships using Eager Loading via a query builder context
+        $user = Auth::user();
 
-        return response()->noContent();
+        $userWithRelationships = User::with(['reviews', 'order', "projects"])->find($user->id);
+
+        if ($userWithRelationships) {
+            return response()->json(['user' => $userWithRelationships]);
+        } else {
+            return response()->json(['message' => 'User not found'], 404);
+        }
     }
+
 }
