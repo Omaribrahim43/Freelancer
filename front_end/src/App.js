@@ -1,6 +1,8 @@
 import Home from "./Components/pages/home";
 import About from "./Components/pages/about";
 import Services from "./Components/pages/services";
+// import Singel from "./Components/pages/singel";
+import Profile from "./Components/pages/profile";
 import Single from "./Components/pages/single";
 import Yacht from "./Components/sections/services/test";
 
@@ -76,12 +78,12 @@ function App() {
         />
         <Route path="/single/:id" element={<Single />} />
         <Route path="/add-service" element={<AddService />} />
-          <Route path="/checkout/:id" element={<Checkout />} />
-
-      </Routes>
-    </Router>
-  )
-
+          <Route path="/checkout/:id" element={isAuthenticated ? <Checkout /> : <Login />}/>
+          <Route path="/my_profile" element={<Profile />} />
+        </Routes>
+      </Router>
+   
+  );
 }
 
 export default App;

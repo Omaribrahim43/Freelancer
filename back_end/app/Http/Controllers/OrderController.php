@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Order_feature;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -41,7 +43,7 @@ class OrderController extends Controller
        
         // $data = $data['amount']['data'];
         // $data =$data['project_id'];
-     Order::create([
+   $Order=  Order::create([
             'amount' => $request->amount,
             'payment_method' => $request->method,
             'duration' => $request->duration,
@@ -49,7 +51,19 @@ class OrderController extends Controller
             'user_id' => $request->userId,
             
         ]);
-    
+
+
+        $features = $request->featureIds;
+        if ($features) {
+        foreach ($features as  $value) {
+            Order_feature::create([
+                'order_id'=> $Order->id,
+                'feature_id'=> $value,
+
+            ]);
+        }
+        }
+
         // Attach feature IDs to the order (assuming a many-to-many relationship)
         // $order->features()->sync($featureIds);
     

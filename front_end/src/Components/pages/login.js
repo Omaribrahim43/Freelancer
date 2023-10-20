@@ -5,6 +5,7 @@
   import { useNavigate } from "react-router-dom";
   import axios from "../../axios/axios";
   import { GoogleLogin } from "@react-oauth/google";
+  import { useParams } from "react-router-dom";
   //Import Image
   // import lightLogo from "../../assets/images/logo-light.png";
   // import darkLogo from "../../assets/images/logo-dark.png";
@@ -17,6 +18,7 @@
 
   const SignIn = ({isAuthenticated, user, loginSuccess, logoutSuccess}) => {
   ;
+  const { id } = useParams();
   
 
     const handleLogout = () => {
@@ -53,7 +55,13 @@
         const data = await axios.get("/user");
         loginSuccess(data.data.user);
         console.log(data.data.user);
-        navigate("/");
+// if (id){
+//    navigate(`checkout/${id}`);
+//    console.log("ccccc");
+// }else{
+   navigate(-1);
+
+// }
         // console.log(response); // Log the user information
       } catch (error) {
         console.log(error);

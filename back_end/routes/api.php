@@ -29,6 +29,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('users', [UserController::class, 'index']);
 
 Route::get('users/{id}', [UserController::class, 'getuser']);
+Route::put('users/update/{id}', [UserController::class, 'updateUser']);
+Route::put('users/updatepass/{id}', [UserController::class, 'updateUserPass']);
+
 
 Route::get('projects', [ProjectController::class, 'index'])->name('show.projects');
 Route::get('projects/category/{id}', [ProjectController::class, 'categoryProjects'])->name('show.category.projects');

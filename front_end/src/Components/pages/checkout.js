@@ -133,6 +133,7 @@ const  duration= Duration;
           userId,
           projectId,
           duration,
+          featureIds,
         });
 
         console.log('Data sent to Laravel:', response);
