@@ -34,6 +34,10 @@ class Project extends Model
     {
         return $this->belongsTo(User::class, 'seller_id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id', 'seller_id');
+    }
 
     public function order()
     {

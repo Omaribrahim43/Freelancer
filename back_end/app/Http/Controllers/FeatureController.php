@@ -19,6 +19,12 @@ class FeatureController extends Controller
         return response()->json($features);
     }
 
+
+    public function projectFeatures($id)
+    {
+        $features = Feature::where('project_id', $id)->get();
+        return response()->json($features);
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -14,7 +14,7 @@ class Review extends Model
         'project_id',
         'rating',
         'comment',
-        'review_datel',
+        'review_date',
     ];
 
     public function project()
@@ -24,6 +24,6 @@ class Review extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id', 'client_id');
+        return $this->belongsTo(User::class, 'id', 'user_id');
     }
 }

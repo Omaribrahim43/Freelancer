@@ -30,4 +30,8 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'id', 'client_id');
     }
+    public function features()
+{
+    return $this->belongsToMany(Feature::class);
+}
 }
