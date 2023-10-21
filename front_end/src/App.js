@@ -6,6 +6,7 @@ import Profile from "./Components/pages/profile";
 import Single from "./Components/pages/single";
 import Articles from "./Components/pages/Articles";
 import Article from "./Components/pages/Article";
+import Freelancer from "./Components/pages/FreelancerProfile";
 import Yacht from "./Components/sections/services/test";
 
 // import { Searchbar } from "./Components/sections/services/searchbar";
@@ -78,6 +79,7 @@ function App() {
         <Route path="/my_profile" element={<Profile />} />
         <Route path="/articles" element={<Articles />} />
         <Route path="/article" element={<Article />} />
+        <Route path="/Freelancer/:id" element={<Freelancer />} />
       </Routes>
     </Router>
 
