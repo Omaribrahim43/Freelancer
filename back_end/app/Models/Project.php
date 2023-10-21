@@ -28,11 +28,11 @@ class Project extends Model
     }
     public function category()
     {
-        return $this->hasMany(Category::class, 'id', 'project_id');
+        return $this->hasMany(Category::class, 'id', 'category_id');
     }
     public function user()
     {
-        return $this->belongsTo(User::class, 'id', 'seller_id');
+        return $this->belongsTo(User::class,'seller_id', 'id');
     }
 
     public function order()

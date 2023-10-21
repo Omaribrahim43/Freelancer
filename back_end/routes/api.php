@@ -54,6 +54,7 @@ Route::get('orders/project/{id}', [OrderController::class, 'projectOrders'])->na
 // Route::resources(ReviewController::class)
 Route::get('reviews', [ReviewController::class, 'index'])->name('show.reviews');
 Route::get('review/{id}', [ReviewController::class, 'oneReview'])->name('show.one.review');
+Route::get('review/project/{id}', [ReviewController::class, 'projectReviews'])->name('show.one.review');
 Route::post('reviews/store', [ReviewController::class, 'store'])->name('store.reviews');
 Route::post('reviews/add', [ReviewController::class, 'create'])->name('add.reviews');
 Route::put('reviews/update/{id}', [ReviewController::class, 'update'])->name('update.reviews');
