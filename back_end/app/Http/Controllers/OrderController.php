@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Order_feature;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -12,9 +14,10 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function projectOrders($id)
     {
-        //
+        $Orders = Order::where('project_id', $id)->get();
+        return response()->json($Orders);
     }
 
     /**
@@ -35,7 +38,39 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Retrieve the data, including payment, order, and feature IDs
+      
+        $data = $request->all();
+       
+        // $data = $data['amount']['data'];
+        // $data =$data['project_id'];
+   $Order=  Order::create([
+            'amount' => $request->amount,
+            'payment_method' => $request->method,
+            'duration' => $request->duration,
+            'project_id' => $request->projectId,
+            'user_id' => $request->userId,
+            
+        ]);
+
+
+        $features = $request->featureIds;
+        if ($features) {
+        foreach ($features as  $value) {
+            Order_feature::create([
+                'order_id'=> $Order->id,
+                'feature_id'=> $value,
+
+            ]);
+        }
+        }
+
+        // Attach feature IDs to the order (assuming a many-to-many relationship)
+        // $order->features()->sync($featureIds);
+    
+        // You can also perform any additional logic here
+    
+        return response()->json($data);
     }
 
     /**

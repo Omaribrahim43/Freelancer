@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import Footer from "../layouts/Footer";
 import Header from "../layouts/Header";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../axios/axios";
+import { useSelector} from "react-redux";
 
 
 export default function AddService() {
+  const userData = useSelector((state) => state.user);
+
     const [category, setCategory] = useState([]);
     const [project, setProject] = useState({
-      seller_id: "",
+      seller_id: userData.id,
       category_id: "",
       title: "",
       image: null,
@@ -20,8 +23,12 @@ export default function AddService() {
   
     useEffect(() => {
         async function fetchData() {
+      
           try {
-            const response = await axios.get("http://127.0.0.1:8000/api/categories");
+            const csrfResponse = await axios.get("/get-csrf-token");
+            const csrfToken = csrfResponse.data.csrf_token;
+            axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+            const response = await axios.get("/categories");
             setCategory(response.data);
           } catch (error) {
             console.error("Error fetching data:", error);
@@ -62,8 +69,12 @@ export default function AddService() {
       });
   
       try {
+        const csrfResponse = await axios.get("/get-csrf-token");
+        const csrfToken = csrfResponse.data.csrf_token;
+        axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+
         const projectResponse = await axios.post(
-          "http://127.0.0.1:8000/api/projects/add",
+          "/projects/add",
           formData
         );
         alert("Project added successfully!");
@@ -77,6 +88,22 @@ export default function AddService() {
     <>
       <Header />
       <link rel="stylesheet" href="css/dashboard.css"></link>
+
+      <div class="wt-haslayout wt-innerbannerholder">
+				<div class="container">
+					<div class="row justify-content-md-center">
+						<div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
+							<div class="wt-innerbannercontent">
+							<div class="wt-title"><h2>Add Service</h2></div>
+							<ol class="wt-breadcrumb">
+								<li><a href="index-2.html">Home</a></li>
+								<li><a href="javascript:void(0);">Add Service</a></li>
+							</ol>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
       <div id="wt-wrapper" className="wt-wrapper wt-haslayout">
         <div className="wt-contentwrapper">
@@ -139,10 +166,10 @@ export default function AddService() {
                                     seller_id: e.target.value,
                                   }));
                                 }}
-                                type="number"
+                                type="hidden"
                                 name="seller_id"
                                 className="form-control"
-                                placeholder="Seller ID"
+                                value={project.seller_id}
                               />
                             </div>
                        

@@ -22,6 +22,7 @@ class User extends Authenticatable
         'image',
         'username',
         // 'first_name',
+        'google_id',
         'name',
         'email',
         'password',
@@ -42,7 +43,7 @@ class User extends Authenticatable
 
     public function order()
     {
-        return $this->hasMany(Order::class, 'id', 'client_id');
+        return $this->hasMany(Order::class, 'id', 'user_id');
     }
     /**
      * The attributes that should be hidden for serialization.
@@ -50,7 +51,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 

@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
 
             // Admin
             [
+                "id"=>1,
                 'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
                 'username' => 'omar.migdady',
                 'name' => 'omar',
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
                 'role' => 'admin',
             ],
             [
+                "id" => 2,
                 'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
                 'username' => 'hussam.odat',
                 'name' => 'hussam',
@@ -37,6 +39,8 @@ class UserSeeder extends Seeder
                 'role' => 'admin',
             ],
             [
+                "id" => 3,
+
                 'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
                 'username' => 'sereen.qamhia',
                 'name' => 'sereen',
@@ -46,6 +50,8 @@ class UserSeeder extends Seeder
                 'role' => 'admin',
             ],
             [
+                "id" => 4,
+
                 'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
                 'username' => 'leena.rababah',
                 'name' => 'leena',
@@ -55,6 +61,8 @@ class UserSeeder extends Seeder
                 'role' => 'admin',
             ],
             [
+                "id" => 5,
+
                 'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
                 'username' => 'ahmad.tamimi',
                 'name' => 'ahmad',
@@ -64,6 +72,8 @@ class UserSeeder extends Seeder
                 'role' => 'admin',
             ],
             [
+                "id" => 6,
+
                 'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
                 'username' => 'anfal.dherat',
                 'name' => 'anfal',
@@ -74,6 +84,8 @@ class UserSeeder extends Seeder
             ],
             // Agent
             [
+                "id" => 7,
+
                 'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
                 'username' => 'Freelancer',
                 'name' => 'freelancer',
@@ -85,6 +97,8 @@ class UserSeeder extends Seeder
 
             // User
             [
+                "id" => 8,
+
                 'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
                 'username' => 'Client',
                 'name' => 'client',
