@@ -73,7 +73,7 @@ function App() {
         <Route path="/login" element={isAuthenticated ? <Home /> : <Login />} />
         <Route path="/register" element={isAuthenticated ? <NavLink to="/" /> : <Register />} />
         <Route path="/single/:id" element={<Single />} />
-        <Route path="/add-service" element={data.role === 'provider' ? <AddService /> : <Navigate to="/" replace />} />
+        <Route path="/add-service" element={isAuthenticated ? data.role === 'freelancer' ? <AddService /> : <Navigate to="/" replace /> :<Navigate to="/" replace /> } />
         <Route path="/checkout/:id" element={isAuthenticated ? <Checkout /> : <Login />} />
         <Route path="/my_profile" element={<Profile />} />
         <Route path="/articles" element={<Articles />} />
