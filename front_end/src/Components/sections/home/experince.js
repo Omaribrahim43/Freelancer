@@ -1,62 +1,45 @@
 export default function exp() {
-    return (
-      <>
-        <section className="wt-haslayout wt-main-section">
-          <div className="container">
-            <div className="row">
-              <div className="col-12 col-sm-12 col-md-6 col-lg-6 float-left">
-                <figure className="wt-mobileimg">
-                  <img src="images/mobile-img.png" alt="img description" />
-                </figure>
-              </div>
-              <div className="col-12 col-sm-12 col-md-6 col-lg-6 float-left">
-                <div className="wt-experienceholder">
-                  <div className="wt-sectionhead">
-                    <div className="wt-sectiontitle">
-                      <h2>Limitless Experience</h2>
-                      <span>Roam Around With Your Business</span>
-                    </div>
-                    <div className="wt-description">
-                      <p>
-                        Dotem eiusmod tempor incune utnaem labore etdolore
-                        maigna aliqua enim poskina ilukita ylokem lokateise
-                        ination voluptate velit esse cillum dolore eu fugiat
-                        nulla pariatur lokaim urianewce.
-                      </p>
-                      <p>
-                        Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborumed
-                        perspiciatis.
-                      </p>
-                    </div>
-                    <ul className="wt-appicon">
-                      <li>
-                        <a href="javascript:void(0)">
-                          <figure>
-                            <img
-                              src="images/app-icon/img-01.png"
-                              alt="img description"
-                            />
-                          </figure>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0)">
-                          <figure>
-                            <img
-                              src="images/app-icon/img-02.png"
-                              alt="img description"
-                            />
-                          </figure>
-                        </a>
-                      </li>
-                    </ul>
+  return (
+    <>
+      <section className="wt-haslayout wt-main-section">
+        <div className="container">
+          <div className="row">
+            <div className="col-12 col-sm-12 col-md-6 col-lg-6 float-left">
+              <figure className="wt-mobileimg">
+              <img src="images/windows-MYomVPpR5FU-unsplash.jpg" alt="img description" width="1000" height="200" />
+              </figure>
+            </div>
+            <div className="col-12 col-sm-12 col-md-6 col-lg-6 float-left">
+              <div className="wt-experienceholder">
+                <div className="wt-sectionhead">
+                  <div className="wt-sectiontitle">
+                    <h2>Join as a Freelancer</h2>
+                    {/* <span>Roam Around With Your Business</span> /}
                   </div>
+                  <div className="wt-description">
+                    <p>
+                    Are you a talented freelancer looking for exciting opportunities and projects? 
+
+                    </p>
+                    {/ <p>Join our platform to connect with clients, showcase your skills, and kickstart your freelance career.</p> */}
+                    <p>
+                    Whether you're a web developer, Degital Marketing, Business our platform provides a gateway to a diverse range of freelance gigs. You'll have the flexibility to choose projects that align with your strengths, set your own rates, and enjoy the freedom of working on your terms.
+                    </p>
+                  </div>
+                  <ul className="wt-appicon">
+                    <li>
+
+                    </li>
+                    <li>
+
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-      </>
-    );
+        </div>
+      </section>
+    </>
+  );
 }

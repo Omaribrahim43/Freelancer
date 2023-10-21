@@ -25,7 +25,27 @@
 	margin: 0px;
 	padding: 0px;
 }
+.category-description {
+	max-height: 4em; /* Adjust the maximum height as needed for two lines */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+  }
 
+  .explore-link {
+	text-decoration: none;
+	
+	color: #fff; /* Change the text color as needed */
+	padding: 8px 16px; /* Adjust the padding as needed */
+	border-radius: 5px; /* Add rounded corners if desired */
+	display: inline-block;
+	margin-top: 10px; /* Adjust the margin as needed */
+  }
+  
+  .explore-link i {
+	margin-left: 5px; /* Add space between "Explore" and the arrow icon */
+  }
+  
 datalist {
   display: flex;
   flex-direction: column;
@@ -1270,7 +1290,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	font-size:16px;
 	font-weight:400;
 	margin: 0 0 5px;
-	line-height:32px;
+	line-height:16px;
 }
 .wt-username span{
 	display:block;
