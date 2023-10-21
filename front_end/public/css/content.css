@@ -1,0 +1,25 @@
+datalist {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  writing-mode: vertical-lr;
+  width: 280px;
+}
+
+option {
+  padding: 0;
+}
+
+input[type="range"] {
+  width: 300px;
+  margin: 0;
+}
+
+
+/* link:active  {
+  color: red;
+} */ */
+
+.active {
+  color: red !important;
+}

@@ -14,9 +14,10 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function projectOrders($id)
     {
-        //
+        $Orders = Order::where('project_id', $id)->get();
+        return response()->json($Orders);
     }
 
     /**

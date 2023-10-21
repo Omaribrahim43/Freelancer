@@ -6,16 +6,19 @@ import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import { CLIENT_ID } from '../../Config/config';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { useSelector} from "react-redux";
-
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 export default function Checkout() {
-    const { id } = useParams();
+  const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const selectedFeatureIds = queryParams.get("features").split(',');
   console.log("SelectedFeatureIds Array:", selectedFeatureIds);
-  
+
   const [project, setProject] = useState({});
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [show, setShow] = useState(false);
@@ -23,8 +26,6 @@ export default function Checkout() {
   const [ErrorMessage, setErrorMessage] = useState("");
   const [orderID, setOrderID] = useState(false);
   const user = useSelector((state) => state.user);
-  // console.log("data:", data);
-
 
   useEffect(() => {
     // Fetch project details
@@ -34,78 +35,68 @@ export default function Checkout() {
 
     // Fetch features based on selectedFeatureIds
     axios.get(`http://127.0.0.1:8000/api/features`).then((response) => {
-    const featuresData = response.data;
+      const featuresData = response.data;
 
-    // Convert selectedFeatureIds to strings
-    const selectedFeatureIdsString = selectedFeatureIds.map(String);
+      // Convert selectedFeatureIds to strings
+      const selectedFeatureIdsString = selectedFeatureIds.map(String);
 
-    // Filter features based on string comparison
-    const features = featuresData.filter((feature) => selectedFeatureIdsString.includes(String(feature.id)));
+      // Filter features based on string comparison
+      const features = featuresData.filter((feature) => selectedFeatureIdsString.includes(String(feature.id)));
 
-    setSelectedFeatures(features);
-    console.log(features);
-  });
+      setSelectedFeatures(features);
+      console.log(features);
+    });
   }, []);
 
   let Duration = project.deadline + selectedFeatures.reduce((acc, feature) => acc + Number(feature.deadline), 0);
   let price = project.price + selectedFeatures.reduce((acc, feature) => acc + feature.price, 0);
- 
-  // const orderData = [
-  //   { key: 'price', value: price },
-  //   { key: 'duration', value: Duration },
-  //   { key: 'projectId', value: id },
-  // ];
-  
-  // // Serialize the data to JSON and store it in the session
-  // sessionStorage.setItem('order', JSON.stringify(orderData));
 
-
-   // creates a paypal order
-   const createOrder = (data, actions) => {
+  // creates a PayPal order
+  const createOrder = (data, actions) => {
     return actions.order.create({
-        purchase_units: [
-            {
-                description: "Service",
-                amount: {
-                    currency_code: "USD",
-                    value: price,
-                },
-            },
-        ],
-    }).then((orderID) => {
-            setOrderID(orderID);
-            return orderID;
-        });
-};
-
-// check Approval
-const onApprove = async (data, actions) => {
-  return actions.order.capture().then(function (details) {
-      const paymentData = {
-          amount: details.purchase_units[0].amount.value,
-          method: 'PayPal',
-          payer: {
-              name: details.payer.name.given_name + ' ' + details.payer.name.surname,
-              email: details.payer.email_address,
+      purchase_units: [
+        {
+          description: "Service",
+          amount: {
+            currency_code: "USD",
+            value: price,
           },
-          transactionId: details.id,
-          currency: details.purchase_units[0].amount.currency_code,
-          timestamp: details.create_time,
+        },
+      ],
+    }).then((orderID) => {
+      setOrderID(orderID);
+      return orderID;
+    });
+  };
+
+  // Check Approval
+  const onApprove = async (data, actions) => {
+    return actions.order.capture().then(function (details) {
+      const paymentData = {
+        amount: details.purchase_units[0].amount.value,
+        method: 'PayPal',
+        payer: {
+          name: details.payer.name.given_name + ' ' + details.payer.name.surname,
+          email: details.payer.email_address,
+        },
+        transactionId: details.id,
+        currency: details.purchase_units[0].amount.currency_code,
+        timestamp: details.create_time,
       };
-const amount = paymentData.amount;
-const method = paymentData.method;
-const payername = paymentData.payer.name;
-const payeremail = paymentData.payer.email;
-const  userId= user.id;
-const projectId = id;
-const  duration= Duration;
+      const amount = paymentData.amount;
+      const method = paymentData.method;
+      const payername = paymentData.payer.name;
+      const payeremail = paymentData.payer.email;
+      const userId = user.id;
+      const projectId = id;
+      const duration = Duration;
       // Additional order and feature details
       const orderDetails = {
-          duration: Duration,
-          price: price,
-          projectId: id,
-          userId: user.id,
-          // Other order-related fields
+        duration: Duration,
+        price: price,
+        projectId: id,
+        userId: user.id,
+        // Other order-related fields
       };
 
       // Feature IDs
@@ -120,45 +111,55 @@ const  duration= Duration;
         duration,
       };
 
-      console.log('requestData' , requestData);
+      console.log('requestData', requestData);
       const Approve = async (data) => {
-     try {
-        const csrfResponse = await axios.get("/get-csrf-token");
-        const csrfToken = csrfResponse.data.csrf_token;
-        axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
-        console.log('csrfResponse:', csrfResponse);
-        const response = await axios.post("/orders/create", {
-          amount,
-          method,
-          userId,
-          projectId,
-          duration,
-          featureIds,
-        });
+        try {
+          const csrfResponse = await axios.get("/get-csrf-token");
+          const csrfToken = csrfResponse.data.csrf_token;
+          axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+          console.log('csrfResponse:', csrfResponse);
+          const response = await axios.post("/orders/create", {
+            amount,
+            method,
+            userId,
+            projectId,
+            duration,
+            featureIds,
+          });
 
-        console.log('Data sent to Laravel:', response);
-    } catch (error) {
-        console.error('Error sending data to Laravel:', error);
-    }
+          console.log('Data sent to Laravel:', response);
+        } catch (error) {
+          console.error('Error sending data to Laravel:', error);
+        }
+      }
+      Approve();
 
-  }
-  Approve();
-    setSuccess(true);
-  });
-};
+      // Display a success alert using SweetAlert2
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Payment was successful!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setSuccess(true);
+          navigate(`/`);
+        }
+      });
+    });
+  };
 
-//capture likely error
-const onError = (data, actions) => {
-    setErrorMessage("An Error occured with your payment ");
-};
+  // Capture likely errors
+  const onError = (data, actions) => {
+    setErrorMessage("An Error occurred with your payment");
+  };
 
-useEffect(() => {
+  useEffect(() => {
     if (success) {
-        alert("Payment successful!!");
-        console.log('Order successful . Your order id is--', orderID);
+      alert("Payment successful!!");
+      console.log('Order successful. Your order id is--', orderID);
     }
-},[]);
-
+  }, []);
+  
   return (
     <>
       <Header />
@@ -172,8 +173,8 @@ useEffect(() => {
 							<div class="wt-title"><h2>Cheackout</h2></div>
 							<ol class="wt-breadcrumb">
 								<li><a href="index-2.html">Home</a></li>
-								<li><a href="javascript:void(0);">Projects</a></li>
-								<li > <a href="javascript:void(0);">Project Detail </a></li>
+								<li><a href="javascript:void(0);">Services</a></li>
+								<li > <a href="javascript:void(0);">Service Details </a></li>
 								<li class="wt-active">checkout</li>
 							</ol>
 							</div>
@@ -190,28 +191,30 @@ useEffect(() => {
           </span>
           <div className="wt-widget wt-companysinfo-jobsingle col-3">
                 <div className="wt-companysdetails">
-                  <figure>
+                 
                     <img src={project.image} alt="img description" />
-                  </figure>
+                
                  
                 </div>
          </div>
           <div className="wt-proposalhead col-3">
             <h2>Service</h2>
             <h3>{project.title}</h3>
-            <div className="selected-features">
-        <h5>Selected Features:</h5>
-        <ul>
-             {selectedFeatures.map((item) => (
-               <div key={item.id}>
-                 <li >{item.title} -- Additional cost of {item.price} JD .</li>
-                   </div>
-                
-                     ))}
-        </ul>
+          
+            {selectedFeatures && selectedFeatures.length > 0 ? (
+    <div className="selected-features">
+      <h5>Selected Features:</h5>
+      <ul>
+        {selectedFeatures.map((item) => (
+          <div key={item.id}>
+            <li>{item.title} -- Additional cost of {item.price} JD.</li>
           </div>
+        ))}
+      </ul>
+    </div>
+  ) : null}
 
-         </div>
+              </div>
 
          <div className="wt-proposalhead col-2 ">
             <h2 >Duration</h2>
