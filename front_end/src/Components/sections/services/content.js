@@ -274,7 +274,7 @@ export default function Content() {
                                 {/* <option value="70" label="70"></option>
                                 <option value="80" label="80"></option>
                                 <option value="90" label="90"></option> */}
-                                <option value="100" label="100"></option>
+                                <option value="100" label="100$"></option>
                               </datalist>
 
                               {/* 

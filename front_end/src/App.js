@@ -1,6 +1,7 @@
 import Home from "./Components/pages/home";
 import About from "./Components/pages/about";
 import Services from "./Components/pages/services";
+import Contactus from "./Components/pages/contactus";
 // import Singel from "./Components/pages/singel";
 import Profile from "./Components/pages/profile";
 import Single from "./Components/pages/single";
@@ -70,6 +71,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services/:id" element={<Services />} />
+        <Route path="/contactus" element={<Contactus />} />
 
         <Route path="/login" element={isAuthenticated ? <Home /> : <Login />} />
         <Route path="/register" element={isAuthenticated ? <NavLink to="/" /> : <Register />} />
