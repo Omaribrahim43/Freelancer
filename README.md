@@ -1,6 +1,7 @@
 # Freelancer
 
 Explore our freelancer website, connecting you with a skilled professional offering a variety of services tailored to your needs. With a commitment to delivering top-quality work, we're here to bring your ideas to life. Contact us today to get started.
+The website Created with the specified technologies and features that involves both the front-end (React) and back-end (Laravel, MySQL). 
 
 Schema link => https://drawsql.app/teams/omar-33/diagrams/freelancer
 
