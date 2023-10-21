@@ -58,7 +58,7 @@ export default function Detail() {
   const profile =project.seller_id;
 
   const profileButtonClick = (id) => {
-    navigate(`/profile/${id}`);
+    navigate(`/Freelancer/${id}`);
   };
 
   const handleFeatureChange = (event) => {
@@ -125,7 +125,7 @@ export default function Detail() {
                 </ul>
               </div>
               <div className="wt-btnarea">
-                <button onClick={() => profileButtonClick(profile)} className="wt-btn">
+                <button onClick={() => profileButtonClick(project.seller_id)} className="wt-btn">
                   See Profile
                 </button>
               </div>

@@ -18,7 +18,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        
         'image',
         'username',
         // 'first_name',
@@ -44,6 +43,10 @@ class User extends Authenticatable
     public function order()
     {
         return $this->hasMany(Order::class, 'id', 'user_id');
+    }
+    public function project()
+    {
+        return $this->hasMany(Project::class);
     }
     /**
      * The attributes that should be hidden for serialization.

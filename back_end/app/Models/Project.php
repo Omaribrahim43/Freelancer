@@ -20,7 +20,7 @@ class Project extends Model
         'deadline',
         'buyers',
         'status',
-        
+
     ];
     public function review()
     {
@@ -28,11 +28,11 @@ class Project extends Model
     }
     public function category()
     {
-        return $this->hasMany(Category::class, 'id', 'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
     public function user()
     {
-        return $this->belongsTo(User::class,'seller_id', 'id');
+        return $this->belongsTo(User::class, 'seller_id');
     }
 
     public function order()
@@ -42,7 +42,6 @@ class Project extends Model
 
     public function feature()
     {
-        $this->hasMany(Feature::class, 'id', 'project_id');
+        $this->hasMany(Feature::class);
     }
-    
 }
