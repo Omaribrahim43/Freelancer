@@ -1,3 +1,7 @@
+import Contactus from "../../pages/contactus";
+
+
+
 export default function content() {
     return (
       <>
@@ -41,20 +45,16 @@ export default function content() {
                                   <span>Start Today For a Great Future</span>
                                 </div>
                                 <div className="wt-description">
+                                  <h3>About Us</h3>
                                   <p>
-                                    Dotem eiusmod tempor incune utnaem labore
-                                    etdolore maigna aliqua eniina ilukita ylokem
-                                    lokateise ination voluptate velite esse
-                                    cillum dolore eu fugnulla pariatur lokaim
-                                    urianewce anim id est laborumed.
+                                    At Freelancers, we bridge the gap between visionary ideas and digital reality. We are a team of experienced freelance web development business analysts who are passionate about helping businesses harness the power of the web to drive growth and success.
                                   </p>
+                                  <h3>Our Mission</h3>
                                   <p>
-                                    Excepteur sint occaecat cupidatat non
-                                    proident, sunt in culpa officia deserunt
-                                    mollit anim id est laborumed perspiciatis
-                                    unde omnis isteatus error aluptatem
-                                    accusantium doloremque laudantium.
+                                    Our mission is to transform your business goals into functional and visually appealing web solutions. We understand that every business is unique, and that's why we approach each project with a fresh perspective. Our focus is not just on creating websites, but on crafting digital experiences that captivate your audience, streamline your operations, and boost your bottom line.
                                   </p>
+                                  
+                                 
                                 </div>
                               </div>
                               <div id="wt-statistics" className="wt-statistics">
@@ -113,14 +113,20 @@ export default function content() {
               </section>
               {/*Greetings & Welcome End*/}
               {/*Signup Start*/}
+              
               <section className="wt-haslayout">
                 <div className="container">
                   <div className="row">
+                    
                     <div className="col-12 col-sm-12 col-md-12 col-lg-12">
-                      <div className="wt-signupholder">
+                      <div className="wt-signupholder" style={{
+                        background: 'url(https://images.pexels.com/photos/3182792/pexels-photo-3182792.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)', backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat'}}>
                         <div className="col-12 col-sm-12 col-md-12 col-lg-6 pull-right">
+                          
                           <div className="wt-signupcontent">
-                            <div className="wt-title">
+                            <Contactus />
+                            {/* <div className="wt-title">
                               <h2>
                                 <span>Signup as</span>Freelancer
                               </h2>
@@ -140,7 +146,7 @@ export default function content() {
                               <a href="javascript:void(0);" className="wt-btn">
                                 What’s new
                               </a>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -211,7 +217,7 @@ export default function content() {
                           <div className="wt-teamholder">
                             <figure className="wt-speakerimg">
                               <img
-                                src="images/team/img-01.jpg"
+                                src="https://media.licdn.com/dms/image/D4E03AQGNKltWPRhB2Q/profile-displayphoto-shrink_800_800/0/1697909040131?e=1703116800&v=beta&t=67jJSSskj3nP6PXOSV1toHgdJ_WDOVqgBiqygEsgJOk"
                                 alt="image description"
                               />
                             </figure>
@@ -249,7 +255,7 @@ export default function content() {
                           <div className="wt-teamholder">
                             <figure className="wt-speakerimg">
                               <img
-                                src="images/team/img-02.jpg"
+                                src="https://media.licdn.com/dms/image/D4E35AQFf2naX75mL1w/profile-framedphoto-shrink_800_800/0/1695588382607?e=1698516000&v=beta&t=lBYk80Wwwmgn6i3D-WfnYl3n4r1vEuhC6MvA9MK-2UY"
                                 alt="image description"
                               />
                             </figure>
@@ -287,7 +293,7 @@ export default function content() {
                           <div className="wt-teamholder">
                             <figure className="wt-speakerimg">
                               <img
-                                src="images/team/img-03.jpg"
+                                src="https://media.licdn.com/dms/image/D4E35AQGAHYznobjoEA/profile-framedphoto-shrink_800_800/0/1695592792532?e=1698516000&v=beta&t=ESYEHRvk9Chq6w0GNYzK4Cmyi7X94PLwoj2JOiGcU-w"
                                 alt="image description"
                               />
                             </figure>
@@ -327,7 +333,7 @@ export default function content() {
                           <div className="wt-teamholder">
                             <figure className="wt-speakerimg">
                               <img
-                                src="images/team/img-04.jpg"
+                                src="https://media.licdn.com/dms/image/D4E35AQFuWAu8tO2FtA/profile-framedphoto-shrink_800_800/0/1695733676783?e=1698516000&v=beta&t=cr4c32QIZyHGzqOvEp9AR9xk0YeoYTEuyHQThTngwRQ"
                                 alt="image description"
                               />
                             </figure>
@@ -367,7 +373,7 @@ export default function content() {
                           <div className="wt-teamholder">
                             <figure className="wt-speakerimg">
                               <img
-                                src="images/team/img-05.jpg"
+                                src="https://media.licdn.com/dms/image/D4E35AQEl2KwtoDU-ig/profile-framedphoto-shrink_800_800/0/1696843526372?e=1698516000&v=beta&t=THVGhR9ByZ7n0yAs9q-HROijnuJtqWKxuRprBoUuFQ8"
                                 alt="image description"
                               />
                             </figure>
@@ -402,7 +408,7 @@ export default function content() {
                               </ul>
                             </div>
                           </div>
-                          <div className="wt-teamholder">
+                          {/* <div className="wt-teamholder">
                             <figure className="wt-speakerimg">
                               <img
                                 src="images/team/img-06.jpg"
@@ -521,7 +527,7 @@ export default function content() {
                                 </li>
                               </ul>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
