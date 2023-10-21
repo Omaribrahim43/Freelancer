@@ -6,9 +6,9 @@ import { NavLink } from "react-router-dom";
 
 import {Navigate} from "react-router-dom";
 export default function Header() {
-const data = useSelector((state) => state.user);
+const userData = useSelector((state) => state.user);
 const login = useSelector((state) => state.isAuthenticated);
-console.log('data', data);
+console.log('data', userData);
 const Auth = useSelector((state) => state.isAuthenticated);
 console.log(Auth);
 const dispatch = useDispatch();
@@ -51,12 +51,12 @@ function handleLogout() {
                               id="navbarNav">
                               <ul className="navbar-nav">
                                 <li className="menu-item-has-children page_item_has_children">
-                                {data.role ==='freelancer' ? (
+                                {Auth ? userData.role ==='freelancer' ? (
                                 <NavLink to="/add-service">+Add Service</NavLink>
                                  
                                 ) : (
                                   <span></span>
-                                )}
+                                ): <span></span> }
                                 </li>
                                 
                                 <li className="menu-item-has-children page_item_has_children">
@@ -88,9 +88,9 @@ function handleLogout() {
                                <li>
                                 <div className="wt-userlogedin">
                                   <figure className="wt-userimg">
-                                    {data.image ? (
+                                    {userData.image ? (
                                       <img
-                                        src={data.image}
+                                        src={userData.image}
                                         alt="image description"
                                       />
                                     ) : (
@@ -101,7 +101,7 @@ function handleLogout() {
                                     )}
                                   </figure>
                                   <div className="wt-username">
-                                  <NavLink to="/my_profile">  <h3>{data.name}</h3> </NavLink>
+                                  <NavLink to="/my_profile">  <h3>{userData.name}</h3> </NavLink>
                                    
                                   </div>
                                   
