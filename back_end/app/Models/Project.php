@@ -22,9 +22,10 @@ class Project extends Model
         'status',
         
     ];
+    
     public function review()
     {
-        return $this->hasMany(Review::class, 'id', 'project_id');
+        return $this->hasMany(Review::class, 'project_id','id' );
     }
     public function category()
     {
@@ -32,7 +33,7 @@ class Project extends Model
     }
     public function user()
     {
-        return $this->belongsTo(User::class, 'id', 'seller_id');
+        return $this->belongsTo(User::class, 'seller_id', 'id');
     }
 
     public function order()

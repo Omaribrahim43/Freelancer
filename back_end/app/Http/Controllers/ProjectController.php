@@ -31,10 +31,10 @@ class ProjectController extends Controller
     }
     public function oneProject($id)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::with(['review', 'user', 'review.user'])->findOrFail($id);
+
         return response()->json($project);
     }
-
     /**
      * Show the form for creating a new resource.
      *
