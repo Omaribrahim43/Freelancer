@@ -1,10 +1,6 @@
 import Home from "./Components/pages/home";
 import About from "./Components/pages/about";
 import Services from "./Components/pages/services";
-import Servicesrr from "./Components/pages/servicesrr";
-
-import CustomerReviews from "./Components/sections/services/reviews";
-
 // import Singel from "./Components/pages/singel";
 import Profile from "./Components/pages/profile";
 import Single from "./Components/pages/single";
@@ -12,7 +8,7 @@ import Articles from "./Components/pages/Articles";
 import Article from "./Components/pages/Article";
 import Yacht from "./Components/sections/services/test";
 
-import {Searchbar} from "./Components/sections/services/searchbar";
+// import { Searchbar } from "./Components/sections/services/searchbar";
 
 import Login from "./Components/pages/login";
 import Checkout from "./Components/pages/checkout";
@@ -25,7 +21,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Navigate } from 'react-router-dom';
 
 
-import {store} from '././redux/store';
+import { store } from '././redux/store';
 import './App.css';
 
 import AddService from "./Components/pages/AddService";
@@ -68,50 +64,23 @@ function App() {
   });
 
   return (
-
-    <>
-
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services/:id" element={<Services />} />
-          <Route path="/servicesrr/:id" element={<Servicesrr />} />
-          <Route path="/review" element={<CustomerReviews />} />
-          
-          {/* <Route path="/Yacht" element={<Yacht />} /> */}
-          {/* <Route path="/services" element={<Services />} /> */}
-  
-        {/* <Route path="/project" element={<Project />} /> */}
-        <Route path="/search" element={<Searchbar />} />
-        
-              
-          <Route path="/login" element={Auth ? <Home /> : <Login />} />
-          <Route
-            path="/register"
-            element={Auth ? <NavLink to="/" /> : <Register />}
-          />
-          {/* Define more routes here */}
-          <Route path="/single/:id" element={<Single />} />
-          <Route path="/add-service" element={<AddService />} />
-          <Route path="/checkout/:id" element={<Checkout />} />
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-                  <Route path="/services/:id" element={<Services />} />
+        <Route path="/services/:id" element={<Services />} />
 
         <Route path="/login" element={isAuthenticated ? <Home /> : <Login />} />
-        <Route path="/register"  element={isAuthenticated ? <NavLink to="/" /> : <Register />}/>
+        <Route path="/register" element={isAuthenticated ? <NavLink to="/" /> : <Register />} />
         <Route path="/single/:id" element={<Single />} />
-        <Route path="/add-service" element={data.role === 'provider' ? <AddService /> : <Navigate to="/" replace />}/>
-          <Route path="/checkout/:id" element={isAuthenticated ? <Checkout /> : <Login />}/>
-          <Route path="/my_profile" element={<Profile />} />
-          <Route path="/articles" element={<Articles />} />
-          <Route path="/article" element={<Article />} />
-        </Routes>
-      </Router>
-   
+        <Route path="/add-service" element={data.role === 'provider' ? <AddService /> : <Navigate to="/" replace />} />
+        <Route path="/checkout/:id" element={isAuthenticated ? <Checkout /> : <Login />} />
+        <Route path="/my_profile" element={<Profile />} />
+        <Route path="/articles" element={<Articles />} />
+        <Route path="/article" element={<Article />} />
+      </Routes>
+    </Router>
+
   );
 }
 
