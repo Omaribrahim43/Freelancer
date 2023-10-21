@@ -34,8 +34,7 @@ export default function banner(params) {
                     </div>
                     <div className="wt-description">
                       <p>
-                        Consectetur adipisicing elit sed dotem eiusmod tempor
-                        incuntes ut labore etdolore maigna aliqua enim.
+                      Passionately crafting your vision into reality. Your dreams, our expertise. Let's make it happen.
                       </p>
                     </div>
                   </div>
@@ -104,7 +103,7 @@ export default function banner(params) {
                     <div className="wt-videoshow">
                       <a
                         data-rel="prettyPhoto[video]"
-                        href="https://www.youtube.com/watch?v=J37W6DjqT3Q">
+                        href="https://youtu.be/ggHACGb0mtU?si=hc1HHL07lyiYkG_b">
                         <i className="fa fa-play" />
                       </a>
                     </div>

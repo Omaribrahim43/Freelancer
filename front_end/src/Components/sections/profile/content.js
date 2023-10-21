@@ -5,7 +5,9 @@ import Password from "./password";
 
 function Content() {
   return (
+    
     <main id="wt-main" className="wt-main wt-haslayout">
+      
       {/* Register Form Start */}
       <section className="wt-haslayout">
         <div className="row">

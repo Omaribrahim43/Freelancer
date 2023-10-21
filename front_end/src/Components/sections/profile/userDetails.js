@@ -49,6 +49,7 @@ function UserDetails() {
   };
 
   return (
+    
     <div
       className="wt-personalskillshold tab-pane active fade show"
       id="wt-skills"
