@@ -21,6 +21,7 @@ class User extends Authenticatable
         'image',
         'username',
         // 'first_name',
+        'google_id',
         'name',
         'email',
         'password',
@@ -41,7 +42,7 @@ class User extends Authenticatable
 
     public function order()
     {
-        return $this->hasMany(Order::class, 'id', 'client_id');
+        return $this->hasMany(Order::class, 'id', 'user_id');
     }
     public function project()
     {

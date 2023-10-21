@@ -12,9 +12,10 @@ class Order extends Model
     protected $fillable = [
 
         'project_id',
-        'client_id',
-        'order_date',
-        'status',
+        'amount',
+        'payment_method',
+        'user_id',
+        'duration',
        
     ];
 
@@ -28,7 +29,7 @@ class Order extends Model
     }
     public function user()
     {
-        return $this->belongsTo(User::class, 'id', 'client_id');
+        return $this->belongsTo(User::class, 'id', 'user_id');
     }
     public function features()
 {

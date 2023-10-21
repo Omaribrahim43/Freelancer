@@ -92,7 +92,13 @@ const onApprove = async (data, actions) => {
           currency: details.purchase_units[0].amount.currency_code,
           timestamp: details.create_time,
       };
-
+const amount = paymentData.amount;
+const method = paymentData.method;
+const payername = paymentData.payer.name;
+const payeremail = paymentData.payer.email;
+const  userId= user.id;
+const projectId = id;
+const  duration= Duration;
       // Additional order and feature details
       const orderDetails = {
           duration: Duration,
@@ -107,9 +113,11 @@ const onApprove = async (data, actions) => {
 
       // Combine all data into a single object
       const requestData = {
-          paymentData,
-          orderDetails,
-          featureIds,
+        amount,
+        method,
+        userId,
+        projectId,
+        duration,
       };
 
       console.log('requestData' , requestData);
@@ -119,9 +127,16 @@ const onApprove = async (data, actions) => {
         const csrfToken = csrfResponse.data.csrf_token;
         axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
         console.log('csrfResponse:', csrfResponse);
-        const response = await axios.post('/orders/create', requestData);
+        const response = await axios.post("/orders/create", {
+          amount,
+          method,
+          userId,
+          projectId,
+          duration,
+          featureIds,
+        });
 
-        console.log('Data sent to Laravel:', response.data);
+        console.log('Data sent to Laravel:', response);
     } catch (error) {
         console.error('Error sending data to Laravel:', error);
     }
@@ -157,8 +172,8 @@ useEffect(() => {
 							<div class="wt-title"><h2>Cheackout</h2></div>
 							<ol class="wt-breadcrumb">
 								<li><a href="index-2.html">Home</a></li>
-								<li><a href="javascript:void(0);">Projects</a></li>
-								<li > <a href="javascript:void(0);">Project Detail </a></li>
+								<li><a href="javascript:void(0);">Services</a></li>
+								<li > <a href="javascript:void(0);">Service Details </a></li>
 								<li class="wt-active">checkout</li>
 							</ol>
 							</div>
@@ -175,28 +190,30 @@ useEffect(() => {
           </span>
           <div className="wt-widget wt-companysinfo-jobsingle col-3">
                 <div className="wt-companysdetails">
-                  <figure>
+                 
                     <img src={project.image} alt="img description" />
-                  </figure>
+                
                  
                 </div>
          </div>
           <div className="wt-proposalhead col-3">
             <h2>Service</h2>
             <h3>{project.title}</h3>
-            <div className="selected-features">
-        <h5>Selected Features:</h5>
-        <ul>
-             {selectedFeatures.map((item) => (
-               <div key={item.id}>
-                 <li >{item.title} -- Additional cost of {item.price} JD .</li>
-                   </div>
-                
-                     ))}
-        </ul>
+          
+            {selectedFeatures && selectedFeatures.length > 0 ? (
+    <div className="selected-features">
+      <h5>Selected Features:</h5>
+      <ul>
+        {selectedFeatures.map((item) => (
+          <div key={item.id}>
+            <li>{item.title} -- Additional cost of {item.price} JD.</li>
           </div>
+        ))}
+      </ul>
+    </div>
+  ) : null}
 
-         </div>
+              </div>
 
          <div className="wt-proposalhead col-2 ">
             <h2 >Duration</h2>

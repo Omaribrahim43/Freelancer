@@ -18,10 +18,11 @@ return new class extends Migration
             $table->id();
             $table->string('image')->nullable();
             $table->string('username')->unique()->nullable();
+            $table->string('google_id')->unique()->nullable();
             $table->string('name');
             // $table->string('last_name')->nullable();
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('contact_info')->nullable();
             $table->enum('role', ['admin', 'freelancer', 'client'])->default('client');
             $table->integer('age')->nullable();

@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+
 class UserSeeder extends Seeder
 {
     /**
@@ -19,6 +20,8 @@ class UserSeeder extends Seeder
 
             // Agent
             [
+                "id" => 7,
+
                 'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
                 'username' => 'Freelancer',
                 'name' => 'freelancer',
@@ -30,6 +33,8 @@ class UserSeeder extends Seeder
 
             // User
             [
+                "id" => 8,
+
                 'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
                 'username' => 'Client',
                 'name' => 'client',

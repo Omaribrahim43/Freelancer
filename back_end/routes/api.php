@@ -10,7 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -49,10 +49,12 @@ Route::post('features/create', [FeatureController::class, 'store'])->name('store
 
 
 Route::post('orders/create', [OrderController::class, 'store'])->name( 'store.order');
+Route::get('orders/project/{id}', [OrderController::class, 'projectOrders'])->name( 'projectOrders.order');
 // Reviews 
 // Route::resources(ReviewController::class)
 Route::get('reviews', [ReviewController::class, 'index'])->name('show.reviews');
 Route::get('review/{id}', [ReviewController::class, 'oneReview'])->name('show.one.review');
+Route::get('review/project/{id}', [ReviewController::class, 'projectReviews'])->name('show.one.review');
 Route::post('reviews/store', [ReviewController::class, 'store'])->name('store.reviews');
 Route::post('reviews/add', [ReviewController::class, 'create'])->name('add.reviews');
 Route::put('reviews/update/{id}', [ReviewController::class, 'update'])->name('update.reviews');
@@ -77,3 +79,5 @@ Route::get('/usersss', [AuthenticatedSessionController::class, 'User2']);
 Route::post('/register', [RegisteredUserController::class, 'store'])
     ->middleware('guest')
     ->name('register');
+Route::post('/googlelogin', [AuthController::class, 'googleLogin']);
+

@@ -9,6 +9,7 @@ export default function Detail() {
   const { id } = useParams();
   const [project, setProject] = useState([]);
   const [features, setFeatures] = useState([]); 
+  const [buyers, setBuyers] = useState(''); 
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -22,6 +23,12 @@ export default function Detail() {
 
         const featuresResponse = await axios.get(`http://127.0.0.1:8000/api/features/project/${id}`);
         setFeatures(featuresResponse.data);
+
+        const buyresresponse = await axios.get(`http://127.0.0.1:8000/api/orders/project/${id}`);
+        setBuyers( buyresresponse.data.length ); 
+
+        
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -101,7 +108,7 @@ export default function Detail() {
                 <ul className="wt-userlisting-breadcrumb wt-userlisting-breadcrumbvtwo">
                   <li>
                     <span>
-                     Buyers : {project.buyers}
+                     Buyers : {buyers}
                     </span>
                   </li>
                
@@ -132,29 +139,7 @@ export default function Detail() {
                 </div>
                 <div className="wt-description">
                   <p>{project.desc}</p>
-                  <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
-                  <ul className="wt-projectliststyle">
-                    <li>
-                      <span>
-                        <i className="fa fa-check"></i>Nemo enim ipsam voluptatem quia
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        <i className="fa fa-check"></i>Adipisci velit, sed quia non numquam eius modi tempora
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        <i className="fa fa-check"></i>Eaque ipsa quae ab illo inventore veritatis et quasi architecto
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        <i className="fa fa-check"></i>qui dolorem ipsum quia dolor sit amet
-                      </span>
-                    </li>
-                  </ul>
+             
                   <br/> <br/>
                   {/* <p>Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porrom quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia nonae numquam eius modi tempora incidunt labore.</p> */}
                   <div className="wt-title">
@@ -201,35 +186,7 @@ export default function Detail() {
                  
                 </div>
               </div>
-              {/* <div className="wt-widget wt-sharejob">
-                <div className="wt-widgettitle">
-                  <h2>Ratings </h2>
-                </div>
-                <div className="wt-widgetcontent">
-                  <ul className="wt-socialiconssimple">
-                    <li className="wt-facebook">
-                      <a href="javascript:void(0)">
-                        <i className="fab fa-facebook-f"></i> Share on Facebook
-                      </a>
-                    </li>
-                    <li className="wt-twitter">
-                      <a href="javascript:void(0)">
-                        <i className="fab fa-twitter"></i> Share on Twitter
-                      </a>
-                    </li>
-                    <li className="wt-linkedin">
-                      <a href="javascript:void(0)">
-                        <i className="fab fa-linkedin-in"></i> Share on Linkedin
-                      </a>
-                    </li>
-                    <li className="wt-googleplus">
-                      <a href="javascript:void(0)">
-                        <i className="fab fa-google-plus-g"></i> Share on Google Plus
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div> */}
+             
               <div className="wt-widget wt-reportjob">
                 <div className="wt-widgettitle">
                   <h2>Order Now</h2>
@@ -237,8 +194,8 @@ export default function Detail() {
                 <div className="wt-widgetcontent">
                   <form className="wt-formtheme wt-formreport">
                   <div >
-                    <div>price = {project.price }  </div>
-                    <div>Total price = {project.price + totalPrice}  </div>
+                    <div className="wt-title"> <h5> Service price = {project.price }</h5>  </div>
+                    <div> <h3> Total price = {project.price + totalPrice} </h3> </div>
                    
                   </div>
                   <br></br>
@@ -253,34 +210,7 @@ export default function Detail() {
                   </form>
                 </div>
               </div>
-              {/* <div className="wt-widget wt-reportjob">
-                <div className="wt-widgettitle">
-                  <h2>Report This Job</h2>
-                </div>
-                <div className="wt-widgetcontent">
-                  <form className="wt-formtheme wt-formreport">
-                    <fieldset>
-                      <div className="form-group">
-                        <span className="wt-select">
-                          <select>
-                            <option value="Reason">Select Reason</option>
-                            <option value="Reason1">Reason 1</option>
-                            <option value="Reason2">Reason 2</option>
-                          </select>
-                        </span>
-                      </div>
-                      <div className="form-group">
-                        <textarea className="form-control" placeholder="Description"></textarea>
-                      </div>
-                      <div className="form-group wt-btnarea">
-                        <a href="javascrip:void(0);" className="wt-btn">
-                          Submit
-                        </a>
-                      </div>
-                    </fieldset>
-                  </form>
-                </div>
-              </div> */}
+         
             </aside>
           </div>
         </div>
