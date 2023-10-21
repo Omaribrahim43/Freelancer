@@ -15,8 +15,7 @@ import Rating from '@mui/material/Rating';
 import Category from "../home/category";
 
 
-
-export default function Content() {
+export default function Contentrr() {
 
 
 
@@ -34,15 +33,12 @@ export default function Content() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/projects/category/${id}`);
+        const response = await axios.get(`http://127.0.0.1:8000/api/api/reviews`);
         const filteredData = response.data.filter((project) => {
           return (
-            project.category_id === parseInt(id) &&
-            project.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-            project.status=='active' &&
-            (minPrice === '' || parseFloat(project.price) <= parseFloat(minPrice))
-            &&
-            (maxPrice === '' || parseFloat(project.price) >= parseFloat(maxPrice))
+            project
+            
+            
           );
         });
         setProject(filteredData);
@@ -111,7 +107,7 @@ export default function Content() {
 
   const fetchData = async (values) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/projects`);
+      const response = await axios.get(`http://127.0.0.1:8000/api/api/reviews`);
       const json = response.data;
       const filteredResults = json.filter((project) => {
         return (
@@ -158,8 +154,7 @@ export default function Content() {
   };
   return (
   
-    <main id="wt-main" class="wt-main wt-haslayout wt-innerbgcolor">
-      
+
       <div className="wt-haslayout wt-main-section">
       
         <div className="wt-haslayout">
@@ -354,9 +349,8 @@ export default function Content() {
                                   {/* <h2>{item.title}</h2> */}
                                   {/* <p>desc{item.desc}</p> */}
                                   <ul class="wt-postarticlemeta">
-                                    {/* <li><a>Rating: {item.rating}</a></li> */}
-                                    <li><a>Price: {item.price}$</a></li>
-                                    {/* <li><a>Delevered in: {item.deadline} days</a></li> */}
+                                    <li><a>Rating: {item.project_id}</a></li>
+                                    <li><a>Price: {item.user_id}$</a></li>
                                     {/* <li><a>Deadline: {item.deadline} days</a></li>
                                     <li><a>Buys:{item.buyers}</a></li>
                                   <li><a>Status: {item.status}</a></li> */}
@@ -415,7 +409,7 @@ export default function Content() {
 			
 	
 	
-      </main>
+	
 
 
    

@@ -1,6 +1,10 @@
 import Home from "./Components/pages/home";
 import About from "./Components/pages/about";
 import Services from "./Components/pages/services";
+import Servicesrr from "./Components/pages/servicesrr";
+
+import CustomerReviews from "./Components/sections/services/reviews";
+
 import Single from "./Components/pages/single";
 import Yacht from "./Components/sections/services/test";
 
@@ -50,7 +54,10 @@ console.log(Auth);
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services/:id" element={<Services />} />
-          <Route path="/Yacht" element={<Yacht />} />
+          <Route path="/servicesrr/:id" element={<Servicesrr />} />
+          <Route path="/review" element={<CustomerReviews />} />
+          
+          {/* <Route path="/Yacht" element={<Yacht />} /> */}
           {/* <Route path="/services" element={<Services />} /> */}
   
         {/* <Route path="/project" element={<Project />} /> */}
