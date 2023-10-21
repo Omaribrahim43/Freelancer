@@ -6,9 +6,8 @@ import { Dropdown } from "react-bootstrap";
 import Swal from "sweetalert2";
 // import EditForm from "./editform";
 import * as React from "react";
-import Rating from "@mui/material/Rating";
-import Box from "@mui/material/Box";
-import StarIcon from "@mui/icons-material/Star";
+
+import NewForm from './newform';
 const labels = {
   0.5: "Useless",
   1: "Useless+",
@@ -42,7 +41,11 @@ export default function Comments() {
 
    const [value, setValue] = React.useState(2);
    const [hover, setHover] = React.useState(-1);
-  const userlogin = useSelector((state) => state.user);
+   let userlogin = useSelector((state) => state.user);
+  //  if (!userlogin) {
+  //   userlogin = { id: "1", image: "dd", name: "d", role:'ff'};
+  //  }
+  
 
   // console.log("userlogin", userlogin);
   const { id } = useParams();
@@ -134,6 +137,7 @@ function UpdateForm() {
 
 function EditForm(id) {
      const singlereview = axios.get(`/review/${id}`).then((response)=>{setsinglecomment(response);});
+
 return (
   <>
     <div className="absform" id="absform">
@@ -283,8 +287,8 @@ return (
       {isloading ? (
         <p>Loading</p>
       ) : (
-        Projectcomments.map((Projectcomment) => (
-          <div className="col-12 col-sm-12 col-md-12 col-lg-12 float-left">
+        <div className="col-12 col-sm-12 col-md-12 col-lg-12 float-left">
+          {Projectcomments.map((Projectcomment) => (
             <div className="wt-author">
               <div className="wt-authordetails">
                 <figure>
@@ -335,10 +339,15 @@ return (
                               id="dropdown-basic"
                               style={{
                                 position: "absolute",
-                                top: -34,
-                                right: -30,
+                                top: -37
+                                ,
+                             backgroundColor: 'transparent',
+                                right: -21,
+                                border:'none',
+                                
                               }}>
                               <svg
+                              style={{color:'red'}}
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="16"
                                 height="16"
@@ -352,20 +361,22 @@ return (
                               {parseInt(userlogin.id) ===
                                 parseInt(Projectcomment.user_id) && (
                                 <Dropdown.Item
-                                  
                                   onClick={() => {
                                     EditForm(Projectcomment.id);
                                   }}>
-                                  Edit
                                 </Dropdown.Item>
                               )}
-                           
+
                               <Dropdown.Item
+                              // <button ></button>
                                 onClick={() => delet(Projectcomment.id)}>
                                 Delete
                               </Dropdown.Item>
                             </Dropdown.Menu>
+                                  <NewForm />
+
                           </Dropdown>
+                          
                         ) : (
                           <span></span>
                         )}
@@ -378,44 +389,43 @@ return (
                 </div>
               </div>
             </div>
+          ))}
 
-            <div className="wt-replaybox">
-              <h2>Leave Your Comment</h2>
-            
-              <fieldset>
-                <div className="form-group">
-                  <img src={userlogin.image} width={"60px"}></img>
+          <div className="wt-replaybox">
+            <h2>Leave Your Comment</h2>
 
-                  <input
-                    type="text"
-                    name="comment"
-                    className="form-control"
-                    placeholder="comment*"
-                    onChange={(e) =>
-                      setNewComment({
-                        ...NewComment,
-                        comment: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-              </fieldset>
-              <br></br>
+            <fieldset>
               <div className="form-group">
-                <button
-                  className="wt-btn"
-                  onClick={() => {
-                    PostComment();
-                  }}>
-                  Send
-                </button>
+                <img src={userlogin.image} width={"60px"}></img>
+
+                <input
+                  type="text"
+                  name="comment"
+                  className="form-control"
+                  placeholder="comment*"
+                  onChange={(e) =>
+                    setNewComment({
+                      ...NewComment,
+                      comment: e.target.value,
+                    })
+                  }
+                />
               </div>
-          
+            </fieldset>
+            <br></br>
+            <div className="form-group">
+              <button
+                className="wt-btn"
+                onClick={() => {
+                  PostComment();
+                }}>
+                Send
+              </button>
             </div>
           </div>
-        ))
+        </div>
+        // ))
       )}
-
     </>
   );}
 
