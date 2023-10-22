@@ -6,7 +6,7 @@ export default function exp() {
           <div className="row">
             <div className="col-12 col-sm-12 col-md-6 col-lg-6 float-left">
               <figure className="wt-mobileimg">
-              <img src="images/windows-MYomVPpR5FU-unsplash.jpg" alt="img description" width="1000" height="200" />
+                <img src="https://th.bing.com/th/id/OIP.1nIB16bAAa9DMcngjb-_ogHaDt?pid=ImgDet&rs=1" alt="img description" width="1000" height="200" />
               </figure>
             </div>
             <div className="col-12 col-sm-12 col-md-6 col-lg-6 float-left">

@@ -3,15 +3,15 @@ import Cards from "./cards";
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 // import Rating from '@mui/material/Rating';
-// import Stack from '@mui/material/Stack';
+import Stack from '@mui/material/Stack';
 
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import SearchInput from './SearchInput';
 
 import Swal from "sweetalert2";
-// import Box from '@mui/material/Box';
-// import Rating from '@mui/material/Rating';
+import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
 import Category from "../home/category";
 
 import './content.css'; // Import the CSS file
@@ -113,8 +113,6 @@ export default function Content() {
   const [category, setCategory] = useState([]);
   const [results, setResults] = useState([]);
   {/* ====search========= */ }
-
-
   useEffect(() => {
     async function fetchData() {
 
@@ -217,14 +215,6 @@ export default function Content() {
       setActiveSortByd([...activeSortByd, criteriond]);
     }
   };
-
-
-
-  // const [selectedOption, setSelectedOption] = useState("company");
-
-  // const handleOptionChange = (e) => {
-  //   setSelectedOption(e.target.value);
-  // };
   return (
 
     <main id="wt-main" class="wt-main wt-haslayout wt-innerbgcolor">
@@ -428,59 +418,6 @@ export default function Content() {
                         </form>
                       </div>
                     </div>
-                    {/* <div className="wt-widget wt-effectiveholder">
-                      <div className="wt-widgettitle">
-                        <h2>Project Type</h2>
-                      </div>
-                      <div className="wt-widgetcontent">
-                        <form className="wt-formtheme wt-formsearch">
-                          <fieldset>
-                            <div className="wt-checkboxholder">
-                              <span className="wt-radio">
-                                <input
-                                  id="project"
-                                  type="radio"
-                                  name="description"
-                                  value="company"
-                                  checked={selectedOption === "company"}
-                                  onChange={handleOptionChange}
-                                />
-                                <label htmlFor="project"> Any Project Type</label>
-                              </span>
-                              <span className="wt-radio">
-                                <input
-                                  id="hourly"
-                                  type="radio"
-                                  name="description"
-                                  value="hourly"
-                                  checked={selectedOption === "hourly"}
-                                  onChange={handleOptionChange}
-                                />
-                                <label htmlFor="hourly"> Hourly Based Project</label>
-                              </span>
-                              <div
-                                id="wt-productrangeslider"
-                                className="wt-productrangeslider wt-themerangeslider"
-                              ></div>
-                              <div className="wt-amountbox">
-                                <input type="text" id="wt-consultationfeeamount" readOnly />
-                              </div>
-                              <span className="wt-radio">
-                                <input
-                                  id="fixed"
-                                  type="radio"
-                                  name="description"
-                                  value="fixed"
-                                  checked={selectedOption === "fixed"}
-                                  onChange={handleOptionChange}
-                                />
-                                <label htmlFor="fixed"> Fixed Price Project</label>
-                              </span>
-                            </div>
-                          </fieldset>
-                        </form>
-                      </div>
-                    </div> */}
                     <div className="wt-widget wt-effectiveholder">
                       <div className="wt-widgettitle">
                         <h2>Order By</h2>
@@ -561,7 +498,7 @@ export default function Content() {
                 <div className="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 float-left">
                   <div className="wt-userlistingholder wt-haslayout">
                     <div className="wt-userlistingtitle">
-                      <span>01 - 48 of {project.length} results </span>
+                      <span>01 - 48 of {project.length} results for <em>""</em></span>
                     </div>
 
                     <div className="wt-companysinfoholder">
@@ -581,7 +518,7 @@ export default function Content() {
                                     <Stack style={{ paddingLeft: '20px' }} spacing={1}>
 
                                       <Rating name="half-rating-read" defaultValue={item.rating} precision={0.5} readOnly />
-                                    </Stack> */}
+                                    </Stack>
                                   </a>
                                   <div className="search-result" key={id}>
                                     <Link to={`/single/${item.id}`}><h2>{item.title}</h2></Link>
@@ -602,12 +539,12 @@ export default function Content() {
                                 <ul className="wt-postarticlemeta">
                                   <li>
                                     <a href="javascript:void(0)">
-                                      <span>{item.buyers}Sold</span>
+                                      <span>{item.buyers} Sold</span>
                                     </a>
                                   </li>
                                   <li>
                                     <a href="javascript:void(0)">
-                                      <span>In: {item.deadline}D</span>
+                                      <span>In: {item.deadline} days</span>
                                     </a>
                                   </li>
                                   {/* <li classNameName="wt-following">
