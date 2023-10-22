@@ -6,9 +6,9 @@ import Footer from "../layouts/Footer";
 export default function Profile() {
   return (
     <div>
-      
       <Header />
-      <link rel="stylesheet" href="css/dashboard.css"></link>
+      <link rel="stylesheet" href="/css/dashboard.css"></link>
+
       <Content />
       <Footer />
     </div>
