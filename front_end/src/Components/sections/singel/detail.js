@@ -90,7 +90,7 @@ export default function Detail() {
     return (
       <>
       
-      <div  style={{margin:'0px 180px'}}>
+      <div  style={{margin:'0px 10%'}}>
       <div className="row">
         <div id="wt-twocolumns" className="wt-twocolumns ">
           <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 float-left">

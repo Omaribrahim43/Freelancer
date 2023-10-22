@@ -16,11 +16,7 @@ export default function Footer() {
                       </strong>
                       <div className="wt-description">
                         <p>
-                          Dotem eiusmod tempor incune utnaem labore etdolore
-                          maigna aliqua enim poskina ilukita ylokem lokateise
-                          ination voluptate velit esse cillum dolore eu fugiat
-                          nulla pariatur lokaim urianewce{" "}
-                          <a href="javascript:void(0);">more...</a>
+                        Passionately crafting your vision into reality. Your dreams, our expertise. Let's make it happen.
                         </p>
                       </div>
                       <ul className="wt-socialiconssimple wt-socialiconfooter">
@@ -64,9 +60,7 @@ export default function Footer() {
                         <li>
                           <a href="javascript:void(0);">How It Works</a>
                         </li>
-                        <li>
-                          <a href="javascript:void(0);">Careers</a>
-                        </li>
+                  
                         <li>
                           <a href="javascript:void(0);">
                             Terms &amp; Conditions
@@ -75,9 +69,7 @@ export default function Footer() {
                         <li>
                           <a href="javascript:void(0);">Trust &amp; Safety</a>
                         </li>
-                        <li className="wt-viewmore">
-                          <a href="javascript:void(0);">+ View All</a>
-                        </li>
+                      
                       </ul>
                     </div>
                   </div>
@@ -87,84 +79,29 @@ export default function Footer() {
                         <h3>Explore More</h3>
                       </div>
                       <ul className="wt-fwidgetcontent">
-                        <li>
-                          <a href="javascript:void(0);">Freelancers in USA</a>
-                        </li>
+                      
                         <li>
                           <a href="javascript:void(0);">
-                            Freelancers in Canada
+                          Privacy Policy
                           </a>
                         </li>
                         <li>
                           <a href="javascript:void(0);">
-                            Freelancers in Australia
+                          News
                           </a>
                         </li>
                         <li>
-                          <a href="javascript:void(0);">Jobs in USA</a>
+                          <a href="javascript:void(0);">Careers</a>
                         </li>
-                        <li>
-                          <a href="javascript:void(0);">Find Jobs</a>
-                        </li>
-                        <li className="wt-viewmore">
-                          <a href="javascript:void(0);">+ View All</a>
-                        </li>
+                     
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="wt-haslayout wt-joininfo">
-              <div className="container">
-                <div className="row justify-content-md-center">
-                  <div className="col-xs-12 col-sm-12 col-md-12 col-lg-10 push-lg-1">
-                    <div className="wt-companyinfo">
-                      <span>
-                        <a href="javascript:void(0);">New @ Worktern?</a> Dotem
-                        eiusmod tempor incune utnaem labore etdolore.
-                      </span>
-                    </div>
-                    <div className="wt-fbtnarea">
-                      <a href="javascript:void(0)" className="wt-btn">
-                        Join Now
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="wt-haslayout wt-footerbottom">
-              <div className="container">
-                <div className="row">
-                  <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <p className="wt-copyrights">
-                      <a target="_blank" href="https://www.templateshub.net">
-                        Templates Hub
-                      </a>
-                    </p>
-                    <nav className="wt-addnav">
-                      <ul>
-                        <li>
-                          <a href="javascript:void(0);">News</a>
-                        </li>
-                        <li>
-                          <a href="javascript:void(0);">
-                            Terms &amp; Conditions
-                          </a>
-                        </li>
-                        <li>
-                          <a href="javascript:void(0);">Privacy Policy</a>
-                        </li>
-                        <li>
-                          <a href="javascript:void(0);">Career</a>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
-                </div>
-              </div>
-            </div>
+          
+           
           </footer>
           {/*Footer End*/}
         </>

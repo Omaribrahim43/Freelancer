@@ -3,15 +3,15 @@ import Cards from "./cards";
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 // import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
+// import Stack from '@mui/material/Stack';
 
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import SearchInput from './SearchInput';
 
 import Swal from "sweetalert2";
-import Box from '@mui/material/Box';
-import Rating from '@mui/material/Rating';
+// import Box from '@mui/material/Box';
+// import Rating from '@mui/material/Rating';
 import Category from "../home/category";
 
 import './content.css'; // Import the CSS file
@@ -581,7 +581,7 @@ export default function Content() {
                                     <Stack style={{ paddingLeft: '20px' }} spacing={1}>
 
                                       <Rating name="half-rating-read" defaultValue={item.rating} precision={0.5} readOnly />
-                                    </Stack>
+                                    </Stack> */}
                                   </a>
                                   <div className="search-result" key={id}>
                                     <Link to={`/single/${item.id}`}><h2>{item.title}</h2></Link>

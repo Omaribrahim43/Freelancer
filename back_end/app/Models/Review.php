@@ -19,11 +19,11 @@ class Review extends Model
 
     public function project()
     {
-        return $this->hasMany(Project::class, 'id', 'project_id');
+        return $this->belongsTo(Project::class, 'project_id','id' );
     }
 
     public function user()
     {
-        return $this->hasMany(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id','id');
     }
 }

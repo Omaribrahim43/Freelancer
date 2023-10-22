@@ -74,6 +74,7 @@ Route::get('/get-csrf-token', function () {
 });
 Route::get('/user', [AuthenticatedSessionController::class, 'User1'])
     ->middleware('auth');
+    
 Route::get('/usersss', [AuthenticatedSessionController::class, 'User2']);
 
 Route::post('/register', [RegisteredUserController::class, 'store'])

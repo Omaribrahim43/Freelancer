@@ -30,9 +30,9 @@ function handleLogout() {
                 <div className="wt-navigationarea">
                   <div className="container-fluid">
                     <div className="row">
-                      <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <strong className="wt-logo">
-                         
+                      <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12"  style={{height: '90px'}}>
+                        <strong className="wt-logo"><a href="/">
+                         <img src="/images/logoo.jpg"   alt="company logo here"/></a>
                         </strong>
                         <div className="wt-rightarea">
                           <nav id="wt-nav" className="wt-nav navbar-expand-lg">

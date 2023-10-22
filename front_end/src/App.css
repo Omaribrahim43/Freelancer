@@ -4,3 +4,34 @@
 .wt-logininfo{
   width: 12% !important;
 }
+.wt-navigation > ul > li{
+  margin-right: 10px;
+}
+.p-4{
+  padding: 0 !important;
+}
+/* .btn-primary{
+  background-color: transparent !important;
+
+} */
+.wt-authordetails{
+  padding-right: 0 !important;
+}
+.wt-rightarea {
+    /* float: right; */
+    /* position: absolute; */
+    /* left: 338px !important; */
+}
+
+.cliccckkk{
+ position: absolute;
+    top: -40px;
+    right: 17px;
+    border: none !important;
+    color: green;
+  background-color: transparent !important;
+
+}
+#ropdown-basic{
+  background-color: transparent !important;
+}

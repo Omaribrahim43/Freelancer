@@ -47,12 +47,12 @@ class ReviewController extends Controller
     {
         // Validate the incoming request for creating a project
         $reviewValidator = Validator::make(
-            $request->all(),
+            $request->all(),    
             [
                 'user_id' => 'required',
                 'project_id' => 'required',
                 'rating' => 'required',
-                'comment' => 'nullable',
+                'comment' => 'required',
                 'review_date' => 'required',
                 
             ]
@@ -156,14 +156,16 @@ class ReviewController extends Controller
     // public function update(Request $request, Review $review)
     public function update(Request $request, $id)
     {
+        $a=$request->all();
         $validator = Validator::make(
+
             $request->all(),
             [
-                'user_id' => 'required',
-                'project_id' => 'required',
-                'rating' => 'required',
+                // 'user_id' => 'required',
+                // 'project_id' => 'required',
+                // 'rating' => 'required',
                 'comment' => 'nullable',
-                'review_date' => 'required',
+                // 'review_date' => 'required',
             ]
         );
 
@@ -173,15 +175,15 @@ class ReviewController extends Controller
 
         // $imagePath = $this->updateImage($request, 'image', 'uploads', $request->image);
 
-        Review::where('id', $id)->update([
-            'user_id' => $request->user_id,
-            'project_id' => $request->project_id,
-            'rating' => $request->rating,
-            'comment' => $request->comment,
-            'review_date' => $request->review_date,
-        ]);
+        // Review::where('id', $id)->update([
+        //     'user_id' => $request->user_id,
+        //     'project_id' => $request->project_id,
+        //     'rating' => $request->rating,
+        //     'comment' => $request->comment,
+        //     'review_date' => $request->review_date,
+        // ]);
 
-        return response()->json(['message' => 'Review updated successfully!'], 200);
+        return response()->json([$a], 200);
     }
 
     /**
