@@ -3,16 +3,16 @@ import Cards from "./cards";
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 // import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
+// import Stack from '@mui/material/Stack';
 
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
-import SearchInput from './SearchInput';
+// import SearchInput from './SearchInput';
 
-import Swal from "sweetalert2";
-import Box from '@mui/material/Box';
-import Rating from '@mui/material/Rating';
-import Category from "../home/category";
+// import Swal from "sweetalert2";
+// import Box from '@mui/material/Box';
+// import Rating from '@mui/material/Rating';
+// import Category from "../home/category";
 
 import './content.css'; // Import the CSS file
 
@@ -217,7 +217,7 @@ export default function Content() {
   };
   return (
 
-    <main id="wt-main" class="wt-main wt-haslayout wt-innerbgcolor">
+    <main id="wt-main" className="wt-main wt-haslayout wt-innerbgcolor">
 
 
       {/* <button
@@ -292,10 +292,6 @@ export default function Content() {
                                   ))}
                                 </div>
                               )}
-
-
-
-
                             </div>
                           </fieldset>
                         </form>
@@ -514,7 +510,7 @@ export default function Content() {
                                   <img src={item.image2} style={{ height: '60px' }} alt="img description" />
                                 </figure>
                                 <div className="wt-title">
-                                  <a href="javascript:void(0);">
+                                  <a href="javascript:void(0);"/>
                                     {/* <Stack style={{ paddingLeft: '20px' }} spacing={1}>
 
                                       <Rating name="half-rating-read" defaultValue={item.rating} precision={0.5} readOnly />
@@ -524,17 +520,17 @@ export default function Content() {
                                     <Link to={`/single/${item.id}`}><h2>{item.title}</h2></Link>
                                   </div>
                                   {/* <h2>{item.title}</h2> */}
-                                  {/* <p>desc{item.desc}</p> */}
-                                  <ul class="wt-postarticlemeta">
-                                    {/* <li><a>Rating: {item.rating}</a></li> */}
-                                    <li><a>Price: {item.price}$</a></li>
-                                    {/* <li><a>Delevered in: {item.deadline} days</a></li> */}
-                                    {/* <li><a>Deadline: {item.deadline} days</a></li>
+                                    {/* <p>desc{item.desc}</p> */}
+                                    <ul class="wt-postarticlemeta">
+                                      {/* <li><a>Rating: {item.rating}</a></li> */}
+                                      <li><a>Price: {item.price}$</a></li>
+                                      {/* <li><a>Delevered in: {item.deadline} days</a></li> */}
+                                      {/* <li><a>Deadline: {item.deadline} days</a></li>
                                     <li><a>Buys:{item.buyers}</a></li>
                                   <li><a>Status: {item.status}</a></li> */}
 
 
-                                  </ul>
+                                    </ul>
                                 </div>
                                 <ul className="wt-postarticlemeta">
                                   <li>
@@ -581,15 +577,7 @@ export default function Content() {
             </div>
           </div>
         </div>
-
       </div>
-
-
-
-
     </main>
-
-
-
   );
 }
