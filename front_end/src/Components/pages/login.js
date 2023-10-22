@@ -13,8 +13,8 @@
   import { Form } from "react-bootstrap";
   import { Link } from "react-router-dom";
   import jwt_decode from "jwt-decode";
-
-
+import styled from "styled-components";
+import './login.css'
 
   const SignIn = ({isAuthenticated, user, loginSuccess, logoutSuccess}) => {
   ;
@@ -70,10 +70,10 @@
 
     return (
       <React.Fragment>
-        <div>
-          <div className="main-content">
-            <div className="page-content">
-              <section className="bg-auth">
+        <div style={{ backgroundColor: '#f7f7f7' }}>
+          <div className="main-content " style={{margin:'100px'}} >
+            <div className="page-content" >
+              <section className="bg-auth" >
                 <Container>
                   <Row className="justify-content-center">
                     <Col xl={10} lg={12}>
@@ -81,18 +81,18 @@
                         <Row className="g-0">
                           <Col lg={6} className="text-center">
                             <CardBody className="p-4">
-                              {/* <Link to="/">
+                              <Link to="/">
                                 <img
-                                  src={lightLogo}
+                                  src='https://images.pexels.com/photos/2682452/pexels-photo-2682452.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
                                   alt=""
                                   className="logo-light"
                                 />
-                                <img
+                                {/* <img
                                   src={darkLogo}
                                   alt=""
                                   className="logo-dark"
-                                />
-                              </Link> */}
+                                /> */}
+                              </Link>
                               <div className="mt-5">
                                 {/* <img
                                   src={signInImage}
@@ -168,23 +168,32 @@
                                     </div>
                                   </div>
                                   <div className="text-center">
-                                    <button
+                                    <button style={{ backgroundColor: '#ff5851' }}
                                       type="submit"
                                       className="btn btn-white btn-hover w-100">
                                       Sign In
                                     </button>
+                                  </div>
+
+                                  <div className="text-center mt-3">
+                                    <a style={{ backgroundColor: 'lightgray', color: '#000'}}
+                                      href="/register"
+                                      className="btn btn-white btn-hover w-100">
+                                      Sign Up
+                                    </a>
                                   </div>
                                 </Form>
 
                                 <div className="mt-4 text-center">
                                   <p className="mb-0">
                                     Don't have an account ?
-                                    <Link
+                                    {/* <Link style={{ backgroundColor: '#ff5851' }}
                                       to="/signup"
-                                      className="fw-medium text-white text-decoration-underline">
+                                      className="fw-medium text-white text-decoration-underline ">
                                       {" "}
                                       Sign Up{" "}
                                     </Link>
+                                    < button style={{backgroundColor: '#ff5851'}} className="fw-medium text-white text-decoration-underline wt-description"> ugbiubliyh</button> */}
                                     <GoogleLogin
                                       onSuccess={(credentialResponse) => {
         var credentialResponse = jwt_decode(credentialResponse.credential);

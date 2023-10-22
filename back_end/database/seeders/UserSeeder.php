@@ -16,33 +16,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-
-            // Agent
-            [
-                "id" => 7,
-
-                'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
-                'username' => 'Freelancer',
-                'name' => 'freelancer',
-                // 'last_name' => 'user',
-                'email' => 'freelancer@gmail.com',
-                'password' => Hash::make('password'),
-                'role' => 'freelancer',
-            ],
-
-            // User
-            [
-                "id" => 8,
-
-                'image' => 'https://visualpharm.com/assets/381/Admin-595b40b65ba036ed117d3b23.svg',
-                'username' => 'Client',
-                'name' => 'client',
-                // 'last_name' => 'user',
-                'email' => 'client@gmail.com',
-                'password' => Hash::make('password'),
-                'role' => 'client',
-            ]
-        ]);
+        \App\Models\User::factory(100)->create(); // Change 10 to the number of user records you want to create
     }
 }
