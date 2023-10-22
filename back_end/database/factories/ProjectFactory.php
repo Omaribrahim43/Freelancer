@@ -13,7 +13,7 @@ class ProjectFactory extends Factory
     {
         return [
             'seller_id' => $this->faker->numberBetween(1, 10), // Replace with your logic
-            'category_id' => $this->faker->numberBetween(1, 5), // Replace with your logic
+            'category_id' => $this->faker->numberBetween(1, 3), // Replace with your logic
             'image' => 'https://picsum.photos/id/' . $this->faker->numberBetween(1, 100) . '/640/480',
             'image2' => 'https://picsum.photos/id/' . $this->faker->numberBetween(100, 200) . '/640/480',
             'title' => $this->faker->word,

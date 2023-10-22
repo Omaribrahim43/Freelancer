@@ -16,6 +16,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(1000)->create(); // Change 10 to the number of user records you want to create
+        \App\Models\User::factory(100)->create(); // Change 10 to the number of user records you want to create
     }
 }
