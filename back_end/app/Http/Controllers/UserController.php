@@ -64,7 +64,7 @@ class UserController extends Controller
         ]);
 
         // $user = Auth::user();
-        $user = User::find($id);
+        // $user = User::find($id);
 
 
         // Load the 'reviews' and 'order' relationships using Eager Loading via a query builder context
@@ -76,12 +76,9 @@ class UserController extends Controller
         //     return response()->json(['message' => 'User not found'], 404);
         // }
 
-        if ($user) {
-            return response()->json(['user' => $user]);
-        } else {
-            return response()->json(['message' => 'User not found'], 404);
+        // if ($user) {
+            return response()->json(['suucsees']);
         }
-    }
 
 
     //This function to add update password info that come from react page as response to API 

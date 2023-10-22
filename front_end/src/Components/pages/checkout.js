@@ -10,8 +10,25 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
-
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../redux/action";
 export default function Checkout() {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/user");
+        console.log(response.data.user);
+        console.log("فات");
+        // Do something with the data, e.g., update your component state
+        dispatch(loginSuccess(response.data.user));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [success]);
+  const dispatch = useDispatch;
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,7 +43,7 @@ export default function Checkout() {
   const [ErrorMessage, setErrorMessage] = useState("");
   const [orderID, setOrderID] = useState(false);
   const user = useSelector((state) => state.user);
-
+ 
   useEffect(() => {
     // Fetch project details
     axios.get(`http://127.0.0.1:8000/api/projects/${id}`).then((response) => {
@@ -160,6 +177,8 @@ export default function Checkout() {
     }
   }, []);
   
+
+
   return (
     <>
       <Header />

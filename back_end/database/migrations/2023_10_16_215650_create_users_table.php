@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password')->nullable();
             $table->string('contact_info')->nullable();
-            $table->enum('role', ['admin', 'freelancer', 'client'])->default('client');
+            $table->enum('role', ['freelancer', 'client'])->default('client');
             $table->integer('age')->nullable();
             $table->string('gender')->nullable();
             $table->text('Bio')->nullable();

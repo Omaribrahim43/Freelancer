@@ -42,11 +42,11 @@ class User extends Authenticatable
 
     public function order()
     {
-        return $this->hasMany(Order::class, 'id', 'user_id');
+        return $this->hasMany(Order::class, 'user_id', 'id');
     }
     public function project()
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class, 'seller_id', 'id');
     }
     /**
      * The attributes that should be hidden for serialization.

@@ -19,7 +19,7 @@ class Feature extends Model
     ];
     public function project()
     {
-        return $this->belongsTo(Project::class, 'project_id');
+        return $this->belongsToMany(Project::class, 'id','project_id');
     }
     public function orders()
 {
