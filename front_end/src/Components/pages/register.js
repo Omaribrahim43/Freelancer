@@ -7,7 +7,7 @@ import Google from "./google"
 import { useDispatch } from "react-redux";
 import { Form } from "react-bootstrap";
 import { loginSuccess } from "../../redux/action";
-
+import './login.css'
 const SignUp = () => {
   document.title = "Sign Up";
 const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const dispatch = useDispatch();
   return (
     <React.Fragment>
       <div>
-        <div className="main-content">
+        <div className="main-content" style={{ margin: '100px' }}>
           <div className="page-content">
             <section className="bg-auth">
               <Container>
@@ -56,6 +56,11 @@ const dispatch = useDispatch();
                     <Card className="auth-box">
                       <Row className="align-items-center">
                         <Col lg={6} className="text-center">
+                          <img
+                            src='https://images.pexels.com/photos/2682452/pexels-photo-2682452.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+                            alt=""
+                            className="logo-light"
+                          />
                           <CardBody className="p-4">
                            
                             <div className="mt-5">
@@ -143,7 +148,7 @@ const dispatch = useDispatch();
                                 </div>
 
                                 <div className="text-center">
-                                  <button
+                                  <button style={{ backgroundColor: '#ff5851' }}
                                     type="submit"
                                     className="btn btn-white btn-hover w-100">
                                     Sign Up

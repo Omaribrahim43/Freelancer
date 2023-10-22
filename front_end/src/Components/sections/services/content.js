@@ -14,7 +14,7 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Category from "../home/category";
 
-
+import './content.css'; // Import the CSS file
 
 export default function Content() {
 
@@ -29,7 +29,12 @@ export default function Content() {
   const [maxPrice, setMaxPrice] = useState('');
   const [minPrice, setMinPrice] = useState(''); // Input field for minimum price
 
-  const projectsPerPage = 5;
+  const [sortBy, setSortBy] = useState(null); // State for sorting criterion
+  const [sortByd, setSortByd] = useState(null); // State for sorting criterion
+
+  const [activeSortByd, setActiveSortByd] = useState([]); // State for active sorting criteria
+  const [activeSortBy, setActiveSortBy] = useState([]); // State for active sorting criteria
+  const projectsPerPage = 12;
 
   useEffect(() => {
     async function fetchData() {
@@ -39,12 +44,39 @@ export default function Content() {
           return (
             project.category_id === parseInt(id) &&
             project.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-            project.status=='active' &&
+            project.status == 'active' &&
             (minPrice === '' || parseFloat(project.price) <= parseFloat(minPrice))
             &&
             (maxPrice === '' || parseFloat(project.price) >= parseFloat(maxPrice))
           );
         });
+
+        // if (sortBy) {
+        //   filteredData.sort((a, b) => a[sortBy] - b[sortBy]);
+        // }
+        if (activeSortBy.length > 0) {
+          filteredData.sort((a, b) => {
+            for (const criterion of activeSortBy) {
+              if (a[criterion] !== b[criterion]) {
+                return a[criterion] - b[criterion];
+              }
+            }
+            return 0;
+          });
+        }
+
+        if (activeSortByd.length > 0) {
+          filteredData.sort((a, b) => {
+            for (const criteriond of activeSortByd) {
+              if (a[criteriond] !== b[criteriond]) {
+                return b[criteriond] - a[criteriond];
+              }
+            }
+            return 0;
+          });
+        }
+
+
         setProject(filteredData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -52,7 +84,14 @@ export default function Content() {
     }
 
     fetchData();
-  }, [id, searchQuery, minPrice, maxPrice]);
+  }, [id, searchQuery, minPrice, maxPrice, sortBy, , activeSortBy, activeSortByd]);
+
+  const handleSort = (criterion) => {
+    setSortBy(criterion);
+  };
+  const handleSortd = (criteriond) => {
+    setSortBy(criteriond);
+  };
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -74,6 +113,8 @@ export default function Content() {
   const [category, setCategory] = useState([]);
   const [results, setResults] = useState([]);
   {/* ====search========= */ }
+
+
   useEffect(() => {
     async function fetchData() {
 
@@ -156,12 +197,68 @@ export default function Content() {
   const divStyle = {
     transform: 'rotate(180deg)'
   };
+
+
+  const toggleSortBy = (criterion) => {
+    if (activeSortBy.includes(criterion)) {
+      // If the criterion is already active, remove it
+      setActiveSortBy(activeSortBy.filter((c) => c !== criterion));
+    } else {
+      // If the criterion is not active, add it
+      setActiveSortBy([...activeSortBy, criterion]);
+    }
+  };
+  const toggleSortByd = (criteriond) => {
+    if (activeSortByd.includes(criteriond)) {
+      // If the criterion is already active, remove it
+      setActiveSortByd(activeSortByd.filter((c) => c !== criteriond));
+    } else {
+      // If the criterion is not active, add it
+      setActiveSortByd([...activeSortByd, criteriond]);
+    }
+  };
+
+
+
+  // const [selectedOption, setSelectedOption] = useState("company");
+
+  // const handleOptionChange = (e) => {
+  //   setSelectedOption(e.target.value);
+  // };
   return (
-  
+
     <main id="wt-main" class="wt-main wt-haslayout wt-innerbgcolor">
-      
+
+
+      {/* <button
+        className={`sorting-button ${activeSortBy.includes('price') ? 'active-button' : ''}`}
+        onClick={() => toggleSortBy('price')}
+      >
+        Sort by Price
+      </button>
+      <button
+        className={`sorting-button ${activeSortBy.includes('rating') ? 'active-button' : ''}`}
+        onClick={() => toggleSortBy('rating')}
+      >
+        Sort by rating
+      </button> */}
+
+
+
+      {/* <button
+        className={activeSortBy.includes('price') ? 'active' : ''}
+        onClick={() => toggleSortBy('price')}
+      >
+        Sort by Price
+      </button>
+      <button
+        className={activeSortBy.includes('rating') ? 'active' : ''}
+        onClick={() => toggleSortBy('rating')}
+      >
+        Sort by Rating
+      </button> */}
       <div className="wt-haslayout wt-main-section">
-      
+
         <div className="wt-haslayout">
           <div className="container">
             <div className="row">
@@ -171,6 +268,21 @@ export default function Content() {
                     <div className="wt-widget wt-startsearch">
                       <div className="wt-widgettitle">
                         <h2>Start Your Search</h2>
+                        {/* <button onClick={() => handleSort('price')}>Sort by Price</button>
+                        <button onClick={() => handleSort('rating')}>Sort by Rating</button>
+                        <button
+                          className={sortBy === 'price' ? 'active' : ''}
+                          onClick={() => handleSort('price')}
+                        >
+                          Sort by Price
+                        </button>
+                        <button
+                          className={sortBy === 'rating' ? 'active' : ''}
+                          onClick={() => handleSort('rating')}
+                        >
+                          Sort by Rating
+                        </button> */}
+
                       </div>
                       <div className="wt-widgetcontent">
                         <form className="wt-formtheme wt-formsearch">
@@ -179,7 +291,7 @@ export default function Content() {
                               <input type="text" value={searchQuery}
 
                                 onChange={handleSearchInputChange}
-                                onKeyUp={handleChange} name="Search" className="form-control" placeholder="Search Company"/>
+                                onKeyUp={handleChange} name="Search" className="form-control" placeholder="Search Company" />
                               <span href="javascrip:void(0);" className="wt-searchgbtn"><i className="lnr lnr-magnifier"></i></span>
                               {resultss && resultss.length > 0 && (
                                 <div className="results-list">
@@ -199,39 +311,39 @@ export default function Content() {
                         </form>
                       </div>
                     </div>
-                  <div className="wt-widget wt-effectiveholder">
-                    <div className="wt-widgettitle">
-                      <h2>Categories</h2>
-                    </div>
-                    <div className="wt-widgetcontent">
-                      <form className="wt-formtheme wt-formsearch">
-                        <fieldset>
-                          <div className="form-group">
-                            {categories.map((category) => (
-                              <span className="wt-checkbox" key={category.id}>
-                                <input
-                                  id={`category-${category.id}`}
-                                  type="checkbox"
-                                  name="description"
-                                  value={category.name}
-                                />
-                                <Link to={`/services/${category.id}`}>
-                                  <label
-                                    className={`active-label`}
-                                    style={{ color: activeCategory === category.id ? 'red' : 'initial', backgroundColor: activeCategory === category.id ? 'lightgray' : 'initial' }}
-                                    onClick={() => handleCategoryClick(category.id)}
-                                  >
-                                    {category.name}
-                                  </label>
-                                </Link>
-                              </span>
-                            ))}
-                          </div>
-                        </fieldset>
+                    <div className="wt-widget wt-effectiveholder">
+                      <div className="wt-widgettitle">
+                        <h2>Categories</h2>
+                      </div>
+                      <div className="wt-widgetcontent">
+                        <form className="wt-formtheme wt-formsearch">
+                          <fieldset>
+                            <div className="form-group">
+                              {categories.map((category) => (
+                                <span className="wt-checkbox" key={category.id}>
+                                  <input
+                                    id={`category-${category.id}`}
+                                    type="checkbox"
+                                    name="description"
+                                    value={category.name}
+                                  />
+                                  <Link to={`/services/${category.id}`}>
+                                    <label
+                                      className={`active-label`}
+                                      style={{ color: activeCategory === category.id ? 'red' : 'initial', backgroundColor: activeCategory === category.id ? 'lightgray' : 'initial' }}
+                                      onClick={() => handleCategoryClick(category.id)}
+                                    >
+                                      {category.name}
+                                    </label>
+                                  </Link>
+                                </span>
+                              ))}
+                            </div>
+                          </fieldset>
 
-                      </form>
+                        </form>
+                      </div>
                     </div>
-                  </div>
                     <div className="wt-widget wt-effectiveholder">
                       <div className="wt-widgettitle">
                         <h2>Price Filter</h2>
@@ -312,38 +424,161 @@ export default function Content() {
                           </datalist> */}
                             </div>
                           </fieldset>
-                         
+
                         </form>
                       </div>
                     </div>
+                    {/* <div className="wt-widget wt-effectiveholder">
+                      <div className="wt-widgettitle">
+                        <h2>Project Type</h2>
+                      </div>
+                      <div className="wt-widgetcontent">
+                        <form className="wt-formtheme wt-formsearch">
+                          <fieldset>
+                            <div className="wt-checkboxholder">
+                              <span className="wt-radio">
+                                <input
+                                  id="project"
+                                  type="radio"
+                                  name="description"
+                                  value="company"
+                                  checked={selectedOption === "company"}
+                                  onChange={handleOptionChange}
+                                />
+                                <label htmlFor="project"> Any Project Type</label>
+                              </span>
+                              <span className="wt-radio">
+                                <input
+                                  id="hourly"
+                                  type="radio"
+                                  name="description"
+                                  value="hourly"
+                                  checked={selectedOption === "hourly"}
+                                  onChange={handleOptionChange}
+                                />
+                                <label htmlFor="hourly"> Hourly Based Project</label>
+                              </span>
+                              <div
+                                id="wt-productrangeslider"
+                                className="wt-productrangeslider wt-themerangeslider"
+                              ></div>
+                              <div className="wt-amountbox">
+                                <input type="text" id="wt-consultationfeeamount" readOnly />
+                              </div>
+                              <span className="wt-radio">
+                                <input
+                                  id="fixed"
+                                  type="radio"
+                                  name="description"
+                                  value="fixed"
+                                  checked={selectedOption === "fixed"}
+                                  onChange={handleOptionChange}
+                                />
+                                <label htmlFor="fixed"> Fixed Price Project</label>
+                              </span>
+                            </div>
+                          </fieldset>
+                        </form>
+                      </div>
+                    </div> */}
+                    <div className="wt-widget wt-effectiveholder">
+                      <div className="wt-widgettitle">
+                        <h2>Order By</h2>
+                      </div>
+                      <div className="wt-widgetcontent">
+                        {/* <form className="wt-formtheme wt-formsearch"> */}
+                        <fieldset style={{ border: 'none' }}>
+                          <div className="wt-checkboxholder" style={{ marginTop: '-10px' }}>
+                            {/* <span className="wt-checkbox">
+                                <input id="proindependent" type="checkbox" name="description" value="company" checked=""/>
+                                  <label for="proindependent">All Types</label>
+                              </span>
+                              <span className="wt-checkbox">
+                          
+                              </span> */}
+                            <span className="wt-checkbox " >
+                              <input className={`sorting-button ${activeSortBy.includes('buyers') ? 'active-button' : ''}`}
+                                onClick={() => toggleSortBy('buyers')} id="independent" type="checkbox" name="description" value="company" />
+                              <label for="independent"> Number Sold Asc</label>
+                            </span>
+                            <br></br>
+                            <span className="wt-checkbox" >
+                              <input className={`sorting-button ${activeSortByd.includes('buyers') ? 'active-button' : ''}`}
+                                onClick={() => toggleSortByd('buyers')} id="independentd" type="checkbox" name="description" value="company" />
+                              <label for="independentd"> Number Sold Desc</label>
+                            </span>
+                            <span className="wt-checkbox">
+                              <input id="agency" type="checkbox" name="description" value="company" className={`sorting-button ${activeSortBy.includes('rating') ? 'active-button' : ''}`}
+                                onClick={() => toggleSortBy('rating')} />
+                              <label for="agency">Rating Asc</label>
+                            </span>
+                            <br></br>
+                            <span className="wt-checkbox">
+                              <input id="agencyd" type="checkbox" name="descriptiond" value="company" className={`sorting-button ${activeSortByd.includes('rating') ? 'active-button' : ''}`}
+                                onClick={() => toggleSortByd('rating')} />
+                              <label for="agencyd">Rating Desc</label>
+                            </span>
+                            <span className="wt-checkbox">
 
-                    
-                 
-       
+                              <input className={`sorting-button ${activeSortBy.includes('rating') ? 'active-button' : ''}`}
+                                onClick={() => toggleSortBy('price')} id="rising" type="checkbox" name="description" value="company" />
+                              <label for="rising"> Price Asc</label>
+                            </span>
+                            <br></br>
+                            <span className="wt-checkbox">
+
+                              <input className={`sorting-button ${activeSortByd.includes('rating') ? 'active-button' : ''}`}
+                                onClick={() => toggleSortByd('price')} id="rising" type="checkbox" name="description" value="company" />
+                              <label for="rising"> Price Desc</label>
+                            </span>
+
+                            {/* <span className="wt-checkbox">
+                              
+                              <input className={`sorting-button ${activeSortBy.includes('created_at') ? 'active-button' : ''}`}
+                                onClick={() => toggleSortBy('created_at')} id="created_at" type="checkbox" name="description" value="company"/>
+                              <label for="created_at">Created Date Asc</label>
+                              </span>
+                            <br></br>
+                              <span className="wt-checkbox">
+                              
+                              <input className={`sorting-button ${activeSortByd.includes('created_at') ? 'active-button' : ''}`}
+                                onClick={() => toggleSortByd('created_at')} id="created_atd" type="checkbox" name="descriptiond" value="companyd"/>
+                              <label for="created_atd">Created Date Desc</label>
+                              </span> */}
+
+                          </div>
+                        </fieldset>
+                        {/* </form> */}
+
+                      </div>
+                    </div>
+
+
+
 
                   </aside>
                 </div>
                 <div className="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 float-left">
                   <div className="wt-userlistingholder wt-haslayout">
                     <div className="wt-userlistingtitle">
-                    <span>01 - 48 of {project.length} results for <em>""</em></span>
+                      <span>01 - 48 of {project.length} results </span>
                     </div>
-              
+
                     <div className="wt-companysinfoholder">
                       <div className="row">
                         {displayedProjects.map((item) => (
-                          <div className="col-12 col-sm-12 col-md-12 col-lg-6" key={item.id}>
+                          <div className="col-12 col-sm-12 col-md-12 col-lg-4" key={item.id}>
                             <div className="wt-companysdetails">
                               <figure className="wt-companysimg">
-                                <img src={item.image} style={{height:'200px' , width:'200px'}} alt="img description" />
+                                <img src={item.image} style={{ height: '100px' }} alt="img description" />
                               </figure>
                               <div className="wt-companysinfo">
                                 <figure>
-                                  <img src={item.image} style={{ height: '50px', width: '50px' }} alt="img description" />
+                                  <img src={item.image2} style={{ height: '60px' }} alt="img description" />
                                 </figure>
                                 <div className="wt-title">
                                   <a href="javascript:void(0);">
-                                    <Stack style={{ paddingLeft: '77px' }} spacing={1}>
+                                    <Stack style={{ paddingLeft: '20px' }} spacing={1}>
 
                                       <Rating name="half-rating-read" defaultValue={item.rating} precision={0.5} readOnly />
                                     </Stack>
@@ -360,34 +595,34 @@ export default function Content() {
                                     {/* <li><a>Deadline: {item.deadline} days</a></li>
                                     <li><a>Buys:{item.buyers}</a></li>
                                   <li><a>Status: {item.status}</a></li> */}
-                                  
-                                    
+
+
                                   </ul>
                                 </div>
                                 <ul className="wt-postarticlemeta">
                                   <li>
                                     <a href="javascript:void(0)">
-                                      <span>{item.buyers} Sold</span>
+                                      <span>{item.buyers}Sold</span>
                                     </a>
                                   </li>
                                   <li>
                                     <a href="javascript:void(0)">
-                                      <span>Delevered in: {item.deadline} days</span>
+                                      <span>In: {item.deadline}D</span>
                                     </a>
                                   </li>
-                                  <li classNameName="wt-following">
+                                  {/* <li classNameName="wt-following">
                                     <a href="javascript:void(0)">
                                       <span style={{ color: item.status === 'active' ? 'lightgreen' : 'red' }}>
                                         {item.status}
                                       </span>
                                     </a>
-                                  </li>
+                                  </li> */}
                                 </ul>
                               </div>
                             </div>
                           </div>
                         ))}
-       
+
                       </div>
                     </div>
                     <nav className="wt-pagination">
@@ -409,15 +644,15 @@ export default function Content() {
             </div>
           </div>
         </div>
-       
+
       </div>
-    
-			
-	
-	
-      </main>
 
 
-   
+
+
+    </main>
+
+
+
   );
 }
