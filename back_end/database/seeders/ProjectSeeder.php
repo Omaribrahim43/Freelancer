@@ -18,6 +18,6 @@ class ProjectSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Project::factory(2000)->create(); // Change 10 to the number of records you want to create
+        \App\Models\Project::factory(200)->create(); // Change 10 to the number of records you want to create
     }
 }

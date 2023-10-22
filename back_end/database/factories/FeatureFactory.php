@@ -15,7 +15,7 @@ class FeatureFactory extends Factory
             'project_id' => $this->faker->numberBetween(1, 100), // Replace with your logic
             'title' => $this->faker->sentence,
             'price' => $this->faker->randomFloat(2, 10, 50),
-            // 'deadline' => $this->faker->numberBetween(1, 10),
+            'deadline' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

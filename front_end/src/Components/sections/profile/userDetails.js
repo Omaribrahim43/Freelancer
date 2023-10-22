@@ -3,9 +3,12 @@ import { useSelector } from "react-redux";
 import axios from "../../../axios/axios";
 import { loginSuccess } from "../../../redux/action";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 function UserDetails() {
   const user = useSelector((state) => state.user);
+  const [selectedFile, setSelectedFile] = useState(null);
+
   const login = useSelector((state) => state.isAuthenticated);
   const [responseData, setResponseData] = useState({});
   //   const userId = user.id;
@@ -21,6 +24,18 @@ function UserDetails() {
     });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+
+    const fileURL = URL.createObjectURL(file);
+
+    setFormData({
+      ...formData,
+      image: fileURL,
+    });
+  };
+
   const updateUser = async (param) => {
     param.preventDefault();
     const csrfResponse = await axios.get("/get-csrf-token");
@@ -31,25 +46,30 @@ function UserDetails() {
     await axios
       .put(`/users/update/${user.id}`, formData)
       .then((response) => {
+
         console.log("User data updated successfully");
         console.log(response);
-        setResponseData(response.data);
+        // setResponseData(response.data);
 
-        // Dispatch the login success action with the updated user data
-        dispatch(loginSuccess(response.data.user));
-
-        alert("User data updated successfully");
+        // // Dispatch the login success action with the updated user data
+        // dispatch(loginSuccess(response.data.user));
+        Swal.fire({
+          icon: "success",
+          title: "Your Data updated successfully",
+          showConfirmButton: true,
+          timer: 2500,
+        });
+        // alert("User data updated successfully");
       })
       .catch((error) => {
         console.log(formData);
         console.error("Error updating user data:", error);
       });
 
-    console.log(responseData);
+    // console.log(responseData);
   };
 
   return (
-    
     <div
       className="wt-personalskillshold tab-pane active fade show"
       id="wt-skills"
@@ -88,7 +108,7 @@ function UserDetails() {
                   value={formData.gender}
                   onChange={handleInputChange}
                 >
-                  <option value="" disabled>
+                  <option value="" selected disabled>
                     Select Gender
                   </option>
                   <option value="male">Male</option>
@@ -136,33 +156,19 @@ function UserDetails() {
                 onChange={handleInputChange}
               />
             </div>
-
-            {/* <div className="form-group">
-              <input
-                type="password"
-                name="password" // New password field
-                className="form-control"
-                placeholder="New Password"
-                value={formData.password}
-                onChange={handleInputChange}
-              />
-            </div> */}
           </fieldset>
         </form>
-        <br />
-        <br />
-        <br />
-        <div className="wt-profilephoto wt-tabsinfo">
+
+        <div
+          className="wt-profilephoto wt-tabsinfo"
+          style={{ marginTop: "40px" }}
+        >
           <div className="wt-tabscontenttitle">
             <h2>Profile Photo</h2>
           </div>
           <div className="wt-profilephotocontent">
             <div className="wt-description">
-              <p>
-                Consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                ut labore et dolore magna aliqua aut enim ad minim veniamac quis
-                nostrud exercitation ullamco laboris.
-              </p>
+              <p>Please choose an image to upload. </p>
             </div>
             <form className="wt-formtheme wt-formprojectinfo wt-formcategory">
               <fieldset>
@@ -170,7 +176,12 @@ function UserDetails() {
                   <div className="wt-labelgroup">
                     <label htmlFor="filep">
                       <span className="wt-btn">Select Files</span>
-                      <input type="file" name="file" id="filep" />
+                      <input
+                        type="file"
+                        name="file"
+                        id="filep"
+                        onChange={handleFileChange}
+                      />
                     </label>
                     <span>Drop files here to upload</span>
                     <em className="wt-fileuploading">
@@ -180,48 +191,6 @@ function UserDetails() {
                 </div>
                 <div className="form-group">
                   <ul className="wt-attachfile wt-attachfilevtwo">
-                    {/* <li className="wt-uploadingholder wt-companyimg-uploading">
-                      <div className="wt-uploadingbox">
-                        <figure>
-                          <img
-                            src="images/company/img-07.jpg"
-                            alt="img description"
-                          />
-                        </figure>
-                        <div className="wt-uploadingbar wt-uploading">
-                          <span className="uploadprogressbar"></span>
-                          <span>Profile Photo.jpg</span>
-                          <em>
-                            File size: 300 kb
-                            <a
-                              href="javascript:void(0);"
-                              className="lnr lnr-cross"
-                            ></a>
-                          </em>
-                        </div>
-                      </div>
-                    </li>
-                    <li className="wt-uploadingholder wt-companyimg-user">
-                      <div className="wt-uploadingbox">
-                        <figure>
-                          <img
-                            src="images/company/img-08.jpg"
-                            alt="img description"
-                          />
-                        </figure>
-                        <div className="wt-uploadingbar wt-uploading">
-                          <span className="uploadprogressbar"></span>
-                          <span>Profile Photo.jpg</span>
-                          <em>
-                            File size: 300 kb
-                            <a
-                              href="javascript:void(0);"
-                              className="lnr lnr-cross"
-                            ></a>
-                          </em>
-                        </div>
-                      </div>
-                    </li> */}
                     <li className="wt-uploadingholder">
                       <div className="wt-uploadingbox">
                         <div className="wt-designimg">
@@ -233,11 +202,15 @@ function UserDetails() {
                             checked
                           />
                           <label htmlFor="demoz">
+                            {/* <img src={formData.image} alt="img description" /> */}
                             <img
-                              src="images/company/img-09.jpg"
+                              src={
+                                selectedFile
+                                  ? URL.createObjectURL(selectedFile)
+                                  : formData.image
+                              }   
                               alt="img description"
                             />
-                            <i className="fa fa-check"></i>
                           </label>
                         </div>
                         <div className="wt-uploadingbar wt-uploading">

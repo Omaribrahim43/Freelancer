@@ -195,7 +195,7 @@ export default function Detail() {
                   <form className="wt-formtheme wt-formreport">
                   <div >
                     <div className="wt-title"> <h5> Service price = {project.price }</h5>  </div>
-                    <div> <h3> Total price = {project.price + totalPrice} </h3> </div>
+                    <div> <h5> Total price = {project.price + totalPrice} </h5> </div>
                    
                   </div>
                   <br></br>

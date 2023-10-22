@@ -1,17 +1,18 @@
 import React from "react";
 import UserDetails from "./userDetails";
-import Buyers from "./buyers";
+import Orders from "./orders";
+import Services from "./services";
 import Password from "./password";
+import { useSelector } from "react-redux";
 
 function Content() {
+  const user = useSelector((state) => state.user);
+
   return (
-    
     <main id="wt-main" className="wt-main wt-haslayout">
-      
-      {/* Register Form Start */}
       <section className="wt-haslayout">
         <div className="row">
-          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-9">
+          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-10">
             <div className="wt-haslayout wt-dbsectionspace">
               <div className="wt-dashboardbox wt-dashboardtabsholder">
                 <div className="wt-dashboardboxtitle">
@@ -24,52 +25,44 @@ function Content() {
                         Personal Details
                       </a>
                     </li>
+
                     <li className="nav-item">
-                      <a data-toggle="tab" href="#wt-education">
-                        Experience &amp; Education
+                      <a
+                        data-toggle="tab"
+                        href={
+                          user.role === "client" ? "#wt-Orders" : "#wt-Services"
+                        }
+                      >
+                        {user.role === "client" ? "My Orders" : "My Services"}
                       </a>
                     </li>
+
+                    {/* <li className="nav-item">
+                      <a data-toggle="tab" href="#wt-ServicesOrOreders">
+                        My Orders
+                      </a>
+                    </li> */}
                     <li className="nav-item">
-                      <a data-toggle="tab" href="#wt-awards">
+                      <a data-toggle="tab" href="#password">
                         Change Password
                       </a>
                     </li>
                   </ul>
                 </div>
                 <div className="wt-tabscontent tab-content">
-                  {/* Personal Details start */}
                   <UserDetails />
-                  {/* Personal Details end */}
+                  {/* <Orders /> */}
+                  {/* <Services /> */}
+                  {user.role === "client" ? <Orders /> : <Services />}
 
-                  {/* Buyers start */}
-                  <Buyers />
-                  {/* Buyers end */}
-
-                  {/* password start */}
+                 
                   <Password />
-                  {/* password end */}
                 </div>
               </div>
-            </div>
-            {/* <div className="wt-updatall">
-              <i className="ti-announcement"></i>
-              <span>
-                Update all the latest changes made by you, by just clicking on
-                "Save & Continue" button.
-              </span>
-              <button className="wt-btn" onClick={handleSaveAndUpdate}>
-                Save & Update
-              </button>
-            </div> */}
-          </div>
-          <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
-            <div className="wt-haslayout wt-dbsectionspace wt-codescansidebar">
-              <div className="tg-authorcodescan wt-codescanholder"></div>
             </div>
           </div>
         </div>
       </section>
-      {/* Register Form End */}
     </main>
   );
 }

@@ -515,7 +515,7 @@ export default function Content() {
                                 </figure>
                                 <div className="wt-title">
                                   <a href="javascript:void(0);">
-                                    <Stack style={{ paddingLeft: '20px' }} spacing={1}>
+                                    {/* <Stack style={{ paddingLeft: '20px' }} spacing={1}>
 
                                       <Rating name="half-rating-read" defaultValue={item.rating} precision={0.5} readOnly />
                                     </Stack>
@@ -547,13 +547,13 @@ export default function Content() {
                                       <span>In: {item.deadline} days</span>
                                     </a>
                                   </li>
-                                  {/* <li classNameName="wt-following">
+                                  <li classNameName="wt-following">
                                     <a href="javascript:void(0)">
                                       <span style={{ color: item.status === 'active' ? 'lightgreen' : 'red' }}>
                                         {item.status}
                                       </span>
                                     </a>
-                                  </li> */}
+                                  </li>
                                 </ul>
                               </div>
                             </div>

@@ -1,4 +1,5 @@
 import axios from "../../../axios/axios";
+import { loginSuccess } from "../../../redux/action";
 import { Form, useParams } from "react-router-dom";
 import  { useState, useEffect } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
@@ -6,7 +7,7 @@ import { Dropdown } from "react-bootstrap";
 import Swal from "sweetalert2";
 // import EditForm from "./editform";
 import * as React from "react";
-
+import { useDispatch } from "react-redux";
 import NewForm from './newform';
 const labels = {
   0.5: "Useless",
@@ -60,6 +61,8 @@ export default function Comments() {
       review_date: formattedTime,
       comment: "",
     });
+const dispatch = useDispatch();
+
   // const [UpdateComment, setUpdateComment] = useState('');
      const [NewComment, setNewComment] = useState({
        user_id: userlogin.id,
@@ -69,6 +72,21 @@ export default function Comments() {
        comment:"",
      });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/user');
+        console.log(response.data.user);
+        console.log('فات');
+        // Do something with the data, e.g., update your component state
+        dispatch(loginSuccess(response.data.user));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [NewComment, UpdateComment]);
      
  async function fetchData() {
    try {
@@ -100,8 +118,12 @@ function PostComment() {
         toast.addEventListener("mouseenter", Swal.stopTimer);
         toast.addEventListener("mouseleave", Swal.resumeTimer);
       },
+        
     });
-
+setNewComment({
+  ...NewComment,
+  comment: "",
+});
     Toast.fire({
       icon: "success",
       title: "Your Comment Add successfully",
@@ -310,13 +332,14 @@ return (
                       </h3>
                       <span>
                         <i className="lnr lnr-clock" /> Author Since:{" "}
-                        {Projectcomment.user.review_date}
+                        {Projectcomment.review_date}
+                      
                       </span>
                     </div>
                     <div className="wt-boxright">
                       <ul className="wt-socialiconssimple">
                         <li className="wt-facebook">
-                          <div className="wt-rightarea">
+                          <div className="wt-rightarea  testtest">
                             <span className="wt-starsvtwo">
                               {Array.from(
                                 { length: Projectcomment.rating },
@@ -339,15 +362,13 @@ return (
                               id="dropdown-basic"
                               style={{
                                 position: "absolute",
-                                top: -37
-                                ,
-                             backgroundColor: 'transparent',
+                                top: -37,
+                                backgroundColor: "transparent",
                                 right: -21,
-                                border:'none',
-                                
+                                border: "none",
                               }}>
                               <svg
-                              style={{color:'red'}}
+                                style={{ color: "red" }}
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="16"
                                 height="16"
@@ -363,20 +384,17 @@ return (
                                 <Dropdown.Item
                                   onClick={() => {
                                     EditForm(Projectcomment.id);
-                                  }}>
-                                </Dropdown.Item>
+                                  }}></Dropdown.Item>
                               )}
 
                               <Dropdown.Item
-                              // <button ></button>
+                                // <button ></button>
                                 onClick={() => delet(Projectcomment.id)}>
                                 Delete
                               </Dropdown.Item>
                             </Dropdown.Menu>
-                                  <NewForm />
-
+                            <NewForm />
                           </Dropdown>
-                          
                         ) : (
                           <span></span>
                         )}

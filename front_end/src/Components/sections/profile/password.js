@@ -76,7 +76,8 @@ export default function PasswordChange() {
   };
 
   return (
-    <div className="wt-awardsholder tab-pane fade" id="wt-awards">
+    
+    <div className="wt-awardsholder tab-pane fade" id="password">
       <div className="wt-yourdetails wt-tabsinfo">
         <div className="wt-tabscontenttitle">
           <h2>Change Password</h2>

@@ -21,15 +21,15 @@ class Order extends Model
 
     public function payment()
     {
-        $this->belongsTo(Payment::class, 'id', 'order_id');
+        $this->belongsTo(Payment::class,  'order_id','id');
     }
     public function project()
     {
-        return $this->belongsTo(Project::class, 'id', 'project_id');
+        return $this->belongsTo(Project::class,  'project_id','id');
     }
     public function user()
     {
-        return $this->belongsTo(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class,  'user_id', 'id');
     }
     public function features()
 {

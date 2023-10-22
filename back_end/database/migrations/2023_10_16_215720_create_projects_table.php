@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('CASCADE');
             // $table->foreignId('category_id')->constrained('categories')->onDelete('RESTRICT')->onUpdate('cascade');
             $table->string('image')->nullable();
+            $table->string('image2')->nullable();
             $table->string('title');
             $table->longText('desc');
             $table->integer('rating')->nullable();
