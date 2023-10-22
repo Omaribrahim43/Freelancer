@@ -14,11 +14,11 @@ class UserFactory extends Factory
     {
         return [
             'image' => $this->faker->imageUrl(),
-            'username' => $this->faker->userName,
+            'username' => $this->faker->unique()->userName,
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'password' => Hash::make('password'), // You can change the default password if needed
-            'role' => $this->faker->randomElement(['admin', 'freelancer', 'client']), // Adjust roles as needed
+            'role' => $this->faker->randomElement(['freelancer', 'client']), // Adjust roles as needed
         ];
     }
 }
